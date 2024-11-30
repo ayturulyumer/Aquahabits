@@ -1,5 +1,6 @@
 @use "../../scss/utils" as *;
 $primary-color: whitesmoke;
+$logo-color: #0a7788;
 
 .topNav {
   padding: 1em;
@@ -9,8 +10,12 @@ $primary-color: whitesmoke;
 
   nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+
+    @include tablet {
+      justify-content: space-around;
+    }
   }
 }
 
@@ -18,7 +23,6 @@ $primary-color: whitesmoke;
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: $primary-color;
   gap: 2px;
 
   img {
@@ -26,8 +30,10 @@ $primary-color: whitesmoke;
   }
 
   span {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 24px;
+    color: $logo-color;
   }
 }
 
@@ -57,6 +63,31 @@ $primary-color: whitesmoke;
       font-size: 18px;
       color: $primary-color;
       text-decoration: none;
+      display: block;
+      position: relative;
+      padding: 0.2em 0;
+
+      :hover {
+        color: #6db6e0
+      }
+
+      ::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0.1em;
+        background-color: $primary-color;
+        opacity: 0;
+        transition: opacity 300ms, transform 300ms;
+      }
+
+      :hover::after,
+      :focus::after {
+        opacity: 1;
+        transform: translate3d(0, 0.2em, 0);
+      }
     }
   }
 }
