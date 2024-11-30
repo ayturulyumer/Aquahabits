@@ -1,0 +1,62 @@
+@use "../../scss/utils" as *;
+$primary-color: whitesmoke;
+
+.topNav {
+  padding: 1em;
+  background: #28282b;
+  width: 100vw;
+  height: fit-content;
+
+  nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: $primary-color;
+  gap: 2px;
+
+  img {
+    width: 80px;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 22px;
+  }
+}
+
+.hamburgerMenu {
+  @include desktop {
+    display: none;
+  }
+
+  img {
+    cursor: pointer;
+    width: 40px;
+  }
+}
+
+.navList {
+  display: none;
+
+  @include desktop {
+    display: flex;
+    gap: 15px;
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      font-size: 18px;
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+}
