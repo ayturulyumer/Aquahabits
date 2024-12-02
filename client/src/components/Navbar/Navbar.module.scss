@@ -1,65 +1,74 @@
 @use "../../scss/utils" as *;
+
 $primary-color: whitesmoke;
 $logo-color: #0a7788;
+$bg-color: #28282b;
 
-.topNav {
+.navbar {
   padding: 1em;
-  background: #28282b;
-  width: 100vw;
-  height: fit-content;
+  background: $bg-color;
+  width: 100%;
+  position: fixed;
+  top: 0;
 
-  nav {
+  &__container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+  }
 
-    @include tablet {
-      justify-content: space-around;
+  &__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 8px;
+
+    &-img {
+      width: 80px;
+    }
+
+    &-text {
+     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 24px;
+      color: $logo-color;
+      letter-spacing: 1.5px;
     }
   }
-}
 
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  gap: 2px;
-
-  img {
-    width: 80px;
-  }
-
-  span {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-weight: bold;
-    font-size: 24px;
-    color: $logo-color;
-  }
-}
-
-.hamburgerMenu {
-  @include desktop {
-    display: none;
-  }
-
-  img {
-    cursor: pointer;
-    width: 40px;
-  }
-}
-
-.navList {
-  display: none;
-
-  @include desktop {
+  &__menu {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: fixed;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    background-color: $bg-color;
+    padding: 10px 0 25px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
 
-    li {
+    &--visible {
+      transform: translateX(0);
+    }
+
+    @include tablet {
+      position: relative;
+      flex-direction: row;
+      transform: translateX(0);
+      gap: 40px;
+      width: auto;
+      top: 0;
+      left: 0;
+      padding: 0;
+    }
+
+    &-item {
       list-style: none;
     }
 
-    a {
+    &-link {
       font-size: 18px;
       color: $primary-color;
       text-decoration: none;
@@ -67,11 +76,11 @@ $logo-color: #0a7788;
       position: relative;
       padding: 0.2em 0;
 
-      :hover {
-        color: #6db6e0
+      &:hover {
+        color: #6db6e0;
       }
 
-      ::after {
+      &::after {
         content: "";
         position: absolute;
         bottom: 0;
@@ -83,11 +92,22 @@ $logo-color: #0a7788;
         transition: opacity 300ms, transform 300ms;
       }
 
-      :hover::after,
-      :focus::after {
+      &:hover::after,
+      &:focus::after {
         opacity: 1;
-        transform: translate3d(0, 0.2em, 0);
+        transform: translateY(0.2em);
       }
+    }
+  }
+
+  &__toggle {
+    cursor: pointer;
+    img {
+      width: 40px;
+    }
+
+    @include tablet{
+      display: none;
     }
   }
 }

@@ -1,34 +1,40 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import habitLogo from '../../assets/habitlogo.png';
-import HamburgerIcon from "../../svg/burger-menu.svg"
+import BurgerIcon from '../../svg/burger-menu.svg';
+import CloseIcon from '../../svg/close-icon.svg';
 
+import styles from './Navbar.module.scss';
 
-
-
-import styles from "./Navbar.module.scss"
 export default function Navbar() {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const handleToggleMenu = () => {
+        setShowMenu((prevState) => !prevState);
+    };
+
     return (
-        <header className={styles.topNav}>
-            <nav>
-                <Link className={styles.logo}>
-                    <img src={habitLogo} alt="Habitect Logo" />
-                    <span>Habitect</span>
+        <header className={styles['navbar']}>
+            <nav className={styles['navbar__container']}>
+                <Link to="/" className={styles['navbar__logo']}>
+                    <img src={habitLogo} alt="Habitect Logo" className={styles['navbar__logo-img']} />
+                    <span className={styles['navbar__logo-text']}>Habitect</span>
                 </Link>
-                <ul className={styles.navList}>
-                    <li>
-                        <a><Link to="/">Home</Link> </a>
+                <ul className={`${styles['navbar__menu']} ${showMenu ? styles['navbar__menu--visible'] : ''}`}>
+                    <li className={styles['navbar__menu-item']}>
+                        <Link to="/" className={styles['navbar__menu-link']}>Home</Link>
                     </li>
-                    <li>
-                        <a><Link to="/">FAQ</Link> </a>
+                    <li className={styles['navbar__menu-item']}>
+                        <Link to="/faq" className={styles['navbar__menu-link']}>FAQ</Link>
                     </li>
-                    <li>
-                        <a><Link to="/">Pricing</Link> </a>
+                    <li className={styles['navbar__menu-item']}>
+                        <Link to="/pricing" className={styles['navbar__menu-link']}>Pricing</Link>
                     </li>
                 </ul>
-            <div className={styles.hamburgerMenu}>
-                <img src={HamburgerIcon} alt="" />
-            </div>
+                <div onClick={handleToggleMenu} className={styles['navbar__toggle']}>
+                    <img src={showMenu ? CloseIcon : BurgerIcon} alt="Menu Icon" />
+                </div>
             </nav>
         </header>
-    )
+    );
 }
