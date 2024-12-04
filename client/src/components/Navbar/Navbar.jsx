@@ -4,7 +4,6 @@ import habitLogo from '../../assets/habitlogo.png';
 import BurgerIcon from '../../svg/burger-menu.svg';
 import CloseIcon from '../../svg/close-icon.svg';
 
-import styles from './Navbar.module.scss';
 
 export default function Navbar() {
     const [showMenu, setShowMenu] = useState(false);
@@ -14,27 +13,26 @@ export default function Navbar() {
     };
 
     return (
-        <header className={styles['navbar']}>
-            <nav className={styles['navbar__container']}>
-                <Link to="/" className={styles['navbar__logo']}>
-                    <img src={habitLogo} alt="Habitect Logo" className={styles['navbar__logo-img']} />
-                    <span className={styles['navbar__logo-text']}>Habitect</span>
-                </Link>
-                <ul className={`${styles['navbar__menu']} ${showMenu ? styles['navbar__menu--visible'] : ''}`}>
-                    <li className={styles['navbar__menu-item']}>
-                        <Link to="/" className={styles['navbar__menu-link']}>Home</Link>
-                    </li>
-                    <li className={styles['navbar__menu-item']}>
-                        <Link to="/faq" className={styles['navbar__menu-link']}>FAQ</Link>
-                    </li>
-                    <li className={styles['navbar__menu-item']}>
-                        <Link to="/pricing" className={styles['navbar__menu-link']}>Pricing</Link>
-                    </li>
+        <nav className="navbar w-screen">
+            <div className="navbar-start mx-8">
+                <Link to="/" className="text-3xl font-light tracking-normal ">Habitect</Link>
+            </div>
+            <div className="navbar-center">
+                <ul className="flex gap-20 mr-4">
+                    <li className="hover-red-underline cursor-pointer">Pricing</li>
+                    <li className="hover-red-underline cursor-pointer">FAQ</li>
+                    <li className="hover-red-underline cursor-pointer">About</li>
                 </ul>
-                <div onClick={handleToggleMenu} className={styles['navbar__toggle']}>
-                    <img src={showMenu ? CloseIcon : BurgerIcon} alt="Menu Icon" />
-                </div>
-            </nav>
-        </header>
+            </div>
+            <div className="navbar-end">
+                <ul className="flex mx-8">
+                    <li className="btn btn-md btn-outline  text-white">Login</li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
     );
 }
