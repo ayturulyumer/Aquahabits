@@ -4,7 +4,7 @@ import HabitsIcon from "../../svg/habits-icon.svg"
 
 export default function NavbarBottom() {
     return (
-        <div className="btm-nav bg-inherit  ">
+        <nav className="btm-nav bg-inherit  ">
             <button>
                 <img className="w-6 h-6" src={HomeIcon} alt="Home Icon" />
             </button>
@@ -14,6 +14,6 @@ export default function NavbarBottom() {
             <button>
                 <img className="w-6 h-6" src={HabitsIcon} alt="Habits Icon" />
             </button>
-        </div>
+        </nav>
     )
 }

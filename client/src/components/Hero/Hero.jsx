@@ -14,16 +14,16 @@ export default function HeroSection() {
         <div className="relative min-h-full  overflow-hidden ">
             <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8 max-w-full">
                 <div className="grid gap-12 lg:grid-cols-2 lg:gap-8">
-                    <div className="flex flex-col justify-center">
-                        <h1 className="mb-4 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-                            Level Up Your Life with Habitect
+                    <div className="flex flex-col gap-2 justify-center  items-center">
+                        <h1 className="mb-4 text-4xl  text-center font-extrabold  tracking-tight sm:text-5xl md:text-7xl">
+                            Level Up Your Life with <span className="font-light text-[#50B0FF] tracking-normal">Habitect</span>
                         </h1>
-                        <p className="mb-8 text-xl">
+                        <p className="mb-8 text-xl text-center">
                             Track habits, crush goals, and turn your life into an epic adventure. Gamify your growth and watch your progress soar!
                         </p>
-                        <div>
-                            <button className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-purple-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-150">
-                                Start Your Journey
+                        <div className=''>
+                            <button className="btn btn-md btn-outline  text-white">
+                                Get Started
                             </button>
                         </div>
                     </div>
