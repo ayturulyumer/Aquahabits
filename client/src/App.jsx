@@ -3,15 +3,22 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import "./scss/App.scss"
 
 import Home from "./pages/Home/Home.jsx";
-import Navbar from "./components/Navbar/Navbar.jsx";
+import NavbarTop from "./components/Navbar/NavbarTop.jsx";
+import NavbarBottom from "./components/Navbar/NavbarBottom.jsx";
+import { useScreenSize } from "./hooks/useScreenSize.jsx";
 
-const Layout = () => (
-  <>
-    <Navbar />
-    <Outlet />
+const Layout = () => {
+  const isMobile = useScreenSize()
 
-  </>
-)
+  return (
+    <>
+      {isMobile ? <NavbarBottom /> : <NavbarTop />}
+      <Outlet />
+
+    </>
+
+  )
+}
 function App() {
   const router = createBrowserRouter([
     {
