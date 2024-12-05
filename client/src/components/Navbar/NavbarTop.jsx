@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 import habitLogo from '../../assets/habitlogo.png';
-import BurgerIcon from '../../svg/burger-menu.svg';
-import CloseIcon from '../../svg/close-icon.svg';
+
 
 
 export default function NavbarTop() {
 
 
     return (
-        <nav className="navbar ">
+        <nav className="navbar bg-custom-gradient ">
             <div className="navbar-start mx-8">
                 <Link to="/" className="text-3xl font-light text-[#50B0FF] tracking-normal ">Habitect</Link>
             </div>
