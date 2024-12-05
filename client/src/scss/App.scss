@@ -24,12 +24,6 @@
   }
 }
 
-$bg-color: linear-gradient(
-  112.1deg,
-  rgb(32, 38, 57) 11.4%,
-  rgb(63, 76, 119) 70.2%
-);
-
 * {
   font-family: "Space Grotesk", sans-serif;
   margin: 0;
@@ -39,7 +33,6 @@ $bg-color: linear-gradient(
 
 body {
   height: 100vh;
-  background: $bg-color;
 }
 
 img {
