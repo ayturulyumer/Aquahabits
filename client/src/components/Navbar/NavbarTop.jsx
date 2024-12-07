@@ -9,7 +9,7 @@ export default function NavbarTop() {
     return (
         <nav className="navbar bg-custom-gradient ">
             <div className="navbar-start mx-8">
-                <Link to="/" className="text-3xl font-light text-[#50B0FF] tracking-normal ">Habitect</Link>
+                <Link to="/" className="text-3xl font-light text-[#A4E1D4] tracking-normal ">Habitect</Link>
             </div>
             <div className="navbar-center">
                 <ul className="flex gap-20 mr-4">
