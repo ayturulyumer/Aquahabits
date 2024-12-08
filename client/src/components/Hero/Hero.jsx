@@ -3,6 +3,7 @@
 import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
+import Pricing from '../Pricing/Pricing.jsx'
 
 const painPointsData = {
     title: "Traditional way:",
@@ -64,7 +65,7 @@ export default function HeroSection() {
                             </div>
                         </div>
                     </section>
-                    <div className="absolute hidden lg:block bottom-[2060px]  left-0 w-full">
+                    <div className="absolute hidden lg:block bottom-[2800px]  left-0 w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-fit">
                             <defs>
                                 <linearGradient id="customGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -82,7 +83,7 @@ export default function HeroSection() {
                 </div>
                 <section className='relative mt-20 max-w-6xl mx-auto z-40 font-extrabold  text-center  '>
                     <h1 className='text-4xl text-center font-extrabold sm:text-4xl md:text-6xl'>
-                        Tired of failing your <span className='italic text-yellow-200'>New Year’s resolutions</span> every year?
+                        Tired of failing your <span className='italic text-red-400'>New Year’s resolutions</span> every year?
                     </h1>
 
                     <div className='grid md:grid-cols-2  gap-8 mt-20 max-w-4xl mx-auto '>
@@ -90,9 +91,11 @@ export default function HeroSection() {
                         <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                     </div>
                 </section>
-                <section className='flex justify-center w-screen mt-36 '>
+                <section className='flex justify-center  mt-36 '>
                     <Roadmap />
                 </section>
+                    <Pricing />
+
             </div>
         </div>
     )

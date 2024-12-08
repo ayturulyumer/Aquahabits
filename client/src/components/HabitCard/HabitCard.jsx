@@ -8,7 +8,7 @@ export default function HabitCard({ linethrough, style, labelText, listItems }) 
 
     return (
         <div
-            className={`card rounded-box  border bg-black/70 backdrop-blur-lg ${styles[style]}`}
+            className={`card rounded-box  border bg-gray-800 backdrop-blur-lg ${styles[style]}`}
         >
             <div className="card-body space-y-2">
                 <h3 className={`${linethrough ? "line-through" : ""} text-3xl font-bold`}>{labelText}</h3>
