@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import daisyui from "daisyui"; // Import daisyUI module
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -25,7 +27,7 @@ export default {
     },
   },
   mode: "jit",
-  plugins: [require("daisyui")],
+  plugins: [daisyui], // Use the imported daisyui directly
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "dark", // name of one of the included themes for dark mode
