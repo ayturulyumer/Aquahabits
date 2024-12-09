@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home.jsx";
 import NavbarTop from "./components/Navbar/NavbarTop.jsx";
 import NavbarBottom from "./components/Navbar/NavbarBottom.jsx";
 import { useScreenSize } from "./hooks/useScreenSize.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 const Layout = () => {
   const isMobile = useScreenSize()
@@ -14,6 +15,7 @@ const Layout = () => {
     <>
       {isMobile ? <NavbarBottom /> : <NavbarTop />}
       <Outlet />
+      <Footer />
 
     </>
 
