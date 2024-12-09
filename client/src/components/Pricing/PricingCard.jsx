@@ -17,18 +17,16 @@ export default function PricingCard({
     };
 
     return (
-        <div className="bg-gray-800 flex flex-col rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+        <div className="bg-gray-800  flex flex-col rounded-lg shadow-lg p-6 ">
             <div className="mb-8">
-                {/* Title changes based on the checkbox state */}
                 <h3 className="text-4xl mb-4 place-self-center font-semibold text-white">
                     {isLifetime ? 'Lifetime' : title}
                 </h3>
                 <div className="form-control items-center">
                     <label className="flex align-middle gap-4 cursor-pointer">
-                        {/* Handle checkbox change */}
                         <input
                             type="checkbox"
-                            className="toggle toggle-primary"
+                            className="toggle toggle-success"
                             defaultChecked={isLifetime}
                             onChange={handleToggle}
                         />
@@ -37,7 +35,6 @@ export default function PricingCard({
                 </div>
             </div>
             <div className="mb-8">
-                {/* Price changes based on the checkbox state */}
                 <span className="text-5xl font-extrabold text-white">
                     {isLifetime ? '$44.99' : price}
                 </span>

@@ -4,6 +4,7 @@ import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
 import Pricing from '../Pricing/Pricing.jsx'
+import Accordion from '../Accordion/Accordion.jsx'
 
 const painPointsData = {
     title: "Traditional way:",
@@ -94,7 +95,8 @@ export default function HeroSection() {
                 <section className='flex justify-center  mt-36 '>
                     <Roadmap />
                 </section>
-                    <Pricing />
+                <Pricing />
+                <Accordion />
 
             </div>
         </div>
