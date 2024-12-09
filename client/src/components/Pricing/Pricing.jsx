@@ -21,9 +21,6 @@ export default function Pricing() {
                     <h2 className="text-4xl font-extrabold italic sm:text-5xl">
                         A journey of a thousand miles begins with a single step
                     </h2>
-                    <p className="mt-4 text-xl text-gray-400">
-                        Start your journey
-                    </p>
                 </div>
                 <div className="grid grid-cols-1 gap-8 ">
                     {plans.map((plan, index) => (
