@@ -45,8 +45,8 @@ export default function HeroSection() {
                             Track habits, crush goals, and turn your life into an epic adventure. Gamify your growth and watch your progress soar!
                         </p>
                         <div className='z-50'>
-                            <button className="btn  btn-md btn-outline  btn-primary  text-primary  ">
-                                Get Started
+                            <button className="btn  btn-md   btn-primary btn-wide  text-secondary  ">
+                                
                             </button>
                         </div>
                     </section>
@@ -61,7 +61,7 @@ export default function HeroSection() {
                                 <HabitStat label="Goals Completed" value="15" />
                                 <HabitStat label="Achievements" value="5 Unlocked" />
                                 <div className="flex items-center justify-center p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-                                    <span className="text-4xl font-bold text-white">+10</span>
+                                    <span className="text-4xl font-bold text-neutral">+10</span>
                                 </div>
                             </div>
                         </div>

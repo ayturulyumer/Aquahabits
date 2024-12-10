@@ -7,7 +7,7 @@
 
 @layer utilities {
   .hover-red-underline {
-    @apply relative hover:underline-offset-8 hover:decoration-custom-red;
+    @apply relative hover:underline-offset-8 hover:decoration-hover;
   }
   .hover-red-underline::after {
     content: "";
@@ -16,7 +16,7 @@
     bottom: -4px;
     height: 2px;
     width: 0;
-    background-color: theme("colors.custom-red");
+    background-color: theme("colors.hover");
     transition: width 0.3s ease-in-out;
   }
   .hover-red-underline:hover::after {

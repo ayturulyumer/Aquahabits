@@ -13,7 +13,7 @@ export default {
         4: "4px", // Custom underline thickness
       },
       colors: {
-        "custom-red": "#c40233",
+        "hover": "#63B2A0",
       },
       keyframes: {
         underlineGrow: {
