@@ -2,7 +2,7 @@ export default function HabitCard({ linethrough, style, labelText, listItems }) 
     // Define styles for green and red card variations
 
     const styles = {
-        green: "border-[#A4E1D4] text-[#A4E1D4]",
+        green: "border-primary text-primary",
         red: "border-red-300  text-red-300",
     };
 

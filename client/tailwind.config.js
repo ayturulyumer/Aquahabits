@@ -13,7 +13,7 @@ export default {
         4: "4px", // Custom underline thickness
       },
       colors: {
-        "custom-red": "#c40233", // You can change this to your preferred red shade
+        "custom-red": "#c40233",
       },
       keyframes: {
         underlineGrow: {
@@ -29,7 +29,21 @@ export default {
   mode: "jit",
   plugins: [daisyui], // Use the imported daisyui directly
   daisyui: {
-    themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    themes: [
+      {
+        mytheme: {
+          primary: "#A4E1D4", // Soft teal for primary actions like buttons
+          secondary: "#111827", // Dark gray for secondary elements or accents
+          accent: "#63B2A0", // Muted teal for hover states and accents
+          neutral: "#E5E7EB", // Light gray for regular text
+          "base-100": "#202639", // Dark blue-gray for the background
+          info: "#0000ff", // Blue for informational elements
+          success: "#00ff00", // Green for success messages or states
+          warning: "#FFBF00", // Yellow for warnings
+          error: "#FF0000", // Red for errors
+        },
+      },
+    ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "dark", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components

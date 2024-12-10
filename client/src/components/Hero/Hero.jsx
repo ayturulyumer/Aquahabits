@@ -39,13 +39,13 @@ export default function HeroSection() {
                 <div className="grid gap-12  py-24 lg:grid-cols-2 lg:gap-8 h-full">
                     <section className="relative h-full flex flex-col gap-2 justify-center items-center">
                         <h1 className="mb-4 text-4xl text-center font-extrabold tracking-tight sm:text-5xl md:text-7xl">
-                            Level Up Your Life with <span className="font-light text-[#A4E1D4] tracking-normal">Habitect</span>
+                            Level Up Your Life with <span className="font-light text-primary tracking-normal">Habitect</span>
                         </h1>
                         <p className="mb-8 text-xl text-center">
                             Track habits, crush goals, and turn your life into an epic adventure. Gamify your growth and watch your progress soar!
                         </p>
                         <div className='z-50'>
-                            <button className="btn  btn-md btn-outline text-white">
+                            <button className="btn  btn-md btn-outline  btn-primary  text-primary  ">
                                 Get Started
                             </button>
                         </div>
