@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from 'react'
 
 import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
@@ -7,50 +7,92 @@ import Pricing from '../Pricing/Pricing.jsx'
 import Accordion from '../Accordion/Accordion.jsx'
 
 const painPointsData = {
-    title: "Traditional way:",
+    title: "Challenges in building lasting habits:",
     issues: [
-        "Set unrealistic goals.",
-        "Focus on discipline alone",
-        "No feedback or rewards",
-        "Feel guilty for failing"
-
+        "Setting unrealistic expectations",
+        "Relying solely on discipline",
+        "Lacking feedback or rewards",
+        "Feeling discouraged after failure"
     ]
-
 }
 
-const solutionPointsData =
-{
-    title: "With Habitect:",
+const solutionPointsData = {
+    title: "A smarter way to build lasting habits:",
     solutions: [
-        "Build momentum with micro-habits",
-        "Enjoy streaks, points, and rewards",
-        "Get kudos for progress, big or small",
-        "Achieve without burnout by seeing your small victories"
+        "Start with small, manageable habits",
+        "Gamify the process",
+        "Celebrate every step forward",
+        "Focus on small wins to avoid burnout"
     ]
 }
+
 
 
 
 
 export default function HeroSection() {
+    const words = ["fun", "exciting", "rewarding", "engaging"];
+    const [currentWordIndex, setCurrentWordIndex] = useState(0);
+    const [typedText, setTypedText] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [pause, setPause] = useState(false); // New state to handle the pause
+
+    useEffect(() => {
+        let typingSpeed = 150;
+
+        if (pause) {
+            typingSpeed = 2000;
+        } else if (isDeleting) {
+            typingSpeed = 100;
+        }
+
+        const currentWord = words[currentWordIndex];
+        const updateText = setTimeout(() => {
+            if (!pause) {
+                if (!isDeleting && typedText !== currentWord) {
+                    setTypedText(currentWord.slice(0, typedText.length + 1));
+                } else if (isDeleting && typedText !== "") {
+                    setTypedText(currentWord.slice(0, typedText.length - 1));
+                } else if (!isDeleting && typedText === currentWord) {
+                    setPause(true);
+                } else if (isDeleting && typedText === "") {
+                    setIsDeleting(false);
+                    setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+                }
+            } else {
+                setPause(false); // End pause after 2 seconds
+                setIsDeleting(true); // Start deleting
+            }
+        }, typingSpeed);
+
+        return () => clearTimeout(updateText);
+    }, [typedText, isDeleting, pause, currentWordIndex, words]);
+
     return (
-        <div className="relative min-h-screen bg-custom-gradient  overflow-hidden">
-            <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8 max-w-full h-full">
-                <div className="grid gap-12  py-24 lg:grid-cols-2 lg:gap-8 h-full">
-                    <section className="relative h-full flex flex-col gap-2 justify-center items-center">
-                        <h1 className="mb-4 text-4xl text-center font-extrabold tracking-tight sm:text-5xl md:text-7xl">
-                            Level Up Your Life with <span className="font-light text-primary tracking-normal">Habitect</span>
+        <div className="relative min-h-screen bg-custom-gradient overflow-hidden flex flex-col justify-center items-center">
+            <div className="container mx-auto px-2 py-16 sm:px-6 sm:py-24 lg:px-4 max-w-full h-full">
+                <div className="grid gap-12 py-24 lg:grid-cols-2 lg:gap-8 h-full">
+                    <section className="relative flex flex-col justify-center items-center gap-3">
+                        <h1 className="mb-4 text-3xl font-black -tracking-wider  leading-none text-left w-11/12    md:w-full md:font-semibold md:text-5xl  lg:text-6xl lg:w-10/12">
+                            Building lasting habits is easier when it's
+                            <span className="relative inline-block ml-2 mt-2 bg-base-100 rounded-xl transform">
+                                <span className="relative z-10 px-2 py-1 text-primary font-mono font-black ">
+                                    {typedText}
+                                    <span className="animate-pulse text-white text-md">|</span>
+                                </span>
+                            </span>
                         </h1>
-                        <p className="mb-8 text-xl text-center">
-                            Track habits, crush goals, and turn your life into an epic adventure. Gamify your growth and watch your progress soar!
+                        <p className="mb-3 leading-relaxed font-medium text-center w-11/12 ">
+                            Make growth fun and simple with gamified habits
                         </p>
-                        <div className='z-50'>
-                            <button className="btn  btn-md   btn-primary btn-wide  text-secondary  ">
-                                
+                        <div className='z-50  '>
+                            <button className="btn  btn-wide font-bold tracking-wider uppercase btn-primary text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out">
+                                Gamify now
                             </button>
                         </div>
                     </section>
-                    <section className="relative h-full">
+
+                    <section className="relative  flex justify-center items-center">
                         <div className="absolute inset-0 flex items-center justify-center z-0">
                             <div className="h-64 w-64 max-w-full max-h-full rounded-full bg-blue-400 opacity-50 blur-3xl"></div>
                         </div>
@@ -66,39 +108,31 @@ export default function HeroSection() {
                             </div>
                         </div>
                     </section>
-                    <div className="absolute hidden lg:block bottom-[2800px]  left-0 w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-fit">
-                            <defs>
-                                <linearGradient id="customGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style={{ stopColor: '#202639', stopOpacity: 1 }} />
-                                    <stop offset="100%" style={{ stopColor: '#3F4C77', stopOpacity: 1 }} />
-                                </linearGradient>
-                            </defs>
-                            <path
-                                fill="url(#customGradient)"
-                                d="M0,192L48,165.3C96,139,192,85,288,85.3C384,85,480,139,576,144C672,149,768,107,864,112C960,117,1056,171,1152,160C1248,149,1344,75,1392,37.3L1440,0L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                            ></path>
-                        </svg>
-                    </div>
-
                 </div>
-                <section className='relative mt-20 max-w-6xl mx-auto z-40 font-extrabold  text-center  '>
-                    <h1 className='text-4xl text-center font-extrabold sm:text-4xl md:text-6xl'>
-                        Tired of failing your <span className='italic text-red-400'>New Year’s resolutions</span> every year?
-                    </h1>
 
-                    <div className='grid md:grid-cols-2  gap-8 mt-20 max-w-4xl mx-auto '>
-                        <HabitCard linethrough="linethrough" style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
+                <section className='relative my-28 max-w-6xl mx-auto z-40 font-extrabold text-center lg:mt-40'>
+                    <h2 className='text-3xl text-center font-extrabold sm:text-4xl md:text-5xl'>
+                        Tired of setting goals and never following through?
+                    </h2>
+                    <p className='mt-8 leading-relaxed font-sans font-medium'>
+                        We get it. Building lasting habits is tough, especially when you feel like you're just spinning your wheels.
+                    </p>
+                    <div className='grid md:grid-cols-2 gap-8 mt-20 max-w-4xl mx-auto'>
+                        <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
                         <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                     </div>
                 </section>
-                <section className='flex justify-center  mt-36 '>
-                    <Roadmap />
-                </section>
-                <Pricing />
-                <Accordion />
 
+                <section className='grid  grid-cols-1 md:grid-cols-2'>
+                    <Roadmap />
+                    <Pricing />
+                </section>
+                <section className='my-28'>
+
+                    <Accordion />
+                </section>
             </div>
         </div>
-    )
+    );
 }
+

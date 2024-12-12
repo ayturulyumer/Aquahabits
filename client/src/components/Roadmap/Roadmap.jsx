@@ -5,37 +5,37 @@ const timelineItems = [
     {
         id: 1,
         title: "Start Small",
-        image: "../../../start-small.png", // Add image URL here
+        image: "../../../start-small.png",
     },
     {
         id: 2,
         title: "Gamify",
 
-        image: "../../../gamify.png", // Add image URL here
+        image: "../../../gamify.png",
     },
     {
         id: 3,
-        title: "Celebrate small wins",
-        image: "../../../celebrate.png", // Add image URL here
+        title: "Small wins",
+        image: "../../../celebrate.png",
     },
     {
         id: 4,
         title: "Level up",
-        image: "../../../level-up.png", // Add image URL here
+        image: "../../../level-up.png",
     },
 ]
 
 export default function Roadmap() {
     return (
-        <ul className="timeline timeline-snap-icon text-center tracking-wide  max-md:timeline-compact timeline-vertical">
+        <ul className="timeline timeline-snap-icon   timeline-vertical">
             {timelineItems.map((item, index) => (
                 <li key={item.id}>
-                    <div className="timeline-middle  ">
+                    <div className="timeline-middle">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
-                            className="h-10 w-10"
+                            className="h-6 w-6"
                         >
                             <path
                                 fillRule="evenodd"
@@ -52,18 +52,18 @@ export default function Roadmap() {
                             <img
                                 src={item.image}
                                 alt={item.title}
-                                className="w-40 h-40 md:w-72 md:h-72 object-cover rounded-full mb-2"
+                                className="w-24 h-24  object-cover rounded-full mb-2"
                             />
-                            <div className="text-xl md:text-3xl uppercase font-medium  italic">{item.title}</div>
+                            <div className="text-xl  uppercase font-medium  ">{item.title}</div>
                         </div>
                     ) : (
                         <div className="timeline-end space-y-6 mb-10">
                             <img
                                 src={item.image}
                                 alt={item.title}
-                                className="w-40 h-40 md:w-72 md:h-72 object-cover rounded-full mb-2"
+                                className="w-24 h-24  object-cover rounded-full mb-2"
                             />
-                            <div className="text-xl md:text-3xl   uppercase font-medium italic">{item.title}</div>
+                            <div className="text-xl    uppercase font-medium ">{item.title}</div>
                         </div>
                     )}
 

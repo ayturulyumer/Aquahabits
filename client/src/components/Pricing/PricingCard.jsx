@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 export default function PricingCard({
     title,
@@ -35,7 +35,7 @@ export default function PricingCard({
                 </div>
             </div>
             <div className="mb-8">
-                <span className="text-5xl font-extrabold text-white">
+                <span className="text-5xl  text-white">
                     {isLifetime ? '$44.99' : price}
                 </span>
                 {showPerMonth && !isLifetime && <span className="text-xl font-medium text-gray-400">/mo</span>}
@@ -62,8 +62,7 @@ export default function PricingCard({
                 ))}
             </ul>
             <button
-                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
-                onClick={onButtonClick}
+                className='btn w-full font-bold tracking-wider uppercase btn-primary text-secondary' onClick={onButtonClick}
             >
                 {buttonText}
             </button>

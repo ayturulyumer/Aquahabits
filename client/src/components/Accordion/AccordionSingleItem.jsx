@@ -26,7 +26,7 @@ export default function AccordionSingleItem({ title, content, isOpen, onClick })
     }, [isOpen])
 
     return (
-        <div className="border-b border-black  ">
+        <div className="border-b border-black   ">
             <button
                 className="flex justify-between items-center w-full py-4 px-6 text-left"
                 onClick={onClick}
@@ -45,7 +45,7 @@ export default function AccordionSingleItem({ title, content, isOpen, onClick })
                 className="overflow-hidden transition-all duration-300 ease-in-out"
                 style={{ maxHeight: 0 }}
             >
-                <div className="p-6 bg-gray-800/50 rounded-t-3xl text-lg text-gray-400">
+                <div className="p-6 bg-gray-800/50 rounded-t-3xl text-md text-gray-400 ">
                     <p>{content}</p>
                 </div>
             </div>
