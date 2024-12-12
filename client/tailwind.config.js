@@ -5,6 +5,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        bangers: ["Bangers", "cursive"],
+        lexend: ["Lexend", "sans-serif"],
+      },
       backgroundImage: {
         "custom-gradient":
           "linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%)",
@@ -13,7 +17,7 @@ export default {
         4: "4px", // Custom underline thickness
       },
       colors: {
-        "hover": "#63B2A0",
+        hover: "#4ADE80",
       },
       keyframes: {
         underlineGrow: {
@@ -32,15 +36,15 @@ export default {
     themes: [
       {
         mytheme: {
-          primary: "#A4E1D4", // Soft teal for primary actions like buttons
-          secondary: "#111827", // Dark gray for secondary elements or accents
-          accent: "#63B2A0", // Muted teal for hover states and accents
-          neutral: "#E5E7EB", // Light gray for regular text
-          "base-100": "#202639", // Dark blue-gray for the background
-          info: "#0000ff", // Blue for informational elements
-          success: "#00ff00", // Green for success messages or states
-          warning: "#FFBF00", // Yellow for warnings
-          error: "#FF0000", // Red for errors
+          primary: "#A6F2A1",
+          secondary: "#1E293B",
+          accent: "#4ADE80",
+          neutral: "#F3F4F6",
+          "base-100": "#102A43",
+          info: "#2563EB",
+          success: "#22C55E",
+          warning: "#F59E0B",
+          error: "#EF4444",
         },
       },
     ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
