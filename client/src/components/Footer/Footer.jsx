@@ -49,7 +49,6 @@ export default function Footer() {
                         </svg>
                     </a>
                 </div>
-                    Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
             </nav>
         </footer>
     )

@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import Button from "../Button/Button.jsx";
+
+import JourneyIcon from "../../svg/journey-icon.svg"
 
 export default function PricingCard({
     title,
@@ -62,7 +65,7 @@ export default function PricingCard({
                     </li>
                 ))}
             </ul>
-            <Button isBlock onClick={onButtonClick} className='text-secondary'>{buttonText}</Button>
+            <Button isBlock iconRight={JourneyIcon} iconAlt="Journey Icon" onClick={onButtonClick} className='text-secondary'>{buttonText}</Button>
 
         </div>
     );

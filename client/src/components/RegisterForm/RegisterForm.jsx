@@ -48,7 +48,7 @@ export default function RegisterForm() {
                             />
                         </div>
 
-                        <Button isBlock iconLeft={RegisterIcon} iconAlt="Register Icon" className="btn-secondary mt-8">Sign up</Button>
+                        <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon"  className="btn-secondary  mt-8">Sign up</Button>
                     </div>
                     <div className="text-xs text-center  mt-4 opacity-60">By signing up, you agree to our
                         <Link to="/tos" className="link mx-1" >
