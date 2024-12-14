@@ -4,7 +4,10 @@ import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
 import Pricing from '../Pricing/Pricing.jsx'
+
 import Accordion from '../Accordion/Accordion.jsx'
+import Button from '../Button/Button.jsx'
+
 
 const painPointsData = {
     title: "Challenges in building lasting habits:",
@@ -85,9 +88,7 @@ export default function HeroSection() {
                         Make growth fun and simple with gamified habits
                     </p>
                     <div className='z-50  '>
-                        <button className="btn  btn-wide font-bold tracking-wider uppercase btn-primary text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out">
-                            Gamify now
-                        </button>
+                        <Button isWide  className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
                     </div>
                 </section>
 

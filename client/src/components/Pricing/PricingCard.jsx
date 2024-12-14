@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../Button/Button.jsx";
 
 export default function PricingCard({
     title,
@@ -61,11 +62,8 @@ export default function PricingCard({
                     </li>
                 ))}
             </ul>
-            <button
-                className='btn w-full font-bold tracking-wider uppercase btn-primary text-secondary' onClick={onButtonClick}
-            >
-                {buttonText}
-            </button>
+            <Button isBlock onClick={onButtonClick} className='text-secondary'>{buttonText}</Button>
+
         </div>
     );
 }
