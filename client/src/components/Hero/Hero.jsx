@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import GamifyIcon from "../../svg/gamify-icon.svg"
+
 import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
@@ -88,7 +90,7 @@ export default function HeroSection() {
                         Make growth fun and simple with gamified habits
                     </p>
                     <div className='z-50  '>
-                        <Button isWide  className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
+                        <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
                     </div>
                 </section>
 
