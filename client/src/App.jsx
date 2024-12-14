@@ -7,6 +7,7 @@ import NavbarTop from "./components/Navbar/NavbarTop.jsx";
 import NavbarBottom from "./components/Navbar/NavbarBottom.jsx";
 import { useScreenSize } from "./hooks/useScreenSize.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import Register from "./pages/Register/Register.jsx";
 
 const Layout = () => {
   const isMobile = useScreenSize()
@@ -26,7 +27,10 @@ function App() {
     {
       path: "/",
       element: <Layout />,
-      children: [{ path: "/", element: <Home /> }],
+      children: [
+        { path: "/", element: <Home /> },
+        { path: "/signup", element: <Register /> }
+      ],
     },
   ]);
   return <RouterProvider router={router} />;

@@ -15,12 +15,11 @@ export default function NavbarTop() {
                 <ul className="flex gap-20 mr-4">
                     <li className="hover-red-underline cursor-pointer">Pricing</li>
                     <li className="hover-red-underline cursor-pointer">FAQ</li>
-                    <li className="hover-red-underline cursor-pointer">About</li>
                 </ul>
             </div>
             <div className="navbar-end">
                 <ul className="flex mx-20">
-                    <button className="btn btn-md btn-outline text-neutral">Login</button>
+                    <button type='button' className="btn btn-md btn-outline text-neutral">Login</button>
                 </ul>
             </div>
         </nav>
