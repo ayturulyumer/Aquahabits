@@ -3,7 +3,7 @@
 export default function Button({ variant = "btn-primary",
     size = "btn-md",
     isWide = false,
-    type = "",
+    type = "submit",
     isBlock = false,
     isCircle = false,
     isSquare = false,
@@ -32,7 +32,7 @@ export default function Button({ variant = "btn-primary",
   `.trim();
 
     return (
-        <button onClick={onClick} className={`${baseClass} ${optionalModifiers} ${className}`}>
+        <button type={type} onClick={onClick} className={`${baseClass} ${optionalModifiers} ${className}`}>
             {iconLeft && (
                 <span className="mr-2 flex items-center">
                     <img className="h-6 w-6" src={iconLeft} alt={iconAlt} />
