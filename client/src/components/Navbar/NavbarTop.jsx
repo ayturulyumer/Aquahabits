@@ -20,7 +20,9 @@ export default function NavbarTop() {
                 </div>
                 <div className="navbar-end">
                     <ul className="flex mx-20">
-                        <button type='button' className="btn btn-md btn-outline text-neutral">Login</button>
+                        <Link to="/login">
+                            <button type='button' className="btn btn-md btn-outline text-neutral">Login</button>
+                        </Link>
                     </ul>
                 </div>
             </nav>
