@@ -17,7 +17,7 @@ export default function LoginForm() {
                                 Or
                             </div>
                         </div>
-                        <div className="mx-auto max-w-xs">
+                        <form className="mx-auto max-w-xs">
                             <label htmlFor="email" className="block  mb-2 text-sm font-medium ">
                                 Email
                             </label>
@@ -37,7 +37,7 @@ export default function LoginForm() {
                                 className="w-full px-4 py-4 rounded-lg  bg-inherit font-medium border border-gray-200 text-sm focus:outline-none focus:text-gray-700 focus:border-gray-400 focus:bg-white"
                                 type="password"
                             />
-                        </div>
+                        </form>
 
                         <Button isBlock iconRight={LoginIcon} iconAlt="Login Icon" className="btn-secondary  mt-8">Login</Button>
                     </div>

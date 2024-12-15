@@ -1,9 +1,18 @@
 import GoogleIcon from "../../svg/google-icon.svg";
 import RegisterIcon from "../../svg/add-user-icon.svg";
 import { Link } from "react-router";
+import { useForm } from "../../hooks/useForm.jsx";
 
 import Button from "../Button/Button.jsx";
+
 export default function RegisterForm() {
+
+    const handleRegisterSubmit = (values) => {
+        console.log(values)
+    }
+
+    const { values, changeHandler, onSubmit } = useForm({ email: "", password: "", rePassword: "" }, handleRegisterSubmit)
+
     return (
 
         <div className="max-w-screen-xl w-[300px] shadow rounded-box flex justify-center sm:w-auto ">
@@ -18,7 +27,8 @@ export default function RegisterForm() {
                                 Or
                             </div>
                         </div>
-                        <div className="mx-auto max-w-xs">
+                        {/** Form */}
+                        <form className="mx-auto max-w-xs" onSubmit={onSubmit}>
                             <label htmlFor="email" className="block  mb-2 text-sm font-medium ">
                                 Email
                             </label>
@@ -26,6 +36,10 @@ export default function RegisterForm() {
                                 id="email"
                                 className="w-full px-4 py-4 rounded-lg  font-medium bg-inherit border border-gray-200  focus:placeholder-gray-700 focus:text-gray-700 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                                 type="email"
+                                name="email"
+                                value={values.email}
+                                onChange={changeHandler}
+                                required
                                 placeholder="habi@tect.com"
                             />
 
@@ -37,18 +51,26 @@ export default function RegisterForm() {
                                 id="password"
                                 className="w-full px-4 py-4 rounded-lg  bg-inherit font-medium border border-gray-200 text-sm focus:outline-none focus:text-gray-700 focus:border-gray-400 focus:bg-white"
                                 type="password"
+                                name="password"
+                                value={values.password}
+                                onChange={changeHandler}
+                                required
                             />
-                            <label htmlFor="re-password" className="block mt-5 mb-2 text-sm font-medium ">
+                            <label htmlFor="rePassword" className="block mt-5 mb-2 text-sm font-medium ">
                                 Repeat Password
                             </label>
                             <input
-                                id="re-password"
+                                id="rePassword"
                                 className="w-full px-4 py-4 rounded-lg  bg-inherit font-medium border border-gray-200 text-sm focus:outline-none focus:text-gray-700 focus:border-gray-400 focus:bg-white"
                                 type="password"
+                                name="rePassword"
+                                value={values.rePassword}
+                                onChange={changeHandler}
+                                required
                             />
-                        </div>
 
-                        <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon" className="btn-secondary  mt-8">Sign up</Button>
+                            <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon" className="btn-secondary  mt-8">Sign up</Button>
+                        </form>
                     </div>
                     <div className="text-xs text-center  mt-4 opacity-60">By signing up, you agree to our
                         <Link to="/tos" className="link mx-1" >
