@@ -1,14 +1,44 @@
+import { useState } from "react";
+import { Link } from "react-router";
+
+import { useForm } from "../../hooks/useForm.jsx";
+
 import GoogleIcon from "../../svg/google-icon.svg";
 import RegisterIcon from "../../svg/add-user-icon.svg";
-import { Link } from "react-router";
-import { useForm } from "../../hooks/useForm.jsx";
 
 import Button from "../Button/Button.jsx";
 
 export default function RegisterForm() {
+    const [errors, setErrors] = useState({})
 
     const handleRegisterSubmit = (values) => {
-        console.log(values)
+        const newErrors = {};
+
+        if (!values.email) {
+            newErrors.email = "Email is required !"
+        }
+
+        if (!values.password) {
+            newErrors.password = "Password is required !"
+        }
+
+        if (!values.rePassword) {
+            newErrors.rePassword = "Repeat password is required !"
+        } else if (values.rePassword !== values.password) {
+            newErrors.password = "Passwords must match !"
+            newErrors.rePassword = "Passwords must match !"
+
+        }
+
+
+        setErrors(newErrors)
+        if (Object.keys(newErrors).length === 0) {
+            console.log("Successfully submitted ", values)
+            setErrors({})
+        } else {
+            console.log(errors)
+        }
+
     }
 
     const { values, changeHandler, onSubmit } = useForm({ email: "", password: "", rePassword: "" }, handleRegisterSubmit)
@@ -42,8 +72,7 @@ export default function RegisterForm() {
                                 required
                                 placeholder="habi@tect.com"
                             />
-
-
+                            {errors.email && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.email}</p>}
                             <label htmlFor="password" className="block mt-5 mb-2 text-sm font-medium ">
                                 Password
                             </label>
@@ -56,6 +85,7 @@ export default function RegisterForm() {
                                 onChange={changeHandler}
                                 required
                             />
+                            {errors.rePassword && <p className="text-red-500 tracking-wider text-sm mt-1">{errors.password}</p>}
                             <label htmlFor="rePassword" className="block mt-5 mb-2 text-sm font-medium ">
                                 Repeat Password
                             </label>
@@ -68,7 +98,7 @@ export default function RegisterForm() {
                                 onChange={changeHandler}
                                 required
                             />
-
+                            {errors.rePassword && <p className="text-red-500 tracking-wider text-sm mt-1">{errors.rePassword}</p>}
                             <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon" className="btn-secondary  mt-8">Sign up</Button>
                         </form>
                     </div>
