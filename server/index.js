@@ -8,6 +8,10 @@ const routes = require("./routes.js");
 
 const app = express();
 
+// Middleware for parsing incoming requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(routes);
 
 mongoose
