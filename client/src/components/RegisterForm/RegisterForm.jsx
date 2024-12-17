@@ -8,10 +8,12 @@ import RegisterIcon from "../../svg/add-user-icon.svg";
 
 import Button from "../Button/Button.jsx";
 
+import * as authApi from "../../api/authApi.js"
+
 export default function RegisterForm() {
     const [errors, setErrors] = useState({})
 
-    const handleRegisterSubmit = (values) => {
+    const handleRegisterSubmit = async (values) => {
         const newErrors = {};
 
         if (!values.email) {
@@ -33,7 +35,12 @@ export default function RegisterForm() {
 
         setErrors(newErrors)
         if (Object.keys(newErrors).length === 0) {
-            console.log("Successfully submitted ", values)
+            try {
+                const user = await authApi.register(values.email, values.password)
+                console.log("User registered successfully", user);
+            } catch (error) {
+                console.error("Registration failed:", error.response?.data?.message || error.message);
+            }
             setErrors({})
         } else {
             console.log(errors)
