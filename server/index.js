@@ -10,7 +10,7 @@ const routes = require("./routes.js");
 const app = express();
 
 connectDB();
-configureServer();
+configureServer(app);
 
 app.use(routes);
 

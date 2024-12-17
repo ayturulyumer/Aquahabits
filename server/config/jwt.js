@@ -1,5 +1,5 @@
 module.exports = {
   jwtSecret: process.env.JWT_SECRET,
-  accessTokenExpiry: "15m",
-  refreshTokenExpiry: "7d",
+  accessTokenExpiry: process.env.JWT_ACCESS_EXPIRY,
+  refreshTokenExpiry: process.env.JWT_REFRESH_EXPIRY,
 };
