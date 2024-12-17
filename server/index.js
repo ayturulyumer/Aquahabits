@@ -1,17 +1,17 @@
 require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db.js");
+const configureServer = require("./config/server.js");
+
+const PORT = process.env.PORT;
 
 const routes = require("./routes.js");
 
 const app = express();
 
-// Middleware for parsing incoming requests
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 connectDB();
+configureServer();
 
 app.use(routes);
 
-app.listen(3030, () => console.log("Server listening"));
+app.listen(PORT, () => console.log(`Server listening at ${PORT}`));
