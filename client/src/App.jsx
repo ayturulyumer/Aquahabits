@@ -2,6 +2,8 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import "./scss/App.scss"
 
+import { AuthProvider } from "./context/authContext.jsx";
+
 import Home from "./pages/Home/Home.jsx";
 import NavbarTop from "./components/Navbar/NavbarTop.jsx";
 import NavbarBottom from "./components/Navbar/NavbarBottom.jsx";
@@ -35,7 +37,9 @@ function App() {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>;
 }
 
 export default App;
