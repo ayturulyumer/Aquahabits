@@ -38,8 +38,9 @@ export default function RegisterForm() {
             try {
                 const user = await authApi.register(values.email, values.password)
                 console.log("User registered successfully", user);
-            } catch (error) {
-                console.error("Registration failed:", error.response?.data?.message || error.message);
+            } catch (err) {
+                console.log(err)
+                console.error("Registration failed:", err.message || err.message);
             }
             setErrors({})
         } else {
@@ -65,7 +66,7 @@ export default function RegisterForm() {
                             </div>
                         </div>
                         {/** Form */}
-                        <form className="mx-auto max-w-xs" onSubmit={onSubmit}>
+                        <form onSubmit={onSubmit} className="mx-auto max-w-xs" >
                             <label htmlFor="email" className="block  mb-2 text-sm font-medium ">
                                 Email
                             </label>

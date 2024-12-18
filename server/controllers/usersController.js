@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
     res.json({ accessToken });
   } catch (err) {
     const statusCode = err.message === "User already exists !" ? 400 : 500;
-    res.status(statusCode).json({error:  err.message });
+    res.status(statusCode).json({ message: err.message });
   }
 });
 
