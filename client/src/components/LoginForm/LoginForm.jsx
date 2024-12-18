@@ -64,6 +64,7 @@ export default function LoginForm() {
                                 value={values.email}
                                 onChange={changeHandler}
                                 placeholder="habi@tect.com"
+                                required
                             />
                             {errors.email && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.email}</p>}
 
@@ -77,6 +78,7 @@ export default function LoginForm() {
                                 type="password"
                                 value={values.passowrd}
                                 onChange={changeHandler}
+                                required
                             />
                             {errors.password && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.password}</p>}
                             <Button isBlock iconRight={LoginIcon} iconAlt="Login Icon" className="btn-secondary  mt-8">Login</Button>
