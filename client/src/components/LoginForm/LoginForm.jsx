@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import GoogleIcon from "../../svg/google-icon.svg";
 import LoginIcon from "../../svg/login-icon.svg";
@@ -12,6 +12,8 @@ import * as authApi from "../../api/authApi.js"
 
 export default function LoginForm() {
     const [errors, setErrors] = useState({})
+
+    const navigate = useNavigate()
 
     const handleLoginSubmit = async (values) => {
         const newErrors = {}
@@ -29,6 +31,7 @@ export default function LoginForm() {
             try {
                 const user = await authApi.login(values.email, values.password)
                 console.log("User successfully logged in", user)
+                navigate("/")
             } catch (err) {
                 console.error("Login failed:", err.message || err.message)
             }

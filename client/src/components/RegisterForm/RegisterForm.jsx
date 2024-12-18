@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link , useNavigate } from "react-router";
 
 import { useForm } from "../../hooks/useForm.jsx";
 
@@ -13,8 +13,16 @@ import * as authApi from "../../api/authApi.js"
 export default function RegisterForm() {
     const [errors, setErrors] = useState({})
 
+    const navigate = useNavigate()
+
     const handleRegisterSubmit = async (values) => {
         const newErrors = {};
+
+        if (!values.name) {
+            newErrors.name = "Name is required !"
+        } else if (values.name.length < 4 || values.name.length > 20) {
+            newErrors.name = "Name must be between 4 and 20 characters !"
+        }
 
         if (!values.email) {
             newErrors.email = "Email is required !"
@@ -22,6 +30,8 @@ export default function RegisterForm() {
 
         if (!values.password) {
             newErrors.password = "Password is required !"
+        } else if (values.password.length < 8 || values.password.length > 20) {
+            newErrors.password = "Password must be between 8 and 20 characters !"
         }
 
         if (!values.rePassword) {
@@ -36,8 +46,9 @@ export default function RegisterForm() {
         setErrors(newErrors)
         if (Object.keys(newErrors).length === 0) {
             try {
-                const user = await authApi.register(values.email, values.password)
+                const user = await authApi.register(values.name, values.email, values.password)
                 console.log("User registered successfully", user);
+                navigate("/")
             } catch (err) {
                 console.log(err)
                 console.error("Registration failed:", err.message || err.message);
@@ -49,7 +60,7 @@ export default function RegisterForm() {
 
     }
 
-    const { values, changeHandler, onSubmit } = useForm({ email: "", password: "", rePassword: "" }, handleRegisterSubmit)
+    const { values, changeHandler, onSubmit } = useForm({ name: "", email: "", password: "", rePassword: "" }, handleRegisterSubmit)
 
     return (
 
@@ -67,7 +78,21 @@ export default function RegisterForm() {
                         </div>
                         {/** Form */}
                         <form onSubmit={onSubmit} className="mx-auto max-w-xs" >
-                            <label htmlFor="email" className="block  mb-2 text-sm font-medium ">
+                            <label htmlFor="name" className="block  mb-2 text-sm font-medium ">
+                                Name
+                            </label>
+                            <input
+                                id="name"
+                                className="w-full px-4 py-4 rounded-lg  font-medium bg-inherit border border-gray-200  focus:placeholder-gray-700 focus:text-gray-700 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                type="name"
+                                name="name"
+                                value={values.name}
+                                onChange={changeHandler}
+                                required
+                                placeholder="Stephen Strange"
+                            />
+                            {errors.name && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.name}</p>}
+                            <label htmlFor="email" className="block  mt-5 text-sm font-medium ">
                                 Email
                             </label>
                             <input
@@ -93,7 +118,7 @@ export default function RegisterForm() {
                                 onChange={changeHandler}
                                 required
                             />
-                            {errors.rePassword && <p className="text-red-500 tracking-wider text-sm mt-1">{errors.password}</p>}
+                            {errors.password && <p className="text-red-500 tracking-wider text-sm mt-1">{errors.password}</p>}
                             <label htmlFor="rePassword" className="block mt-5 mb-2 text-sm font-medium ">
                                 Repeat Password
                             </label>
