@@ -1,8 +1,9 @@
 const baseUrl = import.meta.env.VITE_APP_BASEURL;
 import * as request from "../lib/requester.js";
 
-export const register = async (email, password) => {
+export const register = async (name, email, password) => {
   const result = await request.post(`${baseUrl}/users/signup`, {
+    name,
     email,
     password,
   });

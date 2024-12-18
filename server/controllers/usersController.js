@@ -3,8 +3,9 @@ const userService = require("../services/userService.js");
 
 router.post("/signup", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const { accessToken, refreshToken } = await userService.register(
+    const { name, email, password } = req.body;
+    const { newUser, accessToken, refreshToken } = await userService.register(
+      name,
       email,
       password
     );
@@ -17,7 +18,14 @@ router.post("/signup", async (req, res) => {
     });
 
     // Send access token to the client
-    res.json({ accessToken });
+    res.json({
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+      },
+      accessToken,
+    });
   } catch (err) {
     const statusCode = err.message === "User already exists !" ? 400 : 500;
     res.status(statusCode).json({ message: err.message });
@@ -27,7 +35,8 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { accessToken, refreshToken } = await userService.login(
+
+    const { existingUser, accessToken, refreshToken } = await userService.login(
       email,
       password
     );
@@ -39,7 +48,14 @@ router.post("/login", async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.json({ accessToken });
+    res.status(200).json({
+      user: {
+        id: existingUser._id,
+        name: existingUser.name,
+        email: existingUser.email,
+      },
+      accessToken,
+    });
   } catch (err) {
     const statusCode = err.message === "Invalid credintials" ? 401 : 500;
     res.status(statusCode).json({ message: err.message });

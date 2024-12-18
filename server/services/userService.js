@@ -9,7 +9,7 @@ const JWT_ACCESS_EXPIRY = process.env.JWT_ACCESS_EXPIRY;
 const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY;
 
 // Registers user
-exports.register = async (email, password) => {
+exports.register = async (name, email, password) => {
   // check if user exists
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -18,16 +18,17 @@ exports.register = async (email, password) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ email, password: hashedPassword });
+  const newUser = await User.create({ name, email, password: hashedPassword });
 
   const accessToken = generateToken(newUser, JWT_ACCESS_EXPIRY);
   const refreshToken = generateToken(newUser, JWT_REFRESH_EXPIRY);
 
-  return { accessToken, refreshToken };
+  return { newUser, accessToken, refreshToken };
 };
 
 exports.login = async (email, password) => {
   const existingUser = await User.findOne({ email });
+  console.log(existingUser)
   if (!existingUser) {
     throw new Error("Invalid credintials !");
   }
@@ -40,5 +41,5 @@ exports.login = async (email, password) => {
   const accessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
   const refreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
 
-  return { accessToken, refreshToken };
+  return { existingUser, accessToken, refreshToken };
 };
