@@ -1,11 +1,14 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
 const User = require("../models/User.js");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const { generateToken } = require("../utils/auth.js");
+
 const JWT_ACCESS_EXPIRY = process.env.JWT_ACCESS_EXPIRY;
 const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY;
 
+// Registers user
 exports.register = async (email, password) => {
   // check if user exists
   const existingUser = await User.findOne({ email });
@@ -23,8 +26,19 @@ exports.register = async (email, password) => {
   return { accessToken, refreshToken };
 };
 
-const generateToken = (user, expiresIn) => {
-  return jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
-    expiresIn,
-  });
+exports.login = async (email, password) => {
+  const existingUser = await User.findOne({ email });
+  if (!existingUser) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+  const isPasswordValid = bcrypt.compare(password, existingUser.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ message: "Invalid credintials" });
+  }
+
+  const accessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
+  const refreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
+
+  return { accessToken, refreshToken };
 };
