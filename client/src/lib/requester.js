@@ -1,5 +1,5 @@
 const buildOptions = (data) => {
-  const accessToken = "ILLFIXITLATER"
+  const accessToken = localStorage.getItem("accessToken");
 
   const options = {
     credentials: "include", // Ensure cookies are sent with the request

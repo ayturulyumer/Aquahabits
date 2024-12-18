@@ -19,13 +19,31 @@ router.post("/signup", async (req, res) => {
     // Send access token to the client
     res.json({ accessToken });
   } catch (err) {
-    const statusCode = err.message === "User already exists" ? 400 : 500;
-    res.status(statusCode).json({ message: err.message });
+    const statusCode = err.message === "User already exists !" ? 400 : 500;
+    res.status(statusCode).json({error:  err.message });
   }
 });
 
-router.get("/", async (req, res) => {
-  res.send("Hiii");
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const { accessToken, refreshToken } = await userService.login(
+      email,
+      password
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.json({ accessToken });
+  } catch (err) {
+    const statusCode = err.message === "Invalid credintials" ? 401 : 500;
+    res.status(statusCode).json({ message: err.message });
+  }
 });
 
 module.exports = router;
