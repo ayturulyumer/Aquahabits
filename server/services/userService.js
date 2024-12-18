@@ -29,12 +29,12 @@ exports.register = async (email, password) => {
 exports.login = async (email, password) => {
   const existingUser = await User.findOne({ email });
   if (!existingUser) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    throw new Error("Invalid credintials !");
   }
 
   const isPasswordValid = bcrypt.compare(password, existingUser.password);
   if (!isPasswordValid) {
-    return res.status(401).json({ message: "Invalid credintials" });
+    throw new Error("Invalid credintials !");
   }
 
   const accessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
