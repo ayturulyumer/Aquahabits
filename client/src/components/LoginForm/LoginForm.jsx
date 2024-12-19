@@ -8,12 +8,13 @@ import Button from "../Button/Button.jsx";
 import { useForm } from "../../hooks/useForm.jsx";
 
 import * as authApi from "../../api/authApi.js"
+import { useAuth } from "../../context/authContext.jsx";
 
 
 export default function LoginForm() {
     const [errors, setErrors] = useState({})
-
     const navigate = useNavigate()
+    const { login } = useAuth()
 
     const handleLoginSubmit = async (values) => {
         const newErrors = {}
@@ -29,11 +30,11 @@ export default function LoginForm() {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                const user = await authApi.login(values.email, values.password)
-                console.log("User successfully logged in", user)
+                const response = await authApi.login(values.email, values.password)
+                login(response.user, response.accessToken)
                 navigate("/")
             } catch (err) {
-                console.error("Login failed:", err.message || err.message)
+                console.error("Login failed:", err.message)
             }
             setErrors({})
         } else {
@@ -79,7 +80,7 @@ export default function LoginForm() {
                                 name="password"
                                 className="w-full px-4 py-4 rounded-lg  bg-inherit font-medium border border-gray-200 text-sm focus:outline-none focus:text-gray-700 focus:border-gray-400 focus:bg-white"
                                 type="password"
-                                value={values.passowrd}
+                                value={values.password}
                                 onChange={changeHandler}
                                 required
                             />
