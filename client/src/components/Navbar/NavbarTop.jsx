@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import habitLogo from '../../assets/habitlogo.png';
+import { useAuth } from '../../context/authContext.jsx';
 
 
 
 export default function NavbarTop() {
+    const { user } = useAuth()
 
 
     return (
@@ -19,11 +21,14 @@ export default function NavbarTop() {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <ul className="flex mx-20">
-                        <Link to="/login">
-                            <button type='button' className="btn btn-md btn-outline text-neutral">Login</button>
-                        </Link>
-                    </ul>
+                    {user ? <p>Hello {user.name}</p>
+                        :
+                        <ul className="flex mx-20">
+                            <Link to="/login">
+                                <button type='button' className="btn btn-md btn-outline text-neutral">Login</button>
+                            </Link>
+                        </ul>}
+
                 </div>
             </nav>
         </header>
