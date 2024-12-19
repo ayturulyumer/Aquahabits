@@ -12,6 +12,6 @@ const app = express();
 connectDB();
 configureServer(app);
 
-app.use(routes);
+app.use("/api", routes);
 
 app.listen(PORT, () => console.log(`Server listening at ${PORT}`));
