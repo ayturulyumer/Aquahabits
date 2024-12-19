@@ -28,7 +28,6 @@ exports.register = async (name, email, password) => {
 
 exports.login = async (email, password) => {
   const existingUser = await User.findOne({ email });
-  console.log(existingUser)
   if (!existingUser) {
     throw new Error("Invalid credintials !");
   }
@@ -42,4 +41,13 @@ exports.login = async (email, password) => {
   const refreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
 
   return { existingUser, accessToken, refreshToken };
+};
+
+exports.getUserData = async (userId) => {
+  const userData = await User.findById(userId).select("-password").lean();
+  if (!userData) {
+    throw new Error("No user found with this ID");
+  }
+
+  return userData;
 };

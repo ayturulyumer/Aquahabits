@@ -18,3 +18,9 @@ export const login = async (email, password) => {
 
   return result;
 };
+
+export const getUserData = async () => {
+  const result = await request.get(`${baseUrl}/users/me`);
+
+  return result;
+};

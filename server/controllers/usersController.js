@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userService = require("../services/userService.js");
+const { auth } = require("../middlewares/authMiddleware.js");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -58,6 +59,20 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     const statusCode = err.message === "Invalid credintials" ? 401 : 500;
+    res.status(statusCode).json({ message: err.message });
+  }
+});
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    
+    const userData = await userService.getUserData(userId);
+    res
+      .status(200)
+      .json({ id: userData._id, email: userData.email, name: userData.name });
+  } catch (err) {
+    const statusCode = err.message === "No user found with this ID" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });
   }
 });
