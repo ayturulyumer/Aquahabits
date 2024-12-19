@@ -7,7 +7,7 @@ const buildOptions = (data) => {
 
   if (accessToken) {
     options.headers = {
-      Authorization: accessToken,
+      Authorization: `Bearer ${accessToken}`,
     };
   }
 
