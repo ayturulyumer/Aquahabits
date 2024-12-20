@@ -2,7 +2,7 @@ const baseUrl = import.meta.env.VITE_APP_BASEURL;
 import * as request from "../lib/requester.js";
 
 export const register = async (name, email, password) => {
-  const result = await request.post(`${baseUrl}/users/signup`, {
+  const result = await request.post(`${baseUrl}/auth/signup`, {
     name,
     email,
     password,
@@ -11,7 +11,7 @@ export const register = async (name, email, password) => {
 };
 
 export const login = async (email, password) => {
-  const result = await request.post(`${baseUrl}/users/login`, {
+  const result = await request.post(`${baseUrl}/auth/login`, {
     email,
     password,
   });
@@ -20,7 +20,7 @@ export const login = async (email, password) => {
 };
 
 export const getUserData = async () => {
-  const result = await request.get(`${baseUrl}/users/me`);
+  const result = await request.get(`${baseUrl}/auth/me`);
 
   return result;
 };
