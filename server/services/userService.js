@@ -7,6 +7,7 @@ const { generateToken } = require("../utils/auth.js");
 
 const JWT_ACCESS_EXPIRY = process.env.JWT_ACCESS_EXPIRY;
 const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registers user
 exports.register = async (name, email, password) => {
@@ -46,8 +47,23 @@ exports.login = async (email, password) => {
 exports.getUserData = async (userId) => {
   const userData = await User.findById(userId).select("-password").lean();
   if (!userData) {
-    throw new Error("No user found with this ID");
+    throw new Error("User not found");
   }
 
   return userData;
+};
+
+exports.refreshTokens = async (refreshToken) => {
+  const decodedUser = jwt.verify(refreshToken, JWT_SECRET);
+
+  const user = await User.findById(decodedUser.id);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const newAccessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
+  const newRefreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
+
+  return { newAccessToken, newRefreshToken };
 };

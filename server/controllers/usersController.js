@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const userService = require("../services/userService.js");
 const { auth } = require("../middlewares/authMiddleware.js");
+const { setRefreshToken } = require("../utils/auth.js");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -11,12 +12,7 @@ router.post("/signup", async (req, res) => {
       password
     );
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true, // prevents client-side from accessing the cookie
-      secure: false, // cookie is sent  only over https
-      sameSite: "lax", // The cookie is only sent for same-site requests, preventing cross-origin misuse. - CHANGE LATER
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
-    });
+    setRefreshToken(refreshToken);
 
     // Send access token to the client
     res.json({
@@ -42,12 +38,7 @@ router.post("/login", async (req, res) => {
       password
     );
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    setRefreshToken(refreshToken);
 
     res.status(200).json({
       user: {
@@ -66,13 +57,36 @@ router.post("/login", async (req, res) => {
 router.get("/me", auth, async (req, res) => {
   try {
     const userId = req.user.id;
-    
+
     const userData = await userService.getUserData(userId);
     res
       .status(200)
       .json({ id: userData._id, email: userData.email, name: userData.name });
   } catch (err) {
     const statusCode = err.message === "No user found with this ID" ? 404 : 500;
+    res.status(statusCode).json({ message: err.message });
+  }
+});
+
+router.post("/refresh-session", async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  console.log(refreshToken);
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "Missing refresh token" });
+  }
+
+  try {
+    const { newAccessToken, newRefreshToken } = await userService.refreshTokens(
+      refreshToken
+    );
+
+    // set the new refresh token to cookie
+    setRefreshToken(newRefreshToken);
+
+    res.status(200).json({ accessToken: newAccessToken });
+  } catch (err) {
+    const statusCode = err.message === "User not found" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });
   }
 });
