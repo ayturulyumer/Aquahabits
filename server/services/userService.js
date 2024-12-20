@@ -62,8 +62,8 @@ exports.refreshTokens = async (refreshToken) => {
     throw new Error("User not found");
   }
 
-  const newAccessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
-  const newRefreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
+  const newAccessToken = generateToken(user, JWT_ACCESS_EXPIRY);
+  const newRefreshToken = generateToken(user, JWT_REFRESH_EXPIRY);
 
   return { newAccessToken, newRefreshToken };
 };

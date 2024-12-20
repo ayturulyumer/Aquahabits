@@ -8,7 +8,7 @@ const generateToken = (user, expiresIn) => {
   });
 };
 
-const setRefreshToken = (refreshToken) => {
+const setRefreshToken = (res, refreshToken) => {
   return res.cookie("refreshToken", refreshToken, {
     httpOnly: true, // prevents client-side from accessing the cookie
     secure: false, // cookie is sent  only over https

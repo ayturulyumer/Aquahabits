@@ -10,7 +10,10 @@ exports.auth = (req, res, next) => {
       req.user = decodedToken;
       next();
     } catch (err) {
-      return res.status(401).json({ message: "Not authorized" });
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "Access token expired" });
+      }
+      return res.status(401).json({ message: "Not authorized " });
     }
   } else {
     return res.status(401).json({ message: "No access token found" });

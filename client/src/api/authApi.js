@@ -21,6 +21,10 @@ export const login = async (email, password) => {
 
 export const getUserData = async () => {
   const result = await request.get(`${baseUrl}/auth/me`);
+  return result;
+};
 
+export const refreshSession = async () => {
+  const result = await request.post(`${baseUrl}/auth/refresh-session`);
   return result;
 };

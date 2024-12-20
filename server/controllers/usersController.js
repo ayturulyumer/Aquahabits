@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
       password
     );
 
-    setRefreshToken(refreshToken);
+    setRefreshToken(res, refreshToken);
 
     res.status(200).json({
       user: {
@@ -70,7 +70,6 @@ router.get("/me", auth, async (req, res) => {
 
 router.post("/refresh-session", async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
-  console.log(refreshToken);
 
   if (!refreshToken) {
     return res.status(401).json({ message: "Missing refresh token" });
@@ -82,9 +81,9 @@ router.post("/refresh-session", async (req, res) => {
     );
 
     // set the new refresh token to cookie
-    setRefreshToken(newRefreshToken);
+    setRefreshToken(res, newRefreshToken);
 
-    res.status(200).json({ accessToken: newAccessToken });
+    res.status(200).json(newAccessToken);
   } catch (err) {
     const statusCode = err.message === "User not found" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });
