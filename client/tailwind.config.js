@@ -17,7 +17,7 @@ export default {
         4: "4px", // Custom underline thickness
       },
       colors: {
-        hover: "#4ADE80",
+        hover: "#ffa500",
       },
       keyframes: {
         underlineGrow: {
@@ -36,9 +36,9 @@ export default {
     themes: [
       {
         mytheme: {
-          primary: "#A6F2A1",
-          secondary: "#1E293B",
-          accent: "#4ADE80",
+          primary: "#ffa500",
+          secondary: "#000000",
+          accent: "#e0e0e0",
           neutral: "#F3F4F6",
           "base-100": "#102A43",
           info: "#2563EB",

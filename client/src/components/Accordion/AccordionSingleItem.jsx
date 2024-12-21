@@ -37,7 +37,7 @@ export default function AccordionSingleItem({ title, content, isOpen, onClick })
                     className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'
                         }`}
                 >
-                    <ChevronIcon color={isOpen ? "#98FF98" : "#000000"} />
+                    <ChevronIcon color={isOpen ? "#ffa500" : "#000000"} />
                 </span>
             </button>
             <div

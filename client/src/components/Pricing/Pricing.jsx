@@ -15,7 +15,7 @@ export default function Pricing() {
     ];
 
     return (
-        <section className=" py-12">
+        <section className="py-12">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-extrabold italic sm:text-5xl">

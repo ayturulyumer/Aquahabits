@@ -23,14 +23,14 @@ export default function PricingCard({
     return (
         <div className="bg-gray-800  flex flex-col rounded-lg shadow-lg p-6 ">
             <div className="mb-8">
-                <h3 className="text-4xl mb-4 place-self-center font-semibold text-white">
+                <h3 className="text-4xl mb-4 place-self-center font-semibold uppercase text-white">
                     {isLifetime ? 'Lifetime' : title}
                 </h3>
                 <div className="form-control items-center">
                     <label className="flex align-middle gap-4 cursor-pointer">
                         <input
                             type="checkbox"
-                            className="toggle toggle-success"
+                            className="toggle toggle-primary"
                             defaultChecked={isLifetime}
                             onChange={handleToggle}
                         />
@@ -48,7 +48,7 @@ export default function PricingCard({
                 {features.map((feature, index) => (
                     <li key={index} className="flex items-center">
                         <svg
-                            className="h-6 w-6 text-green-500 mr-2"
+                            className="h-6 w-6 text-primary mr-2"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"

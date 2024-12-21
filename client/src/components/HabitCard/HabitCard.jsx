@@ -8,7 +8,7 @@ export default function HabitCard({ style, labelText, listItems }) {
 
     return (
         <div
-            className={`card rounded-box  border bg-gray-800 backdrop-blur-lg ${styles[style]}`}
+            className={`card rounded-xl  border bg-gray-800 backdrop-blur-lg ${styles[style]}`}
         >
             <div className="card-body  space-y-2">
                 <h3 className=" text-3xl text-left font-medium">{labelText}</h3>

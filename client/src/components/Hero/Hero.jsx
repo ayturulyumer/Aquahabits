@@ -10,26 +10,7 @@ import Pricing from '../Pricing/Pricing.jsx'
 import Accordion from '../Accordion/Accordion.jsx'
 import Button from '../Button/Button.jsx'
 
-
-const painPointsData = {
-    title: "Challenges in building lasting habits:",
-    issues: [
-        "Setting unrealistic expectations",
-        "Relying solely on discipline",
-        "Lacking feedback or rewards",
-        "Feeling discouraged after failure"
-    ]
-}
-
-const solutionPointsData = {
-    title: "A smarter way to build lasting habits:",
-    solutions: [
-        "Start with small, manageable habits",
-        "Gamify the process",
-        "Celebrate every step forward",
-        "Focus on small wins to avoid burnout"
-    ]
-}
+import { painPointsData, solutionPointsData } from '../../utils/constants.js'
 
 
 
@@ -116,7 +97,7 @@ export default function HeroSection() {
                 <h2 className='text-3xl text-center font-extrabold sm:text-4xl md:text-5xl'>
                     Tired of setting goals and never following through?
                 </h2>
-                <div className='grid md:grid-cols-2 gap-8 mt-20 max-w-4xl mx-auto'>
+                <div className='grid md:grid-cols-2 gap-8 mt-20 max-w-8xl mx-auto'>
                     <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
                     <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                 </div>
@@ -131,7 +112,6 @@ export default function HeroSection() {
                 <Pricing />
             </section>
             <section className='my-28'>
-
                 <Accordion />
             </section>
         </div>

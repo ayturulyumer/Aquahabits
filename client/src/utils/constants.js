@@ -1,17 +1,37 @@
 export const accordionItems = [
   {
-    title: "What is React?",
+    title: "What is actually Habitect?",
     content:
-      "React is a JavaScript library for building user interfaces. It allows you to create reusable UI components and efficiently update the DOM when your data changes.",
+      "Habitect is a gamified habit tracking app that helps you build and maintain positive habits by turning your daily routines into exciting quests and challenges.",
   },
   {
-    title: "What is Tailwind CSS?",
+    title: "Can i track multiple habits at once ?",
     content:
-      "Tailwind CSS is a utility-first CSS framework that provides low-level utility classes to build custom designs without having to leave your HTML.",
+      "Yes! With Habitect, you can track multiple habits simultaneously.",
   },
   {
-    title: "What is CSS animation?",
+    title: "Is there a mobile app available?",
     content:
-      "CSS animations allow you to create smooth transitions and animations using pure CSS. They can be used to enhance the user experience and create more interactive and engaging interfaces.",
+      "Currently, Habitect is available as a web application optimized for both desktop and mobile browsers.",
   },
 ];
+
+export const painPointsData = {
+  title: "Why Building Habits is Hard",
+  issues: [
+    "Lack of motivation and consistency",
+    "Absence of immediate rewards",
+    "Difficulty in tracking progress",
+    "Overwhelming when trying to change multiple habits",
+  ],
+};
+
+export const solutionPointsData = {
+  title: "How Habitect Transforms it",
+  solutions: [
+    "Gamified experience to boost motivation",
+    "Instant rewards and achievements",
+    "Visual progress tracking and analytics",
+    "Gradual habit stacking for sustainable change",
+  ],
+};
