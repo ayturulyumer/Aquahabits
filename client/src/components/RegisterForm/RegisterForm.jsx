@@ -48,7 +48,7 @@ export default function RegisterForm() {
             try {
                 const user = await authApi.register(values.name, values.email, values.password)
                 console.log("User registered successfully", user);
-                navigate("/")
+                navigate("/dashboard")
             } catch (err) {
                 console.log(err)
                 console.error("Registration failed:", err.message || err.message);

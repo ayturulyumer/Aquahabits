@@ -32,7 +32,7 @@ export default function LoginForm() {
             try {
                 const response = await authApi.login(values.email, values.password)
                 login(response.user, response.accessToken)
-                navigate("/")
+                navigate("/dashboard")
             } catch (err) {
                 console.error("Login failed:", err.message)
             }
