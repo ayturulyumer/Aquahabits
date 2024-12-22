@@ -85,7 +85,7 @@ export default function LoginForm() {
                                 required
                             />
                             {errors.password && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.password}</p>}
-                            <Button isBlock iconRight={LoginIcon} iconAlt="Login Icon" className="btn-secondary  mt-8">Login</Button>
+                            <Button isBlock iconRight={LoginIcon} iconAlt="Login Icon" className="  mt-8">Login</Button>
                         </form>
 
                     </div>

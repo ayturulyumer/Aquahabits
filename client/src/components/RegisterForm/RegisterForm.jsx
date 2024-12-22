@@ -132,7 +132,7 @@ export default function RegisterForm() {
                                 required
                             />
                             {errors.rePassword && <p className="text-red-500 tracking-wider text-sm mt-1">{errors.rePassword}</p>}
-                            <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon" className="btn-secondary  mt-8">Sign up</Button>
+                            <Button isBlock iconRight={RegisterIcon} iconAlt="Register Icon" className=" mt-8">Sign up</Button>
                         </form>
                     </div>
                     <div className="text-xs text-center  mt-4 opacity-60">By signing up, you agree to our
