@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from "react-router-dom";
 import "./scss/App.scss"
 
 import { AuthProvider } from "./context/authContext.jsx";
@@ -11,16 +11,23 @@ import { useScreenSize } from "./hooks/useScreenSize.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Login from "./pages/Login/Login.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import MyHabits from "./pages/MyHabits/MyHabits.jsx";
+import MyMissions from "./pages/MyMissions/MyMissions.jsx";
+import MyZoo from "./pages/MyZoo/MyZoo.jsx";
 
 const Layout = () => {
   const isMobile = useScreenSize()
+  const location = useLocation()
+
+  // Check if the path starts with '/dashboard'
+  const hideNavbarAndFooter = location.pathname.startsWith("/dashboard");
 
   return (
     <>
-      {isMobile ? <NavbarBottom /> : <NavbarTop />}
+      {!hideNavbarAndFooter && (isMobile ? <NavbarBottom /> : <NavbarTop />)}
       <Outlet />
-      <Footer />
-
+      {!hideNavbarAndFooter && <Footer />}
     </>
 
   )
@@ -32,6 +39,14 @@ function App() {
       element: <Layout />,
       children: [
         { path: "/", element: <Home /> },
+        {
+          path: "/dashboard", element: <Dashboard />,
+          children: [
+            { path: "my-habits", element: <MyHabits /> },
+            { path: "my-missions", element: <MyMissions /> },
+            { path: "my-zoo", element: <MyZoo /> },
+          ],
+        },
         { path: "/signup", element: <Register /> },
         { path: "/login", element: <Login /> },
       ],
