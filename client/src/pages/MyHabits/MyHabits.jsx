@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import confetti from 'canvas-confetti';
+
 
 const initialHabits = [
     { id: 1, name: 'Drink Water', frequency: 'Daily', completed: false, streak: 5, goal: '8 glasses' },
@@ -24,6 +26,15 @@ export default function MyHabits() {
             const audio = new Audio('/success-sound.mp3');
             audio.volume = 0.05
             audio.play();
+
+            // Trigger confetti
+            confetti({
+                particleCount: 50, // Number of particles
+                spread: 80,         // Spread of the confetti
+                origin: { x: 0.5, y: 0.7 }, // Origin at the center of the screen
+                colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'], // Orange, tomato red, lime green, dodger blue, purple
+
+            });
         } else {
             const audio = new Audio('/uncheck-sound.mp3');
             audio.volume = 0.05
@@ -58,7 +69,7 @@ export default function MyHabits() {
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card bg-base-500 border border-primary shadow-xl hover:shadow-2xl transition-shadow duration-300`}>
+                    <div key={habit.id} className={`card bg-base-500 border-y border-primary shadow-xl hover:shadow-2xl transition-shadow duration-300`}>
                         <div className="card-body p-6">
                             <div className="flex justify-between items-start">
                                 <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
