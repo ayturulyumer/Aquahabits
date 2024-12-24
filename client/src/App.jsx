@@ -14,8 +14,8 @@ import Login from "./pages/Login/Login.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
 import MyMissions from "./pages/MyMissions/MyMissions.jsx";
-import MyZoo from "./pages/MyZoo/MyZoo.jsx";
 import DashboardHome from "./pages/Dashboard/DashboardHome.jsx";
+import MyOcean from "./pages/MyOcean/MyOcean.jsx";
 
 const Layout = () => {
   const isMobile = useScreenSize()
@@ -46,7 +46,7 @@ function App() {
             { index: true, element: <DashboardHome /> },
             { path: "my-habits", element: <MyHabits /> },
             { path: "my-missions", element: <MyMissions /> },
-            { path: "my-zoo", element: <MyZoo /> },
+            { path: "my-ocean", element: <MyOcean /> },
           ],
         },
         { path: "/signup", element: <Register /> },

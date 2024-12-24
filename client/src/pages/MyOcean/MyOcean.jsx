@@ -12,7 +12,7 @@ const ITEM_TYPES = [
   { name: "Anchor", type: "decoration", cost: 60, emoji: "⚓" },
 ];
 
-export default function MyZoo() {
+export default function MyAquarium() {
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
@@ -91,7 +91,7 @@ export default function MyZoo() {
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className="aspect-square border rounded border-dotted border-base-300 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-300 transition-colors duration-200 relative water-grid"
+                className="aspect-square border rounded border-dotted border-base-300 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200 relative water-grid"
                 onClick={() => handleCellClick(rowIndex, colIndex)}
               >
                 {/* Show item or emoji */}
