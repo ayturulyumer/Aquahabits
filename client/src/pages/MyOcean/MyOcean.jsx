@@ -19,8 +19,8 @@ export default function MyAquarium() {
       .map(() => Array(GRID_SIZE).fill(null))
   );
   const [selectedCell, setSelectedCell] = useState(null);
-  const [userPoints, setUserPoints] = useState(1000000); // Starting points
-  const [isMuted, setIsMuted] = useState(false); // Sound state
+  const [userPoints, setUserPoints] = useState(1000000);
+  const [isMuted, setIsMuted] = useState(false);
 
   const bubbleSound = new Audio("/aquarium-sound.mp3");
 
@@ -79,7 +79,7 @@ export default function MyAquarium() {
 
   return (
     <div className="container mx-auto p-2">
-      <h2 className="text-2xl font-bold text-primary mb-4">My Zoo</h2>
+      <h2 className="text-2xl font-bold text-primary mb-4">My Ocean</h2>
       <div className="mb-4">
         <span className="text-lg font-semibold">Points: {userPoints}</span>
       </div>
