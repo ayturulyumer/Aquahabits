@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
+import Button from '../../components/Button/Button.jsx';
+import editIcon from "../../svg/edit-icon.svg"
 
 
 const initialHabits = [
     { id: 1, name: 'Drink Water', frequency: 'Daily', completed: false, streak: 5, goal: '8 glasses' },
-    { id: 2, name: 'Exercise', frequency: '3x per week', completed: false, streak: 2, goal: '30 minutes' },
+    { id: 2, name: 'Exercise', frequency: '3x/week', completed: false, streak: 2, goal: '30 minutes' },
     { id: 3, name: 'Read', frequency: 'Daily', completed: true, streak: 10, goal: '30 pages' },
     { id: 4, name: 'Meditate', frequency: 'Daily', completed: false, streak: 7, goal: '15 minutes' },
-    { id: 5, name: 'Learn a Language', frequency: '5x per week', completed: true, streak: 15, goal: '20 new words' },
+    { id: 5, name: 'Learn a Language', frequency: '5x/week', completed: true, streak: 15, goal: '20 new words' },
 ];
 
 export default function MyHabits() {
@@ -69,11 +71,11 @@ export default function MyHabits() {
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card bg-base-500 border-y border-primary shadow-xl hover:shadow-2xl transition-shadow duration-300`}>
+                    <div key={habit.id} className={`card mx-2 bg-base-500  border-success shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:border-x`}>
                         <div className="card-body p-6">
                             <div className="flex justify-between items-start">
                                 <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
-                                <div className="badge badge-ghost">{habit.frequency}</div>
+                                <div className="badge badge-ghost italic font-light">{habit.frequency}</div>
                             </div>
                             <p className="text-secondary mt-2">{habit.goal}</p>
                             <div className="mt-4 space-y-3">
@@ -100,7 +102,7 @@ export default function MyHabits() {
                                         className="checkbox checkbox-success"
                                     />
                                 </label>
-                                <button onClick={() => openModal(habit)} className="btn btn-ghost btn-sm">Edit</button>
+                                <Button onClick={() => openModal(habit)} iconLeft={editIcon} isCircle className="btn-ghost"></Button>
                             </div>
                         </div>
 
