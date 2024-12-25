@@ -23,6 +23,7 @@ export default function MyAquarium() {
   const [isMuted, setIsMuted] = useState(false);
 
   const bubbleSound = new Audio("/aquarium-sound.mp3");
+  const splashSound = new Audio("/splash-sound.mp3")
 
   // Ensure the sound only plays once and loops infinitely
   useEffect(() => {
@@ -52,6 +53,8 @@ export default function MyAquarium() {
       setGrid(newGrid);
       setUserPoints(userPoints - item.cost);
       setSelectedCell(null);
+      splashSound.volume = 0.05
+      splashSound.play()
     } else {
       alert("Not enough points to add this item!");
     }
@@ -130,8 +133,8 @@ export default function MyAquarium() {
                 {ITEM_TYPES.map((item) => (
                   <button
                     key={item.name}
-                    className={`p-2 rounded-lg flex flex-col items-center justify-center ${userPoints >= item.cost
-                      ? "bg-primary hover:bg-primary-focus"
+                    className={`p-2 rounded-lg flex shadow flex-col items-center justify-center ${userPoints >= item.cost
+                      ? "bg-base-100 hover:bg-primary-focus"
                       : "bg-gray-300 cursor-not-allowed"
                       }`}
                     onClick={() => handleItemSelect(item)}

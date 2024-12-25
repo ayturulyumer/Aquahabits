@@ -92,17 +92,21 @@ export default function MyHabits() {
                                     max="30"
                                 ></progress>
                             </div>
-                            <div className="card-actions justify-between items-center mt-4">
+                            <div className="card-actions justify-around items-center mt-4">
+                                <Button onClick={() => openModal(habit)} iconLeft={editIcon} isCircle className="btn-ghost"></Button>
                                 <label className="cursor-pointer label space-x-2">
-                                    <span className="label-text">Completed Today</span>
+                                    <span
+                                        className={`label-text transition-all duration-500 transform ${habit.completed ? "scale-110 opacity-100 " : "scale-95 "}`}
+                                    >
+                                        {habit.completed ? "Completed" : "Complete"}
+                                    </span>
                                     <input
                                         type="checkbox"
                                         checked={habit.completed}
                                         onChange={() => toggleHabitCompletion(habit.id)}
-                                        className="checkbox checkbox-success"
+                                        className="checkbox checkbox-success transition-all duration-300"
                                     />
                                 </label>
-                                <Button onClick={() => openModal(habit)} iconLeft={editIcon} isCircle className="btn-ghost"></Button>
                             </div>
                         </div>
 
