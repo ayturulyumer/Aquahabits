@@ -73,11 +73,11 @@ export default function MyAquarium() {
               <Tippy
                 key={`${rowIndex}-${colIndex}`}
                 content={
-                  <div className="grid grid-cols-2 max-w-prose overflow-y-auto gap-2 p-2">
+                  <div className="grid grid-cols-1 max-w-42 max-h-32  md:max-h-48  md:grid-cols-2 lg:max-h-52 transition-all ease-in-out duration-500 overflow-y-auto gap-4 p-2 transform hover:scale-105">
                     {ITEM_TYPES.map((item) => (
                       <button
                         key={item.name}
-                        className={`p-2 rounded-lg shadow flex flex-col items-center justify-center ${userPoints >= item.cost
+                        className={`p-2 rounded-lg shadow-md flex md:flex-col  items-center justify-between gap-2 ${userPoints >= item.cost
                           ? "hover:bg-primary-focus"
                           : "bg-gray-300 cursor-not-allowed"
                           }`}
@@ -92,14 +92,14 @@ export default function MyAquarium() {
                   </div>
                 }
                 visible={activeCell && activeCell.row === rowIndex && activeCell.col === colIndex} // Only show tooltip for the active cell
-                trigger="click"
-                placement="top"
+                onClickOutside={() => setActiveCell(null)}
+                placement="auto-start"
                 interactive={true}
                 arrow={true}
                 animation="scale-extreme"
               >
                 <div
-                  className="aspect-square border rounded border-dotted border-base-300 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200"
+                  className="aspect-square border rounded border-dotted border-gray-500 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200"
                   onClick={() => setActiveCell({ row: rowIndex, col: colIndex })} // Set active cell on click
                 >
                   {cell && cell.emoji ? cell.emoji : ""}

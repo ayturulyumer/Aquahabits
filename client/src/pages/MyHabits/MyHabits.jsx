@@ -74,7 +74,7 @@ export default function MyHabits() {
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card mx-2 bg-base-500  border-primary  shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:border-x-4`}>
+                    <div key={habit.id} className={`card mx-2 bg-base-500  border-primary  shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:rotate-2`}>
                         <div className="card-body p-6">
                             <div className="flex justify-between items-start">
                                 <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>

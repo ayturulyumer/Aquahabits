@@ -9,7 +9,7 @@ function DashboardShell({ children }) {
     };
 
     return (
-        <div className="flex h-screen overflow-hidden bg-custom-gradient text-neutral font-lexend">
+        <div className="flex h-screen overflow-hidden bg-custom-gradient ">
             <div
                 className={`bg-custom-gradient text-neutral transition-all duration-300 ease-in-out ${sidebarOpen ? 'w-64' : 'w-0'
                     }`}

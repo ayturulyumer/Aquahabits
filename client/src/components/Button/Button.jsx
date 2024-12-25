@@ -38,10 +38,10 @@ export default function Button({
             {(iconLeft || iconRight) && !children && (
                 <span className={`flex items-center justify-center ${isIconOnly ? "w-full h-full" : ""}`}>
                     {iconLeft && (
-                        <img className="h-10 w-10" src={iconLeft} alt={iconAlt} />
+                        <img className="h-6 w-6" src={iconLeft} alt={iconAlt} />
                     )}
                     {iconRight && (
-                        <img className="h-10 w-10" src={iconRight} alt={iconAlt} />
+                        <img className="h-6 w-6" src={iconRight} alt={iconAlt} />
                     )}
                 </span>
             )}
