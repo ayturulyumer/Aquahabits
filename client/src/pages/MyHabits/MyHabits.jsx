@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
 import Button from '../../components/Button/Button.jsx';
+import HabitForm from '../../components/HabitForm/HabitForm.jsx';
 import editIcon from "../../svg/edit-icon.svg"
+import addIcon from "../../svg/add-icon.svg"
 
 
 const initialHabits = [
@@ -32,6 +34,7 @@ export default function MyHabits() {
             // Trigger confetti
             confetti({
                 particleCount: 50, // Number of particles
+                angle: Math.random() * (120 - 60) + 60, // Generate random angle everytime
                 spread: 80,         // Spread of the confetti
                 origin: { x: 0.5, y: 0.7 }, // Origin at the center of the screen
                 colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'], // Orange, tomato red, lime green, dodger blue, purple
@@ -65,13 +68,13 @@ export default function MyHabits() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-primary">My Habits</h2>
-                <button onClick={() => openModal()} className="btn btn-primary">Add New Habit</button>
+                <Button onClick={() => openModal()} iconRight={addIcon} iconAlt='Add Icon'  className="btn mt-4 btn-primary ">Add Habit</Button>
             </div>
 
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card mx-2 bg-base-500  border-success shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:border-x`}>
+                    <div key={habit.id} className={`card mx-2 bg-base-500  border-primary  shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:border-x-4`}>
                         <div className="card-body p-6">
                             <div className="flex justify-between items-start">
                                 <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
@@ -139,79 +142,3 @@ export default function MyHabits() {
     );
 }
 
-function HabitForm({ habit, onSubmit, onCancel }) {
-    const [formData, setFormData] = useState(habit);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit(formData);
-        setFormData({});
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium text-neutral-content">Habit Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name || ''}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                />
-            </div>
-            <div>
-                <label htmlFor="description" className="block text-sm font-medium text-neutral-content">Description</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description || ''}
-                    onChange={handleChange}
-                    rows="3"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                ></textarea>
-            </div>
-            <div>
-                <label htmlFor="frequency" className="block text-sm font-medium text-neutral-content">Frequency</label>
-                <select
-                    id="frequency"
-                    name="frequency"
-                    value={formData.frequency || ''}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                >
-                    <option value="">Select frequency</option>
-                    <option value="Daily">Daily</option>
-                    <option value="Weekly">Weekly</option>
-                    <option value="3x per week">3x per week</option>
-                    <option value="5x per week">5x per week</option>
-                    <option value="Custom">Custom</option>
-                </select>
-            </div>
-            <div>
-                <label htmlFor="goal" className="block text-sm font-medium text-neutral-content">Goal</label>
-                <input
-                    type="text"
-                    id="goal"
-                    name="goal"
-                    value={formData.goal || ''}
-                    onChange={handleChange}
-                    placeholder="e.g., 10,000 steps"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                />
-            </div>
-            <div className="flex justify-end space-x-3">
-                <button type="button" onClick={onCancel} className="btn btn-ghost">Cancel</button>
-                <button type="submit" className="btn btn-primary">{habit.id ? 'Update' : 'Add'} Habit</button>
-            </div>
-        </form>
-    );
-}

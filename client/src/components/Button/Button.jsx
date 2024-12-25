@@ -17,7 +17,7 @@ export default function Button({
     onClick,
     ...props
 }) {
-    const baseClass = `btn uppercase ${variant} ${size}`;
+    const baseClass = `btn  ${variant} ${size}`;
 
     // Extra props from daisyui
     const optionalModifiers = `
@@ -38,10 +38,10 @@ export default function Button({
             {(iconLeft || iconRight) && !children && (
                 <span className={`flex items-center justify-center ${isIconOnly ? "w-full h-full" : ""}`}>
                     {iconLeft && (
-                        <img className="h-8 w-8" src={iconLeft} alt={iconAlt} />
+                        <img className="h-10 w-10" src={iconLeft} alt={iconAlt} />
                     )}
                     {iconRight && (
-                        <img className="h-8 w-8" src={iconRight} alt={iconAlt} />
+                        <img className="h-10 w-10" src={iconRight} alt={iconAlt} />
                     )}
                 </span>
             )}
@@ -49,13 +49,13 @@ export default function Button({
             {children && (
                 <>
                     {iconLeft && (
-                        <span className="mr-2 flex items-center">
+                        <span className="flex items-center">
                             <img className="h-6 w-6" src={iconLeft} alt={iconAlt} />
                         </span>
                     )}
                     {children}
                     {iconRight && (
-                        <span className="ml-2 flex items-center">
+                        <span className=" flex items-center">
                             <img className="h-6 w-6" src={iconRight} alt={iconAlt} />
                         </span>
                     )}

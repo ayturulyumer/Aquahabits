@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import Tippy from "@tippyjs/react";
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale-extreme.css';
 import Button from "../../components/Button/Button.jsx";
-import UnmuteIcon from "../../svg/unmute-icon.svg"
-import MuteIcon from "../../svg/mute-icon.svg"
+import UnmuteIcon from "../../svg/unmute-icon.svg";
+import MuteIcon from "../../svg/mute-icon.svg";
 
 const GRID_SIZE = 6;
 const ITEM_TYPES = [
@@ -18,67 +21,43 @@ export default function MyAquarium() {
       .fill(null)
       .map(() => Array(GRID_SIZE).fill(null))
   );
-  const [selectedCell, setSelectedCell] = useState(null);
-  const [userPoints, setUserPoints] = useState(1000000);
+  const [userPoints, setUserPoints] = useState(1000);
   const [isMuted, setIsMuted] = useState(false);
+  const [activeCell, setActiveCell] = useState(null); // Track the active cell for tooltip visibility
 
   const bubbleSound = new Audio("/aquarium-sound.mp3");
-  const splashSound = new Audio("/splash-sound.mp3")
+  const splashSound = new Audio("/splash-sound.mp3");
 
-  // Ensure the sound only plays once and loops infinitely
   useEffect(() => {
-    bubbleSound.loop = true; // Set the sound to loop indefinitely
-    bubbleSound.volume = isMuted ? 0 : 0.2; // Adjust volume based on mute state
+    bubbleSound.loop = true;
+    bubbleSound.volume = isMuted ? 0 : 0.2;
     if (!isMuted) {
       bubbleSound.play();
     } else {
       bubbleSound.pause();
     }
 
-    // Cleanup the audio when the component unmounts
     return () => {
       bubbleSound.pause();
-      bubbleSound.currentTime = 0; // Reset to the beginning
+      bubbleSound.currentTime = 0;
     };
-  }, [isMuted]); // Depend on isMuted to toggle sound
+  }, [isMuted]);
 
-  const handleCellClick = (row, col) => {
-    setSelectedCell({ row, col });
-  };
-
-  const handleItemSelect = (item) => {
+  const handleItemSelect = (row, col, item) => {
     if (userPoints >= item.cost) {
       const newGrid = [...grid];
-      newGrid[selectedCell.row][selectedCell.col] = item;
+      newGrid[row][col] = item;
       setGrid(newGrid);
       setUserPoints(userPoints - item.cost);
-      setSelectedCell(null);
-      splashSound.volume = 0.05
-      splashSound.play()
+      splashSound.volume = 0.05;
+      splashSound.play();
+
+      // Hide the Tippy tooltip after selecting the item
+      setActiveCell(null); // Reset active cell
     } else {
       alert("Not enough points to add this item!");
     }
   };
-
-  useEffect(() => {
-    const bubbleInterval = setInterval(() => {
-      // Randomly add new bubbles in the grid
-      const newGrid = [...grid];
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
-          if (Math.random() < 0.05) {
-            const cell = newGrid[row][col];
-            if (cell === null) {
-              newGrid[row][col] = { type: "bubble" };
-            }
-          }
-        }
-      }
-      setGrid(newGrid);
-    }, 3000);
-
-    return () => clearInterval(bubbleInterval); // Cleanup on unmount
-  }, [grid]);
 
   return (
     <div className="container mx-auto p-2">
@@ -87,35 +66,50 @@ export default function MyAquarium() {
         <span className="text-lg font-semibold">Points: {userPoints}</span>
       </div>
 
-
       <div className="flex justify-center p-2">
         <div className="grid grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
           {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
-              <div
+              <Tippy
                 key={`${rowIndex}-${colIndex}`}
-                className="aspect-square border rounded border-dotted border-base-300 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200 relative water-grid"
-                onClick={() => handleCellClick(rowIndex, colIndex)}
+                content={
+                  <div className="grid grid-cols-2 max-w-prose overflow-y-auto gap-2 p-2">
+                    {ITEM_TYPES.map((item) => (
+                      <button
+                        key={item.name}
+                        className={`p-2 rounded-lg shadow flex flex-col items-center justify-center ${userPoints >= item.cost
+                          ? "hover:bg-primary-focus"
+                          : "bg-gray-300 cursor-not-allowed"
+                          }`}
+                        onClick={() => handleItemSelect(rowIndex, colIndex, item)}
+                        disabled={userPoints < item.cost}
+                      >
+                        <span className="text-2xl mb-1">{item.emoji}</span>
+                        <span className="text-sm">{item.name}</span>
+                        <span className="text-xs">{item.cost} pts</span>
+                      </button>
+                    ))}
+                  </div>
+                }
+                visible={activeCell && activeCell.row === rowIndex && activeCell.col === colIndex} // Only show tooltip for the active cell
+                trigger="click"
+                placement="top"
+                interactive={true}
+                arrow={true}
+                animation="scale-extreme"
               >
-                {/* Show item or emoji */}
-                {cell && cell.emoji ? cell.emoji : ""}
-
-                {/* Add bubbles inside cells */}
-                {cell?.type === "bubble" && (
-                  <div
-                    className="bubble"
-                    style={{
-                      left: `${Math.random() * 100}%`, // Random horizontal position
-                      bottom: "0%", // Start from the bottom
-                    }}
-                  ></div>
-                )}
-
-              </div>
+                <div
+                  className="aspect-square border rounded border-dotted border-base-300 flex items-center justify-center md:text-4xl cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200"
+                  onClick={() => setActiveCell({ row: rowIndex, col: colIndex })} // Set active cell on click
+                >
+                  {cell && cell.emoji ? cell.emoji : ""}
+                </div>
+              </Tippy>
             ))
           )}
           <Button
-            className="absolute -top-12 right-0  "
+            className="absolute -top-12 right-0"
+            type="button"
             variant="btn-ghost"
             isSquare
             iconLeft={isMuted ? MuteIcon : UnmuteIcon}
@@ -123,39 +117,6 @@ export default function MyAquarium() {
           />
         </div>
       </div>
-
-      {
-        selectedCell && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-base-100 p-6 rounded-lg shadow-xl w-full max-w-md">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Add to Your Zoo</h3>
-              <div className="grid grid-cols-3 gap-4">
-                {ITEM_TYPES.map((item) => (
-                  <button
-                    key={item.name}
-                    className={`p-2 rounded-lg flex shadow flex-col items-center justify-center ${userPoints >= item.cost
-                      ? "bg-base-100 hover:bg-primary-focus"
-                      : "bg-gray-300 cursor-not-allowed"
-                      }`}
-                    onClick={() => handleItemSelect(item)}
-                    disabled={userPoints < item.cost}
-                  >
-                    <span className="text-2xl mb-1">{item.emoji}</span>
-                    <span className="text-sm">{item.name}</span>
-                    <span className="text-xs">{item.cost} pts</span>
-                  </button>
-                ))}
-              </div>
-              <button
-                className="mt-4 btn btn-ghost"
-                onClick={() => setSelectedCell(null)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )
-      }
-    </div >
+    </div>
   );
 }
