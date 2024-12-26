@@ -65,4 +65,62 @@ img {
   }
 }
 
+.level-up-icon {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  animation: fadeInOut 0.8s ease-in-out;
+  pointer-events: none; /* Prevent interference with clicks */
+}
 
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+@keyframes glowEffect {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4),
+      0 0 50px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.8),
+      0 0 80px rgba(255, 215, 0, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4),
+      0 0 50px rgba(255, 215, 0, 0.3);
+  }
+}
+
+.glowing-border {
+  animation: glowEffect 4s ease-in-out infinite;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dotted gray;
+  transition: all 0.2s ease;
+}
+
+.cell.level-up {
+  border-color: rgba(255, 215, 0, 1); /* Golden color for level up effect */
+  /* Adding glowing effect */
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4),
+    0 0 50px rgba(255, 215, 0, 0.3);
+  animation: glowEffect 2s ease-in-out infinite;
+}
