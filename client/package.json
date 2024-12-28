@@ -13,6 +13,8 @@
     "@tippyjs/react": "^4.2.6",
     "canvas-confetti": "^1.9.3",
     "react": "^18.3.1",
+    "react-calendar": "^5.1.0",
+    "react-calendar-heatmap": "^1.9.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1"
   },
