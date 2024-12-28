@@ -142,6 +142,7 @@ export default function MyHabits() {
 
 
     const openModal = (habit = null) => {
+        console.log(habit)
         setEditingHabit(habit);
         setIsModalOpen(true);
     };

@@ -16,10 +16,12 @@ const READY_TO_GO_HABITS = [
 export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
     const { values, changeHandler, onSubmit } = useForm(
         {
+            id: habit.id || "",
             name: habit.name || "",
             goal: habit.goal || "",
             frequency: habit.frequency || "Daily",
             selectedDays: habit.selectedDays || [],
+            history: habit.history || [],
         },
         addOrUpdateHabit
     );
