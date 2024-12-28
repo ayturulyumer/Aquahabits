@@ -6,6 +6,7 @@ import editIcon from "../../svg/edit-icon.svg"
 import addIcon from "../../svg/add-icon.svg"
 import CalendarHeatmap from 'react-calendar-heatmap';
 import "../../scss/Calendar.scss"
+import HabitStat from '../../components/HabitStat/HabitStat.jsx';
 
 
 const initialHabits = [
@@ -157,13 +158,36 @@ export default function MyHabits() {
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card mx-2 bg-base-500  border-primary  shadow-xl hover:shadow-2xl transition-shadow duration-300 hover:border-x`}>
+                    <div key={habit.id} className={`card mx-2 bg-gradient-to-r from-slate-900 to-slate-700  border-primary  shadow-xl hover:shadow-black transition-shadow duration-300 `}>
                         <div className="card-body p-6">
                             <div className="flex justify-between items-start">
                                 <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
                                 <div className="badge badge-ghost ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</div>
                             </div>
-                            <p className="text-secondary mt-2">{habit.goal}</p>
+                            <div className='flex'>
+
+                            </div>
+                            <div className='w-full sm:gap-2 flex justify-center '>
+                                <HabitStat
+                                    label="Completed"
+                                    bgColor='shadow-2xl  shadow-teal-500'
+                                    value="40"
+                                    labelColor="font-mono"
+                                    valueColor="font-mono "
+                                />
+                                <HabitStat label="Consistency" bgColor='shadow-2xl  shadow-green-600 ' labelColor="font-mono "
+                                    valueColor="font-mono" value={`${100} %`} />
+                                <HabitStat
+                                    label="Streak"
+                                    bgColor='shadow-2xl  shadow-primary'
+                                    value="15"
+                                    labelColor="font-mono "
+                                    valueColor="font-mono"
+                                />
+                            </div>
+
+
+                            <p className="text-white mt-2">{habit.goal}</p>
                             <div className="mt-4 space-y-3">
                                 <CalendarHeatmap
                                     startDate={new Date(new Date().setMonth(new Date().getMonth() - 6))} // 6 months ago
@@ -189,7 +213,7 @@ export default function MyHabits() {
                                         type="checkbox"
                                         checked={habit.completed}
                                         onChange={() => toggleHabitCompletion(habit.id)}
-                                        className="checkbox checkbox-primary transition-all duration-300"
+                                        className="checkbox checkbox-success"
                                     />
                                 </label>
                             </div>
