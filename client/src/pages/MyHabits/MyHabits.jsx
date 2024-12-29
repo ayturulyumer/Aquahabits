@@ -7,6 +7,9 @@ import addIcon from "../../svg/add-icon.svg"
 import CalendarHeatmap from 'react-calendar-heatmap';
 import "../../scss/Calendar.scss"
 import HabitStat from '../../components/HabitStat/HabitStat.jsx';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+import "tippy.js/animations/scale-extreme.css";
 
 
 const initialHabits = [
@@ -150,42 +153,52 @@ export default function MyHabits() {
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between mx-4 items-baseline ">
                 <h2 className="text-2xl font-bold text-primary">My Habits</h2>
-                <Button onClick={() => openModal()} iconRight={addIcon} iconAlt='Add Icon' className="btn mt-4 btn-primary ">Add Habit</Button>
+                <Button onClick={() => openModal()} iconRight={addIcon} iconAlt='Add Icon' className="btn btn-circle mt-4  btn-primary "></Button>
             </div>
 
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`card mx-2 bg-gradient-to-r from-slate-900 to-slate-700  border-primary  shadow-xl hover:shadow-black transition-shadow duration-300 `}>
+                    <div key={habit.id} className={`relative card mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300`}>
                         <div className="card-body p-6">
-                            <div className="flex justify-between items-start">
-                                <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
-                                <div className="badge badge-ghost ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</div>
-                            </div>
-                            <div className='flex'>
 
+                            <div className="flex  gap-4 items-start">
+
+                                <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
+                                <input
+                                    type="checkbox"
+                                    checked={habit.completed}
+                                    onChange={() => toggleHabitCompletion(habit.id)}
+                                    className="checkbox checkbox-success"
+                                />
+                                <div className=" dropdown dropdown-left absolute top-0 right-0 mr-2">
+                                    <div tabIndex={0} role="button" className="">...</div>
+                                    <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
+                                        <li onClick={() => openModal(habit)}><a>Edit</a></li>
+                                        <li><a>Delete</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div className='w-full sm:gap-2 flex justify-center '>
+                            <div className='w-full flex  justify-center md:justify-between my-3 sm:gap-2  '>
                                 <HabitStat
                                     label="Completed"
-                                    bgColor='shadow-2xl  shadow-teal-500'
+                                    bgColor='shadow-2xl shadow-teal-500'
                                     value="40"
                                     labelColor="font-mono"
                                     valueColor="font-mono "
                                 />
-                                <HabitStat label="Consistency" bgColor='shadow-2xl  shadow-green-600 ' labelColor="font-mono "
+                                <HabitStat label="Consistency" bgColor='shadow-2xl shadow-green-600 ' labelColor="font-mono "
                                     valueColor="font-mono" value={`${100} %`} />
                                 <HabitStat
                                     label="Streak"
-                                    bgColor='shadow-2xl  shadow-primary'
+                                    bgColor='shadow-2xl shadow-primary'
                                     value="15"
                                     labelColor="font-mono "
                                     valueColor="font-mono"
                                 />
                             </div>
-
 
                             <p className="text-white mt-2">{habit.goal}</p>
                             <div className="mt-4 space-y-3">
@@ -198,36 +211,38 @@ export default function MyHabits() {
                                         .filter(entry => entry.status === 'completed') // Filter for completed entries
                                         .map(entry => ({ date: entry.date, count: 1 })) // Map to date and count
                                     }
+                                    classForValue={(value) => {
+                                        if (!value) {
+                                            return 'color-empty'; // Class for empty cells
+                                        }
+                                        return 'color-filled'; // Class for filled cells
+                                    }}
+                                    transformDayElement={(element, value) => {
+                                        if (!value || !value.date) return element; // Skip if no value
+
+                                        // Wrap the day element with Tippy for tooltip
+                                        return (
+                                            <Tippy placement='top' animation="scale-extreme" content={`Completed: ${value.date}`}>
+                                                {element}
+                                            </Tippy>
+                                        );
+                                    }}
                                 />
 
                             </div>
-                            <div className="card-actions justify-around items-center mt-4">
-                                <Button onClick={() => openModal(habit)} iconLeft={editIcon} isCircle className="btn-ghost"></Button>
-                                <label className="cursor-pointer label space-x-2">
-                                    <span
-                                        className={`label-text transition-all duration-500 transform ${habit.completed ? "scale-110 opacity-100 " : "scale-95 "}`}
-                                    >
-                                        {habit.completed ? "Completed" : "Complete"}
-                                    </span>
-                                    <input
-                                        type="checkbox"
-                                        checked={habit.completed}
-                                        onChange={() => toggleHabitCompletion(habit.id)}
-                                        className="checkbox checkbox-success"
-                                    />
-                                </label>
-                            </div>
+
                         </div>
 
                         {/* Big Check Icon when Completed */}
                         {habit.completed && (
-                            <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute  top-0 left-0 w-full h-full flex items-center justify-center bg-black  cursor-pointer rounded-box bg-opacity-80 z-50">
+                            <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
                         )}
                     </div>
+
                 ))}
             </div>
 
