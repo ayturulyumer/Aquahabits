@@ -2,13 +2,13 @@ import { useState } from 'react';
 import confetti from 'canvas-confetti';
 import Button from '../../components/Button/Button.jsx';
 import HabitForm from '../../components/HabitForm/HabitForm.jsx';
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal.jsx';
 import editIcon from "../../svg/edit-icon.svg"
 import addIcon from "../../svg/add-icon.svg"
 import CalendarHeatmap from 'react-calendar-heatmap';
 import "../../scss/Calendar.scss"
 import HabitStat from '../../components/HabitStat/HabitStat.jsx';
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
 import "tippy.js/animations/scale-extreme.css";
 
 
@@ -86,6 +86,8 @@ export default function MyHabits() {
     const [habits, setHabits] = useState(initialHabits);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingHabit, setEditingHabit] = useState(null);
+    const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const [habitToDelete, setHabitToDelete] = useState(null);
 
 
     const toggleHabitCompletion = (id) => {
@@ -142,11 +144,26 @@ export default function MyHabits() {
         setEditingHabit(null);
     };
 
+    const openConfirmationModal = (habit) => {
+        setHabitToDelete(habit);
+        setIsConfirmationOpen(true);
+    };
+
+    const closeConfirmationModal = () => {
+        setIsConfirmationOpen(false);
+        setHabitToDelete(null);
+    };
+
+    const confirmDeleteHabit = () => {
+        setHabits(habits.filter(habit => habit.id !== habitToDelete.id));
+        closeConfirmationModal();
+    };
+
+
 
 
 
     const openModal = (habit = null) => {
-        console.log(habit)
         setEditingHabit(habit);
         setIsModalOpen(true);
     };
@@ -177,7 +194,7 @@ export default function MyHabits() {
                                     <div tabIndex={0} role="button" className="">...</div>
                                     <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
                                         <li onClick={() => openModal(habit)}><a>Edit</a></li>
-                                        <li><a>Delete</a></li>
+                                        <li onClick={() => openConfirmationModal(habit)}><a>Delete</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -222,7 +239,7 @@ export default function MyHabits() {
 
                                         // Wrap the day element with Tippy for tooltip
                                         return (
-                                            <Tippy placement='top' animation="scale-extreme" content={`Completed: ${value.date}`}>
+                                            <Tippy key={value.date} placement='top' animation="scale-extreme" content={`Completed: ${value.date}`}>
                                                 {element}
                                             </Tippy>
                                         );
@@ -257,6 +274,18 @@ export default function MyHabits() {
                     />
 
                 </div>
+            )}
+
+            {isConfirmationOpen && (
+                <ConfirmationModal
+                    isOpen={isConfirmationOpen}
+                    onConfirm={confirmDeleteHabit}
+                    onCancel={closeConfirmationModal}
+                    message={
+                        <>Are you sure you want to delete <span className="text-primary font-bold">{habitToDelete.name}</span>?</>
+                    }
+
+                />
             )}
         </div>
     );
