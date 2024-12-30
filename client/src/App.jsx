@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider, Outlet, useLocation } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, useLocation , Navigate } from "react-router-dom";
 import "./scss/App.scss"
 
 import { AuthProvider } from "./context/authContext.jsx";
@@ -13,9 +13,9 @@ import Register from "./pages/Register/Register.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
-import MyMissions from "./pages/MyMissions/MyMissions.jsx";
-import DashboardHome from "./pages/Dashboard/DashboardHome.jsx";
-import MyOcean from "./pages/MyOcean/MyOcean.jsx";
+import MyOcean from "./pages/MyAquarium/MyAquarium.jsx";
+import MyQuests from "./pages/MyQuests/MyQuests.jsx";
+import MyAquarium from "./pages/MyAquarium/MyAquarium.jsx";
 
 const Layout = () => {
   const isMobile = useScreenSize()
@@ -43,10 +43,10 @@ function App() {
         {
           path: "/dashboard", element: <Dashboard />,
           children: [
-            { index: true, element: <DashboardHome /> },
+            { index: true, element: <Navigate to="my-habits" /> },
             { path: "my-habits", element: <MyHabits /> },
-            { path: "my-missions", element: <MyMissions /> },
-            { path: "my-ocean", element: <MyOcean /> },
+            { path: "my-quests", element: <MyQuests /> },
+            { path: "my-aquarium", element: <MyAquarium /> },
           ],
         },
         { path: "/signup", element: <Register /> },
