@@ -28,7 +28,7 @@ function DashboardHeader({ toggleSidebar }) {
       <div className="flex items-center space-x-4">
         <span className="text-sm font-medium">Welcome, Hero!</span>
         <Tippy content={TooltipMessage} placement="bottom-start" animation="scale-extreme">
-          <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full text-md font-medium text-neutral">
+          <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full  font-medium text-neutral">
             <span>75</span>
             <img src={AquaGemIcon} alt="Aquagem" className="w-6 h-6" />
           </div>

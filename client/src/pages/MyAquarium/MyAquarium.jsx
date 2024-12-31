@@ -5,7 +5,7 @@ import "tippy.js/animations/scale-extreme.css";
 import Button from "../../components/Button/Button.jsx";
 import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
-import LevelUpIcon from "../../svg/levelup-icon.svg"
+import LevelUpIcon from "../../svg/levelup-icon.svg";
 
 const GRID_SIZE = 6;
 const ITEM_TYPES = [
@@ -48,7 +48,6 @@ export default function MyAquarium() {
   const handleItemSelect = (row, col, item) => {
     if (userPoints >= item.cost) {
       const newGrid = [...grid];
-      // Deep copy the item to avoid shared reference
       const itemCopy = { ...item };
       newGrid[row][col] = itemCopy;
       setGrid(newGrid);
@@ -56,13 +55,11 @@ export default function MyAquarium() {
       splashSound.volume = 0.05;
       splashSound.play();
 
-      // Hide the Tippy tooltip after selecting the item
       setActiveCell(null);
     } else {
       alert("Not enough points to add this item!");
     }
   };
-
 
   const growAnimal = (row, col) => {
     const newGrid = [...grid];
@@ -87,7 +84,6 @@ export default function MyAquarium() {
     }
   };
 
-
   const removeAnimal = (row, col) => {
     const newGrid = [...grid];
     const animal = newGrid[row][col];
@@ -99,6 +95,25 @@ export default function MyAquarium() {
     }
   };
 
+  // Function to render bubbles at the bottom of the grid container
+  const renderBubbles = () => {
+    const bubbles = [];
+    for (let i = 0; i < 10; i++) {
+      bubbles.push(
+        <div
+          key={`bubble-${i}`}
+          className="bubble"
+          style={{
+            animationDelay: `${Math.random() * 2}s`, // Random delay for each bubble
+            bottom: `${Math.random() * 50}px`, // Random starting position vertically
+            left: `${Math.random() * 100}%`, // Random horizontal position inside the container
+          }}
+        ></div>
+      );
+    }
+    return bubbles;
+  };
+
   return (
     <div className="container mx-auto p-2">
       <h2 className="text-2xl font-bold text-primary mb-4">My Ocean</h2>
@@ -107,14 +122,13 @@ export default function MyAquarium() {
       </div>
 
       <div className="flex justify-center p-2">
-        <div className="grid grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
+        <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
           {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <Tippy
                 key={`${rowIndex}-${colIndex}`}
                 content={
                   cell ? (
-                    // Show habitat information if the cell is occupied
                     <div className="p-2">
                       <h4 className="font-semibold text-lg">{cell.name}</h4>
                       <p className="text-sm">Rarity: {cell.rarity}</p>
@@ -137,12 +151,11 @@ export default function MyAquarium() {
                       </div>
                     </div>
                   ) : (
-                    // Show item selection menu if the cell is empty
                     <div className="grid grid-cols-1 max-w-42 max-h-32 md:max-h-48 md:grid-cols-2 lg:max-h-52 transition-all ease-in-out duration-500 overflow-y-auto gap-4 p-2 transform hover:scale-105">
                       {ITEM_TYPES.map((item) => (
                         <button
                           key={item.name}
-                          className={`p-2 rounded-lg shadow-md flex md:flex-col  items-center justify-between gap-2 ${userPoints >= item.cost
+                          className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${userPoints >= item.cost
                             ? "hover:bg-primary-focus"
                             : "bg-gray-300 cursor-not-allowed"
                             }`}
@@ -157,7 +170,7 @@ export default function MyAquarium() {
                     </div>
                   )
                 }
-                visible={activeCell && activeCell.row === rowIndex && activeCell.col === colIndex} // Only show tooltip for the active cell
+                visible={activeCell && activeCell.row === rowIndex && activeCell.col === colIndex}
                 onClickOutside={() => setActiveCell(null)}
                 placement="auto-start"
                 interactive={true}
@@ -172,28 +185,23 @@ export default function MyAquarium() {
                       : cell && cell.level === 3
                         ? "md:text-4xl"
                         : ""
-
                     } ${cell && cell.isGrowing ? "glowing-border" : ""}`}
-
-                  onClick={() => setActiveCell({ row: rowIndex, col: colIndex })} // Set active cell on click
+                  onClick={() => setActiveCell({ row: rowIndex, col: colIndex })}
                 >
                   {cell && cell.emoji ? cell.emoji : ""}
 
-                  {/* Show Level Up icon when the animal is growing */}
                   {cell?.isGrowing && (
                     <span className="level-up-icon h-3 w-3 md:h-6 md:w-6">
                       <img src={LevelUpIcon} alt="Level Up" />
                     </span>
                   )}
                 </div>
-
-
-
-
-
               </Tippy>
             ))
           )}
+          {/* Render the bubbles container */}
+          <div className="">{renderBubbles()}</div>
+
           <Button
             className="absolute -top-12 right-0"
             type="button"
