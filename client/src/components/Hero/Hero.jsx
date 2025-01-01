@@ -13,7 +13,7 @@ import Button from '../Button/Button.jsx'
 import { painPointsData, solutionPointsData } from '../../utils/constants.js'
 
 
-
+import { Link} from "react-router-dom"
 
 
 export default function HeroSection() {
@@ -71,7 +71,7 @@ export default function HeroSection() {
                         Make growth fun and simple with gamified habits
                     </p>
                     <div className='z-50  '>
-                        <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
+                       <Link to="/dashboard" <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button> </Link>
                     </div>
                 </section>
 
