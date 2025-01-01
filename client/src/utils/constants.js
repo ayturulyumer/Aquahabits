@@ -35,3 +35,11 @@ export const solutionPointsData = {
     "Gradual habit stacking for sustainable change",
   ],
 };
+
+export const ITEM_TYPES = [
+  { name: "Goldfish", rarity: "common", cost: 100, emoji: "🐟", level: 1, size: "small" },
+  { name: "Clownfish", rarity: "rare", cost: 120, emoji: "🐠", level: 1, size: "medium" },
+  { name: "Shark", rarity: "legendary", cost: 250, emoji: "🦈", level: 1, size: "large" },
+  { name: "Seaweed", rarity: "common", cost: 50, emoji: "🌿", level: 1, size: "small" },
+  { name: "Anchor", rarity: "common", cost: 60, emoji: "⚓", level: 1, size: "small" },
+];

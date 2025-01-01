@@ -5,7 +5,9 @@ import "tippy.js/animations/scale-extreme.css";
 import Button from "../../components/Button/Button.jsx";
 import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
-import LevelUpIcon from "../../svg/levelup-icon.svg";
+
+import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
+import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
 
 const GRID_SIZE = 6;
 const ITEM_TYPES = [
@@ -95,24 +97,24 @@ export default function MyAquarium() {
     }
   };
 
-  // Function to render bubbles at the bottom of the grid container
-  const renderBubbles = () => {
-    const bubbles = [];
-    for (let i = 0; i < 10; i++) {
-      bubbles.push(
-        <div
-          key={`bubble-${i}`}
-          className="bubble"
-          style={{
-            animationDelay: `${Math.random() * 2}s`, // Random delay for each bubble
-            bottom: `${Math.random() * 50}px`, // Random starting position vertically
-            left: `${Math.random() * 100}%`, // Random horizontal position inside the container
-          }}
-        ></div>
-      );
-    }
-    return bubbles;
-  };
+  // // Function to render bubbles at the bottom of the grid container
+  // const renderBubbles = () => {
+  //   const bubbles = [];
+  //   for (let i = 0; i < 10; i++) {
+  //     bubbles.push(
+  //       <div
+  //         key={`bubble-${i}`}
+  //         className="bubble"
+  //         style={{
+  //           animationDelay: `${Math.random() * 2}s`, // Random delay for each bubble
+  //           bottom: `${Math.random() * 100}px`, // Random starting position vertically
+  //           left: `${Math.random() * 100}%`, // Random horizontal position inside the container
+  //         }}
+  //       ></div>
+  //     );
+  //   }
+  //   return bubbles;
+  // };
 
   return (
     <div className="container mx-auto p-2">
@@ -123,84 +125,16 @@ export default function MyAquarium() {
 
       <div className="flex justify-center p-2">
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
-          {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => (
-              <Tippy
-                key={`${rowIndex}-${colIndex}`}
-                content={
-                  cell ? (
-                    <div className="p-2">
-                      <h4 className="font-semibold text-lg">{cell.name}</h4>
-                      <p className="text-sm">Rarity: {cell.rarity}</p>
-                      <p className="text-sm">Level: {cell.level}</p>
-                      <p className="text-xs">Cost: {cell.cost} pts</p>
-                      <div className="flex gap-2">
-                        <Button
-                          className="bg-blue-500 text-white"
-                          onClick={() => growAnimal(rowIndex, colIndex)}
-                          disabled={cell.level === 3}
-                        >
-                          {cell.level === 3 ? "Max Level" : "Grow"}
-                        </Button>
-                        <Button
-                          className="bg-red-500 text-white"
-                          onClick={() => removeAnimal(rowIndex, colIndex)}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 max-w-42 max-h-32 md:max-h-48 md:grid-cols-2 lg:max-h-52 transition-all ease-in-out duration-500 overflow-y-auto gap-4 p-2 transform hover:scale-105">
-                      {ITEM_TYPES.map((item) => (
-                        <button
-                          key={item.name}
-                          className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${userPoints >= item.cost
-                            ? "hover:bg-primary-focus"
-                            : "bg-gray-300 cursor-not-allowed"
-                            }`}
-                          onClick={() => handleItemSelect(rowIndex, colIndex, item)}
-                          disabled={userPoints < item.cost}
-                        >
-                          <span className="text-2xl mb-1">{item.emoji}</span>
-                          <span className="text-sm">{item.name}</span>
-                          <span className="text-xs">{item.cost} pts</span>
-                        </button>
-                      ))}
-                    </div>
-                  )
-                }
-                visible={activeCell && activeCell.row === rowIndex && activeCell.col === colIndex}
-                onClickOutside={() => setActiveCell(null)}
-                placement="auto-start"
-                interactive={true}
-                arrow={true}
-                animation="scale-extreme"
-              >
-                <div
-                  className={`relative aspect-square border rounded border-dotted border-gray-500 flex items-center justify-center cursor-pointer hover:bg-base-100 animate-pulse transition-colors duration-200 ${cell && cell.level === 1
-                    ? "md:text-xl"
-                    : cell && cell.level === 2
-                      ? "md:text-2xl"
-                      : cell && cell.level === 3
-                        ? "md:text-4xl"
-                        : ""
-                    } ${cell && cell.isGrowing ? "glowing-border" : ""}`}
-                  onClick={() => setActiveCell({ row: rowIndex, col: colIndex })}
-                >
-                  {cell && cell.emoji ? cell.emoji : ""}
-
-                  {cell?.isGrowing && (
-                    <span className="level-up-icon h-3 w-3 md:h-6 md:w-6">
-                      <img src={LevelUpIcon} alt="Level Up" />
-                    </span>
-                  )}
-                </div>
-              </Tippy>
-            ))
-          )}
+          <AquariumGrid
+            grid={grid}
+            handleItemSelect={handleItemSelect}
+            growAnimal={growAnimal}
+            removeAnimal={removeAnimal}
+            setActiveCell={setActiveCell}
+            activeCell={activeCell}
+            userPoints={userPoints} />
           {/* Render the bubbles container */}
-          <div className="">{renderBubbles()}</div>
+          <BubbleContainer />
 
           <Button
             className="absolute -top-12 right-0"
