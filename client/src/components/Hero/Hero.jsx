@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from "react-router-dom"
 
 import GamifyIcon from "../../svg/gamify-icon.svg"
 
@@ -70,9 +71,12 @@ export default function HeroSection() {
                     <p className="mb-3 leading-relaxed font-medium text-center w-11/12 ">
                         Make growth fun and simple with gamified habits
                     </p>
-                    <div className='z-50  '>
-                        <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
-                    </div>
+                    <Link to="/dashboard">
+
+                        <div className='z-50  '>
+                            <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
+                        </div>
+                    </Link>
                 </section>
 
                 <section className="relative  flex justify-center items-center">
