@@ -58,7 +58,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
         <form
             onClick={(e) => e.stopPropagation()}
             onSubmit={onSubmit}
-            className="max-w-72 md:max-w-md mx-4 p-4 bg-base-300 rounded-box"
+            className="max-w-72 md:max-w-md   mx-4 p-4 bg-base-300 rounded-box"
         >
             {/* Habit Name */}
             <div className="form-control w-full mb-4">
@@ -130,9 +130,9 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     <label className="label">
                         <span className="label-text">Select Days</span>
                     </label>
-                    <div className="grid grid-cols-2">
+                    <div className="flex py-4 gap-2 overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-2 ">
                         {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className="form-control">
+                            <div key={day} className="form-control ">
                                 <label className="label cursor-pointer justify-start gap-2">
                                     <input
                                         type="checkbox"
