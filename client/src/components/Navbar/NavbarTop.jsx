@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import habitLogo from '../../assets/habitlogo.png';
 import { useAuth } from '../../context/authContext.jsx';
 
 

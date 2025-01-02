@@ -8,6 +8,7 @@ import MuteIcon from "../../svg/mute-icon.svg";
 
 import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
+import UnlockGrid from "../../components/UnlockGrid/UnlockGrid.jsx";
 
 const GRID_SIZE = 6;
 const ITEM_TYPES = [
@@ -97,24 +98,7 @@ export default function MyAquarium() {
     }
   };
 
-  // // Function to render bubbles at the bottom of the grid container
-  // const renderBubbles = () => {
-  //   const bubbles = [];
-  //   for (let i = 0; i < 10; i++) {
-  //     bubbles.push(
-  //       <div
-  //         key={`bubble-${i}`}
-  //         className="bubble"
-  //         style={{
-  //           animationDelay: `${Math.random() * 2}s`, // Random delay for each bubble
-  //           bottom: `${Math.random() * 100}px`, // Random starting position vertically
-  //           left: `${Math.random() * 100}%`, // Random horizontal position inside the container
-  //         }}
-  //       ></div>
-  //     );
-  //   }
-  //   return bubbles;
-  // };
+
 
   return (
     <div className="container mx-auto p-2">
@@ -123,7 +107,7 @@ export default function MyAquarium() {
         <span className="text-lg font-semibold">Points: {userPoints}</span>
       </div>
 
-      <div className="flex justify-center p-2">
+      <div className="flex flex-wrap justify-around gap-4 p-2">
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
           <AquariumGrid
             grid={grid}
@@ -145,6 +129,7 @@ export default function MyAquarium() {
             onClick={() => setIsMuted(!isMuted)}
           />
         </div>
+        <UnlockGrid />
       </div>
     </div>
   );
