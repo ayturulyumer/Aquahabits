@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-import "tippy.js/animations/scale-extreme.css";
 import Button from "../../components/Button/Button.jsx";
 import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
+
 
 import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
@@ -12,12 +10,21 @@ import UnlockGrid from "../../components/UnlockGrid/UnlockGrid.jsx";
 
 const GRID_SIZE = 6;
 const ITEM_TYPES = [
-  { name: "Goldfish", rarity: "common", cost: 100, emoji: "🐟", level: 1, size: "small" },
-  { name: "Clownfish", rarity: "rare", cost: 120, emoji: "🐠", level: 1, size: "medium" },
-  { name: "Shark", rarity: "legendary", cost: 250, emoji: "🦈", level: 1, size: "large" },
-  { name: "Seaweed", rarity: "common", cost: 50, emoji: "🌿", level: 1, size: "small" },
-  { name: "Anchor", rarity: "common", cost: 60, emoji: "⚓", level: 1, size: "small" },
+  { name: "Axolotl", rarity: "rare", cost: 150, icon: "../../assets/axolotl.png", size: "small" },
+  { name: "Clownfish", rarity: "common", cost: 120, icon: "../../assets/clownfish.png", size: "small" },
+  { name: "Dolphin", rarity: "epic", cost: 300, icon: "../../assets/dolphin.png", size: "small" },
+  { name: "Jellyfish", rarity: "uncommon", cost: 200, icon: "../../assets/jellyfish.png", size: "small" },
+  { name: "Kraken", rarity: "legendary", cost: 500, icon: "../../assets/kraken.png", size: "small" },
+  { name: "Octopus", rarity: "rare", cost: 250, icon: "../../assets/octopus.png", size: "small" },
+  { name: "Piranha", rarity: "common", cost: 100, icon: "../../assets/piranha.png", size: "small" },
+  { name: "Seahorse", rarity: "common", cost: 80, icon: "../../assets/seahorse.png", size: "small" },
+  { name: "Sea Turtle", rarity: "rare", cost: 220, icon: "../../assets/seaturtle.png", size: "small" },
+  { name: "Shark", rarity: "epic", cost: 400, icon: "../../assets/shark.png", size: "small" },
+  { name: "Stingray", rarity: "uncommon", cost: 180, icon: "../../assets/stringray.png", size: "small" },
+  { name: "Triturus", rarity: "legendary", cost: 90, icon: "../../assets/triturus.png", size: "small" },
+  { name: "Whale", rarity: "legendary", cost: 600, icon: "../../assets/whale.png", size: "small" },
 ];
+
 
 export default function MyAquarium() {
   const [grid, setGrid] = useState(
@@ -25,7 +32,7 @@ export default function MyAquarium() {
       .fill(null)
       .map(() => Array(GRID_SIZE).fill(null))
   );
-  const [userPoints, setUserPoints] = useState(1000);
+  const [userPoints, setUserPoints] = useState(999999);
   const [isMuted, setIsMuted] = useState(false);
   const [activeCell, setActiveCell] = useState(null); // Track the active cell for tooltip visibility
 
