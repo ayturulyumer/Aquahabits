@@ -11,6 +11,8 @@ import SharkIcon from "../assets/shark.png";
 import StingrayIcon from "../assets/stingray.png";
 import TriturusIcon from "../assets/triturus.png";
 import WhaleIcon from "../assets/whale.png";
+import CrabIcon from "../assets/crab.png";
+import StarfishIcon from "../assets/starfish.png";
 
 export const accordionItems = [
   {
@@ -60,10 +62,27 @@ export const ITEM_TYPES = [
     level: 1,
   },
   {
+    name: "Starfish",
+    rarity: "rare",
+    cost: 150,
+    icon: StarfishIcon,
+    size: "small",
+    level: 1,
+  },
+
+  {
     name: "Clownfish",
     rarity: "common",
     cost: 120,
     icon: ClownfishIcon,
+    size: "small",
+    level: 1,
+  },
+  {
+    name: "Crab",
+    rarity: "common",
+    cost: 120,
+    icon: CrabIcon,
     size: "small",
     level: 1,
   },
