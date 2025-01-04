@@ -169,16 +169,16 @@ export default function MyHabits() {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-2">
             <div className="flex justify-between mx-4 items-baseline ">
                 <h2 className="text-2xl font-bold text-primary">My Habits</h2>
                 <Button onClick={() => openModal()} iconRight={addIcon} iconAlt='Add Icon' className="btn btn-circle mt-4  btn-primary "></Button>
             </div>
 
             {/* Habit Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {habits.map(habit => (
-                    <div key={habit.id} className={`relative card mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300`}>
+                    <div key={habit.id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
                         <div className="card-body p-6">
 
                             <div className="flex  gap-4 items-start">
@@ -198,7 +198,7 @@ export default function MyHabits() {
                                     </ul>
                                 </div>
                             </div>
-                            <div className='w-full flex  justify-center md:justify-between my-3 sm:gap-2  '>
+                            <div className='w-full flex   justify-between my-3 gap-2  '>
                                 <HabitStat
                                     label="Completed"
                                     bgColor='shadow-2xl shadow-teal-500'

@@ -9,7 +9,7 @@ export default function HabitStat({
     valueColor = 'text-white', // Default value color
 }) {
     return (
-        <div className={`flex flex-col items-center justify-center p-4 ${bgColor} rounded-lg`}>
+        <div className={`flex   flex-col items-center justify-center p-2 ${bgColor} rounded-lg`}>
             {/* Icon (if you want to use the icon prop, you can include it here) */}
             {icon && <div className="mb-2">{icon}</div>}
 
