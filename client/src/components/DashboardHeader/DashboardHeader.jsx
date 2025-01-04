@@ -10,7 +10,7 @@ function DashboardHeader({ toggleSidebar }) {
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-md hover:bg-primary hover:text-secondary focus:outline-none focus:ring focus:ring-primary transition-colors duration-200"
+          className="p-2 rounded-md hidden hover:bg-primary hover:text-secondary focus:outline-none focus:ring focus:ring-primary md:block transition-colors duration-200"
           aria-label="Toggle Sidebar"
         >
           <svg

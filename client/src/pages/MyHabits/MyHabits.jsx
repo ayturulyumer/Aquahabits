@@ -252,7 +252,7 @@ export default function MyHabits() {
 
                         {/* Big Check Icon when Completed */}
                         {habit.completed && (
-                            <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-50">
+                            <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                 </svg>
