@@ -10,6 +10,8 @@ import "../../scss/Calendar.scss"
 import HabitStat from '../../components/HabitStat/HabitStat.jsx';
 import Tippy from '@tippyjs/react';
 import "tippy.js/animations/scale-extreme.css";
+import { useAuth } from '../../context/authContext.jsx';
+import { useContext } from 'react';
 
 
 const initialHabits = [
@@ -88,6 +90,7 @@ export default function MyHabits() {
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState(null);
+    const { increaseUserPoints, decreaseUserPoints } = useAuth()
 
 
     const toggleHabitCompletion = (id) => {
@@ -123,10 +126,12 @@ export default function MyHabits() {
                 origin: { x: 0.5, y: 0.7 },
                 colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
             });
+            increaseUserPoints(10)
         } else {
             const audio = new Audio('/uncheck-sound.mp3');
             audio.volume = 0.05;
             audio.play();
+            decreaseUserPoints(10)
         }
 
         setHabits(updatedHabits);
@@ -183,15 +188,16 @@ export default function MyHabits() {
 
                             <div className="flex  gap-4 items-start">
 
-                                <h3 className="card-title text-lg font-semibold text-neutral">{habit.name}</h3>
+                                <h3 className="card-title text-lg font-semibold text-neutral ">{habit.name}</h3>
                                 <input
                                     type="checkbox"
                                     checked={habit.completed}
                                     onChange={() => toggleHabitCompletion(habit.id)}
                                     className="checkbox checkbox-success"
                                 />
-                                <div className=" dropdown dropdown-left absolute top-0 right-0 mr-2">
-                                    <div tabIndex={0} role="button" className="">...</div>
+                                <span className="absolute top-7.5 right-2 badge ">{habit.frequency}</span>
+                                <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
+                                    <div tabIndex={0} role="button" className="text-2xl">...</div>
                                     <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
                                         <li onClick={() => openModal(habit)}><a>Edit</a></li>
                                         <li onClick={() => openConfirmationModal(habit)}><a>Delete</a></li>

@@ -4,6 +4,7 @@ import "tippy.js/animations/scale-extreme.css";
 import Tippy from "@tippyjs/react";
 import Button from "../Button/Button.jsx";
 import LevelUpIcon from "../../svg/levelup-icon.svg";
+import AquaCoins from "../../assets/aquagem.png"
 import { ITEM_TYPES } from "../../utils/constants.js";
 
 export default function AquariumGrid({ grid, handleItemSelect, growAnimal, removeAnimal, setActiveCell, activeCell, userPoints }) {
@@ -15,9 +16,9 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                     key={`${rowIndex}-${colIndex}`}
                     content={
                         cell ? (
-                            <div className="p-2">
+                            <div className="p-2 flex flex-col gap-2">
                                 <h4 className="font-semibold text-lg">{cell.name}</h4>
-                                <p className="text-sm">Rarity: {cell.rarity}</p>
+                                <p className="text-sm ">Rarity: {cell.rarity}</p>
                                 <p className="text-sm">Level: {cell.level}</p>
                                 <p className="text-xs">Cost: {cell.cost} pts</p>
                                 <div className="flex gap-2">
@@ -41,14 +42,16 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                                 {ITEM_TYPES.map((item) => (
                                     <button
                                         key={item.name}
-                                        className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${userPoints >= item.cost ? "hover:bg-primary-focus" : "bg-gray-300 cursor-not-allowed"
+                                        className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${userPoints >= item.cost ? "bg-green-500/30" : "bg-red-500/30 cursor-not-allowed"
                                             }`}
                                         onClick={() => handleItemSelect(rowIndex, colIndex, item)}
                                         disabled={userPoints < item.cost}
                                     >
                                         <img src={item.icon} alt={item.name} className="w-8 h-8 mb-1" />
                                         <span className="text-sm">{item.name}</span>
-                                        <span className="text-xs">{item.cost} pts</span>
+                                        <div className="flex text-primary font-medium gap-2">{item.cost}
+                                            <img className="w-4 h-4" src={AquaCoins} alt="Aqua Coins" />
+                                        </div>
                                     </button>
                                 ))}
                             </div>

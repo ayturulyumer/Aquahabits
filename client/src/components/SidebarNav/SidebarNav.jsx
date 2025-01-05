@@ -18,7 +18,7 @@ function SidebarNav({ isOpen }) {
     }
 
     return (
-        <nav className="p-8">
+        <nav className="p-8 ">
             <ul className="space-y-2">
                 {menuItems.map((item) => (
                     <NavLink

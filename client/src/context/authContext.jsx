@@ -6,8 +6,16 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
+  const [userPoints, setUserPoints] = useState(50)
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+
+  const decreaseUserPoints = (amount) => {
+    setUserPoints((prevUserPoints) => prevUserPoints - amount)
+  }
+  const increaseUserPoints = (amount) => {
+    setUserPoints((prevUserPoints) => prevUserPoints + amount)
+  }
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
@@ -63,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, userPoints, increaseUserPoints, decreaseUserPoints }}>
       {children}
     </AuthContext.Provider>
   );

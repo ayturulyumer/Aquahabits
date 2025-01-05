@@ -13,11 +13,11 @@ function DashboardShell({ children }) {
     };
 
     return (
-        <div className="flex h-screen overflow-hidden bg-custom-gradient">
+        <div className="flex  h-screen  bg-custom-gradient">
             {!isMobile ? (
                 // Render Sidebar for larger screens
                 <div
-                    className={`bg-custom-gradient text-neutral transition-all duration-300 ease-in-out ${sidebarOpen ? "w-52" : "w-0"
+                    className={`bg-custom-gradient   text-neutral transition-all duration-300 ease-in-out ${sidebarOpen ? "w-64" : "w-0"
                         }`}
                 >
                     <SidebarNav isOpen={sidebarOpen} />

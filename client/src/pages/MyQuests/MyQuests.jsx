@@ -17,7 +17,6 @@ const completedMissions = [
 
 
 export default function MyQuests() {
-  const userPoints = 325; // This would normally come from a user state or API
 
   return (
     <div className="min-h-screen mx-4 ">

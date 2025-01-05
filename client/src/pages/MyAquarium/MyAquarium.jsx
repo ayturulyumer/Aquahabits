@@ -4,35 +4,25 @@ import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
 
 
+
 import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
 import UnlockGrid from "../../components/UnlockGrid/UnlockGrid.jsx";
+import { useAuth } from "../../context/authContext.jsx";
+import { useContext } from "react";
 
 const GRID_SIZE = 6;
-const ITEM_TYPES = [
-  { name: "Axolotl", rarity: "rare", cost: 150, icon: "../../assets/axolotl.png", size: "small" },
-  { name: "Clownfish", rarity: "common", cost: 120, icon: "../../assets/clownfish.png", size: "small" },
-  { name: "Dolphin", rarity: "epic", cost: 300, icon: "../../assets/dolphin.png", size: "small" },
-  { name: "Jellyfish", rarity: "uncommon", cost: 200, icon: "../../assets/jellyfish.png", size: "small" },
-  { name: "Kraken", rarity: "legendary", cost: 500, icon: "../../assets/kraken.png", size: "small" },
-  { name: "Octopus", rarity: "rare", cost: 250, icon: "../../assets/octopus.png", size: "small" },
-  { name: "Piranha", rarity: "common", cost: 100, icon: "../../assets/piranha.png", size: "small" },
-  { name: "Seahorse", rarity: "common", cost: 80, icon: "../../assets/seahorse.png", size: "small" },
-  { name: "Sea Turtle", rarity: "rare", cost: 220, icon: "../../assets/seaturtle.png", size: "small" },
-  { name: "Shark", rarity: "epic", cost: 400, icon: "../../assets/shark.png", size: "small" },
-  { name: "Stingray", rarity: "uncommon", cost: 180, icon: "../../assets/stringray.png", size: "small" },
-  { name: "Triturus", rarity: "legendary", cost: 90, icon: "../../assets/triturus.png", size: "small" },
-  { name: "Whale", rarity: "legendary", cost: 600, icon: "../../assets/whale.png", size: "small" },
-];
+
 
 
 export default function MyAquarium() {
+  const { userPoints, increaseUserPoints, decreaseUserPoints } = useAuth()
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
       .map(() => Array(GRID_SIZE).fill(null))
   );
-  const [userPoints, setUserPoints] = useState(999999);
+
   const [isMuted, setIsMuted] = useState(false);
   const [activeCell, setActiveCell] = useState(null); // Track the active cell for tooltip visibility
 
@@ -61,7 +51,7 @@ export default function MyAquarium() {
       const itemCopy = { ...item };
       newGrid[row][col] = itemCopy;
       setGrid(newGrid);
-      setUserPoints(userPoints - item.cost);
+      decreaseUserPoints(item.cost);
       splashSound.volume = 0.05;
       splashSound.play();
 
@@ -101,7 +91,7 @@ export default function MyAquarium() {
     if (animal && animal.level) {
       newGrid[row][col] = null; // Remove the animal
       setGrid(newGrid);
-      setUserPoints(userPoints + animal.cost); // Add points back when removing
+      increaseUserPoints(animal.cost)
     }
   };
 
@@ -110,9 +100,6 @@ export default function MyAquarium() {
   return (
     <div className="container mx-auto p-2">
       <h2 className="text-2xl font-bold text-primary mb-4">My Ocean</h2>
-      <div className="mb-4">
-        <span className="text-lg font-semibold">Points: {userPoints}</span>
-      </div>
 
       <div className="flex flex-wrap justify-around gap-4 p-2">
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
