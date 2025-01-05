@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react";
 import Button from "../Button/Button.jsx";
 import LevelUpIcon from "../../svg/levelup-icon.svg";
 import AquaCoins from "../../assets/aquagem.png"
-import { ITEM_TYPES } from "../../utils/constants.js";
+import { ITEM_TYPES, GROWTH_COSTS } from "../../utils/constants.js";
 
 export default function AquariumGrid({ grid, handleItemSelect, growAnimal, removeAnimal, setActiveCell, activeCell, userPoints }) {
     // Memoize the grid rendering
@@ -16,19 +16,29 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                     key={`${rowIndex}-${colIndex}`}
                     content={
                         cell ? (
-                            <div className="p-2 flex flex-col gap-2">
+                            <div className="p-1 flex flex-col gap-2">
                                 <h4 className="font-semibold text-lg">{cell.name}</h4>
-                                <p className="text-sm ">Rarity: {cell.rarity}</p>
-                                <p className="text-sm">Level: {cell.level}</p>
-                                <p className="text-xs">Cost: {cell.cost} pts</p>
+                                <p className="text-sm badge ">Rarity: {cell.rarity}</p>
+                                <p className="text-sm badge">Level: {cell.level}</p>
                                 <div className="flex gap-2">
                                     <Button
                                         className="bg-blue-500 text-white"
                                         onClick={() => growAnimal(rowIndex, colIndex)}
-                                        disabled={cell.level === 3}
+                                        disabled={
+                                            cell.level === 3 || userPoints < GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]
+                                        }
                                     >
-                                        {cell.level === 3 ? "Max Level" : "Grow"}
+                                        {cell.level === 3
+                                            ? "Max Level"
+                                            : (
+                                                <>
+                                                    <img className="w-4 h-4" src={AquaCoins} alt="Aqua Coins" />
+                                                    {GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]}
+                                                </>
+                                            )}
+
                                     </Button>
+
                                     <Button
                                         className="bg-red-500 text-white"
                                         onClick={() => removeAnimal(rowIndex, colIndex)}

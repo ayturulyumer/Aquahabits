@@ -9,7 +9,7 @@ import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
 import UnlockGrid from "../../components/UnlockGrid/UnlockGrid.jsx";
 import { useAuth } from "../../context/authContext.jsx";
-import { useContext } from "react";
+import { GROWTH_COSTS } from "../../utils/constants.js";
 
 const GRID_SIZE = 6;
 
@@ -61,28 +61,46 @@ export default function MyAquarium() {
     }
   };
 
+
   const growAnimal = (row, col) => {
     const newGrid = [...grid];
     const animal = newGrid[row][col];
 
     if (animal) {
-      growSound.volume = 0.1;
-      growSound.play();
+      // Determine the growth cost
+      const currentCost =
+        animal.level === 1
+          ? GROWTH_COSTS[animal.rarity].level2
+          : animal.level === 2
+            ? GROWTH_COSTS[animal.rarity].level3
+            : null;
 
-      animal.isGrowing = true; // Trigger animation
-      setGrid(newGrid);
+      // Validate if the user has enough Aqua Coins
+      if (currentCost !== null && userPoints >= currentCost) {
+        growSound.volume = 0.1;
+        growSound.play();
 
-      setTimeout(() => {
-        animal.isGrowing = false; // Remove animation after it ends
-        if (animal.level === 1) {
-          animal.level = 2;
-        } else if (animal.level === 2) {
-          animal.level = 3;
-        }
-        setGrid([...newGrid]);
-      }, 400); // Duration matches CSS animation
+        // Deduct the coins and trigger growth animation
+        decreaseUserPoints(currentCost);
+        animal.isGrowing = true; // Trigger animation
+        setGrid(newGrid);
+
+        setTimeout(() => {
+          animal.isGrowing = false; // Remove animation after it ends
+          if (animal.level === 1) {
+            animal.level = 2;
+          } else if (animal.level === 2) {
+            animal.level = 3;
+          }
+          setGrid([...newGrid]);
+        }, 400); // Duration matches CSS animation
+      } else {
+        console.log("Not enough Aqua Coins!"); // Notify user
+        // Optionally, you could trigger a UI alert here
+      }
     }
   };
+
 
   const removeAnimal = (row, col) => {
     const newGrid = [...grid];

@@ -6,7 +6,7 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [userPoints, setUserPoints] = useState(50)
+  const [userPoints, setUserPoints] = useState(300)
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
 

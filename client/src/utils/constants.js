@@ -77,3 +77,23 @@ export const ITEM_TYPES = [
   { name: "Triturus", rarity: "legendary", cost: 500, icon: TriturusIcon, size: "small", level: 1 },
 ];
 
+export const GROWTH_COSTS = {
+  common: {
+    level2: 30,
+    level3: 60,
+  },
+  uncommon: {
+    level2: 50,
+    level3: 100,
+  },
+  rare: {
+    level2: 80,
+    level3: 150,
+  },
+  legendary: {
+    level2: 150,
+    level3: 300,
+  },
+};
+
+
