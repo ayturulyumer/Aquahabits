@@ -116,7 +116,7 @@ export default function MyAquarium() {
 
 
   return (
-    <div className="container mx-auto p-2">
+    <div className="container  mx-auto p-2">
       <h2 className="text-2xl font-bold text-primary mb-4">My Ocean</h2>
 
       <div className="flex flex-wrap justify-around gap-4 p-2">
@@ -141,7 +141,6 @@ export default function MyAquarium() {
             onClick={() => setIsMuted(!isMuted)}
           />
         </div>
-        <UnlockGrid />
       </div>
     </div>
   );
