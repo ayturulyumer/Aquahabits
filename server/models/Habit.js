@@ -7,7 +7,7 @@ const habitSchema = new mongoose.Schema({
   goal: { type: String, required: false },
   selectedDays: { type: [String], default: [] }, // Only for weekly habits
   timesPerWeek: { type: Number, required: true },
-  history: [{ date: { type: Date, required: true } }],
+  history: [{ type: Date }],
   streak: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });

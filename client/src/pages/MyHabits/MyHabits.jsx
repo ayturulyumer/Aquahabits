@@ -139,10 +139,10 @@ export default function MyHabits() {
 
     const addOrUpdateHabit = (habit) => {
         if (habit.id) {
-            // Update existing habit
             setHabits(habits.map(h => h.id === habit.id ? { ...h, ...habit } : h));
         } else {
             // Add new habit
+            console.log(habit)
             setHabits([...habits, { ...habit, id: Date.now(), streak: 0, history: [] }]);
         }
         setIsModalOpen(false);
