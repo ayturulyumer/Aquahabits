@@ -8,7 +8,7 @@ router.get("/", auth, async (req, res) => {
     const habits = await habitService.getAll(userId);
     res.json(habits);
   } catch (err) {
-    const statusCode = err.message === "Habits not found" ? 404 : 500;
+    const statusCode = err.message === "No habits found" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });
   }
 });

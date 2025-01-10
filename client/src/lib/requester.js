@@ -3,20 +3,16 @@ const buildOptions = (data) => {
 
   const options = {
     credentials: "include", // Ensure cookies are sent with the request
+    headers: {}, // Initialize headers to avoid undefined issues
   };
 
   if (accessToken) {
-    options.headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
+    options.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   if (data) {
     options.body = JSON.stringify(data);
-    options.headers = {
-      ...options.headers,
-      "content-type": "application/json",
-    };
+    options.headers["content-type"] = "application/json";
   }
 
   return options;
