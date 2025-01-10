@@ -1,16 +1,16 @@
 const router = require("express").Router();
+const { auth } = require("../middlewares/authMiddleware.js");
 const habitService = require("../services/habitService.js");
 
-const createHabit = async (req, res) => {
-  const { userId } = req.user; 
-  const habitData = req.body; 
-
+router.get("/", auth, async (req, res) => {
   try {
-    const habit = await habitService.createHabit(userId, habitData);
-    res.status(201).json({ success: true, habit });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    const userId = req.user.id;
+    const habits = await habitService.getAll(userId);
+    res.json(habits);
+  } catch (err) {
+    const statusCode = err.message === "Habits not found" ? 404 : 500;
+    res.status(statusCode).json({ message: err.message });
   }
-};
+});
 
 module.exports = router;

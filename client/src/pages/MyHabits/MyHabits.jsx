@@ -11,81 +11,81 @@ import HabitStat from '../../components/HabitStat/HabitStat.jsx';
 import Tippy from '@tippyjs/react';
 import "tippy.js/animations/scale-extreme.css";
 import { useAuth } from '../../context/authContext.jsx';
-import { useContext } from 'react';
+import { useQuery } from "react-query"
+import * as habitsApi from "../../api/habitsApi.js"
 
 
-const initialHabits = [
-    {
-        id: 1,
-        name: 'Drink Water',
-        frequency: 'Daily',
-        completed: false,
-        streak: 5,
-        goal: '8 glasses',
-        timesPerWeek: 7, // Always 7 for Daily habits
-        history: [
-            { date: '2024-12-01', status: 'completed' },
-            { date: '2024-12-02', status: 'skipped' }
-        ]
-    },
-    {
-        id: 2,
-        name: 'Exercise',
-        frequency: '3x/week',
-        completed: false,
-        streak: 2,
-        goal: '30 minutes',
-        selectedDays: ['Monday', 'Wednesday', 'Friday'], // Required for weekly habits
-        timesPerWeek: 3,
-        history: [
-            { date: '2024-12-01', status: 'completed' },
-            { date: '2024-12-03', status: 'skipped' }
-        ]
-    },
-    {
-        id: 3,
-        name: 'Read',
-        frequency: 'Daily',
-        completed: true,
-        streak: 10,
-        goal: '30 pages',
-        timesPerWeek: 7, // Always 7 for Daily habits
-        history: [
-            { date: '2024-12-01', status: 'completed' },
-            { date: '2024-12-02', status: 'completed' }
-        ]
-    },
-    {
-        id: 4,
-        name: 'Meditate',
-        frequency: 'Daily',
-        completed: false,
-        streak: 7,
-        goal: '15 minutes',
-        timesPerWeek: 7, // Always 7 for Daily habits
-        history: [
-            { date: '2024-12-01', status: 'skipped' }
-        ]
-    },
-    {
-        id: 5,
-        name: 'Learn a Language',
-        frequency: '5x/week',
-        completed: true,
-        streak: 15,
-        goal: '20 new words',
-        selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], // Only for habits with Xx/week
-        timesPerWeek: 5,
-        history: [
-            { date: '2024-12-01', status: 'completed' },
-            { date: '2024-12-02', status: 'completed' }
-        ]
-    }
-];
+// const initialHabits = [
+//     {
+//         id: 1,
+//         name: 'Drink Water',
+//         frequency: 'Daily',
+//         completed: false,
+//         streak: 5,
+//         goal: '8 glasses',
+//         timesPerWeek: 7, // Always 7 for Daily habits
+//         history: [
+//             { date: '2024-12-01', status: 'completed' },
+//             { date: '2024-12-02', status: 'skipped' }
+//         ]
+//     },
+//     {
+//         id: 2,
+//         name: 'Exercise',
+//         frequency: '3x/week',
+//         completed: false,
+//         streak: 2,
+//         goal: '30 minutes',
+//         selectedDays: ['Monday', 'Wednesday', 'Friday'], // Required for weekly habits
+//         timesPerWeek: 3,
+//         history: [
+//             { date: '2024-12-01', status: 'completed' },
+//             { date: '2024-12-03', status: 'skipped' }
+//         ]
+//     },
+//     {
+//         id: 3,
+//         name: 'Read',
+//         frequency: 'Daily',
+//         completed: true,
+//         streak: 10,
+//         goal: '30 pages',
+//         timesPerWeek: 7, // Always 7 for Daily habits
+//         history: [
+//             { date: '2024-12-01', status: 'completed' },
+//             { date: '2024-12-02', status: 'completed' }
+//         ]
+//     },
+//     {
+//         id: 4,
+//         name: 'Meditate',
+//         frequency: 'Daily',
+//         completed: false,
+//         streak: 7,
+//         goal: '15 minutes',
+//         timesPerWeek: 7, // Always 7 for Daily habits
+//         history: [
+//             { date: '2024-12-01', status: 'skipped' }
+//         ]
+//     },
+//     {
+//         id: 5,
+//         name: 'Learn a Language',
+//         frequency: '5x/week',
+//         completed: true,
+//         streak: 15,
+//         goal: '20 new words',
+//         selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], // Only for habits with Xx/week
+//         timesPerWeek: 5,
+//         history: [
+//             { date: '2024-12-01', status: 'completed' },
+//             { date: '2024-12-02', status: 'completed' }
+//         ]
+//     }
+// ];
 
 
 export default function MyHabits() {
-    const [habits, setHabits] = useState(initialHabits);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -93,14 +93,27 @@ export default function MyHabits() {
     const { increaseUserPoints, decreaseUserPoints } = useAuth()
 
 
+    const {
+        data: habits,
+        isLoading: habitsLoading,
+        error: habitsError,
+    } = useQuery({
+        queryKey: ["habits"],
+        queryFn: habitsApi.getAll
+    })
+
+
+
+
     const toggleHabitCompletion = (id) => {
         const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
 
         const updatedHabits = habits.map(habit => {
             if (habit.id === id) {
+                // Check if today's date is already in the habit history
                 const updatedHistory = habit.completed
                     ? habit.history.filter(entry => entry.date !== today) // Remove today's date if unchecking
-                    : [...habit.history, { date: today, status: 'completed' }]; // Add today's date if checking
+                    : [...habit.history, { date: today }]; // Add today's date if checking
 
                 return {
                     ...habit,
@@ -126,16 +139,16 @@ export default function MyHabits() {
                 origin: { x: 0.5, y: 0.7 },
                 colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
             });
-            increaseUserPoints(10)
+            increaseUserPoints(10);
         } else {
             const audio = new Audio('/uncheck-sound.mp3');
             audio.volume = 0.05;
             audio.play();
-            decreaseUserPoints(10)
+            decreaseUserPoints(10);
         }
 
-        setHabits(updatedHabits);
     };
+
 
     const addOrUpdateHabit = (habit) => {
         if (habit.id) {
@@ -165,9 +178,6 @@ export default function MyHabits() {
     };
 
 
-
-
-
     const openModal = (habit = null) => {
         setEditingHabit(habit);
         setIsModalOpen(true);
@@ -182,7 +192,7 @@ export default function MyHabits() {
 
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {habits.map(habit => (
+                {habits?.map(habit => (
                     <div key={habit.id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
                         <div className="card-body p-6">
 
@@ -231,8 +241,10 @@ export default function MyHabits() {
                                     gutterSize={1.5}
                                     showWeekdayLabels={true}
                                     values={habit.history
-                                        .filter(entry => entry.status === 'completed') // Filter for completed entries
-                                        .map(entry => ({ date: entry.date, count: 1 })) // Map to date and count
+                                        .map(entry => ({
+                                            date: new Date(entry), // Convert the string date to a JavaScript Date object
+                                            count: 1
+                                        }))
                                     }
                                     classForValue={(value) => {
                                         if (!value) {
@@ -245,7 +257,7 @@ export default function MyHabits() {
 
                                         // Wrap the day element with Tippy for tooltip
                                         return (
-                                            <Tippy key={value.date} placement='top' animation="scale-extreme" content={`Completed: ${value.date}`}>
+                                            <Tippy key={value.date} placement='top' animation="scale-extreme" content={`${value.date}`}>
                                                 {element}
                                             </Tippy>
                                         );

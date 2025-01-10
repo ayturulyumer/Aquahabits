@@ -1,6 +1,9 @@
 
-import { createBrowserRouter, RouterProvider, Outlet, useLocation , Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, useLocation, Navigate } from "react-router-dom";
 import "./scss/App.scss"
+
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools"
 
 import { AuthProvider } from "./context/authContext.jsx";
 
@@ -13,9 +16,11 @@ import Register from "./pages/Register/Register.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
-import MyOcean from "./pages/MyAquarium/MyAquarium.jsx";
 import MyQuests from "./pages/MyQuests/MyQuests.jsx";
 import MyAquarium from "./pages/MyAquarium/MyAquarium.jsx";
+
+
+const queryClient = new QueryClient();
 
 const Layout = () => {
   const isMobile = useScreenSize()
@@ -54,8 +59,12 @@ function App() {
       ],
     },
   ]);
+  /// NEED TO IMPLEMENT REACT QUERY
   return <AuthProvider>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </AuthProvider>;
 }
 

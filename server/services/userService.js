@@ -49,7 +49,6 @@ exports.getUserData = async (userId) => {
   if (!userData) {
     throw new Error("User not found");
   }
-
   return userData;
 };
 
