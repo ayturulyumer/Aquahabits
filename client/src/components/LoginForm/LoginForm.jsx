@@ -7,7 +7,7 @@ import Button from "../Button/Button.jsx";
 
 import { useForm } from "../../hooks/useForm.jsx";
 
-import * as authApi from "../../api/authApi.js"
+import * as auth from "../../actions/authActions.js";
 import { useAuth } from "../../context/authContext.jsx";
 
 
@@ -30,7 +30,8 @@ export default function LoginForm() {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                const response = await authApi.login(values.email, values.password)
+                const response = await auth.login(values.email, values.password)
+                console.log(response)
                 login(response.user, response.accessToken)
                 navigate("/dashboard")
             } catch (err) {

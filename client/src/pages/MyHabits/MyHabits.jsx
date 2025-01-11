@@ -12,7 +12,7 @@ import Tippy from '@tippyjs/react';
 import "tippy.js/animations/scale-extreme.css";
 import { useAuth } from '../../context/authContext.jsx';
 import { useQuery } from "react-query"
-import * as habitsApi from "../../api/habitsApi.js"
+import * as habitsApi from '../../actions/habitActions.js';
 
 
 // const initialHabits = [
@@ -105,6 +105,7 @@ export default function MyHabits() {
 
 
 
+
     const toggleHabitCompletion = (id) => {
         const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
 
@@ -192,8 +193,8 @@ export default function MyHabits() {
 
             {/* Habit Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {habits?.map(habit => (
-                    <div key={habit.id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
+                {habits?.data?.map(habit => (
+                    <div key={habit._id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
                         <div className="card-body p-6">
 
                             <div className="flex  gap-4 items-start">

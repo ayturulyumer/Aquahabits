@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import * as authApi from "../api/authApi.js";
+import { getUserData, refreshSession } from "../actions/authActions.js";
 
 const AuthContext = createContext();
 
@@ -24,19 +24,19 @@ export const AuthProvider = ({ children }) => {
       const fetchUserData = async () => {
         try {
           // Attempt to fetch user data with the current access token
-          const userData = await authApi.getUserData();
+          const userData = await getUserData();
           setUser(userData); // Set user data
         } catch (err) {
           // Check if the error is related to token expiration
           if (err.message === "Access token expired") {
             // Refresh the session if token expired
             try {
-              const refreshedAccessToken = await authApi.refreshSession();
+              const refreshedAccessToken = await refreshSession();
               setAccessToken(refreshedAccessToken);
               localStorage.setItem("accessToken", refreshedAccessToken); // Store the new token
 
               // Retry fetching user data with the new access token
-              const userData = await authApi.getUserData();
+              const userData = await getUserData();
               setUser(userData);
             } catch (refreshError) {
               console.error("Error refreshing session:", refreshError.message);

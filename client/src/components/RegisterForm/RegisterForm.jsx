@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link , useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { useForm } from "../../hooks/useForm.jsx";
 
@@ -8,7 +8,7 @@ import RegisterIcon from "../../svg/add-user-icon.svg";
 
 import Button from "../Button/Button.jsx";
 
-import * as authApi from "../../api/authApi.js"
+import * as auth from "../../actions/authActions.js";
 
 export default function RegisterForm() {
     const [errors, setErrors] = useState({})
@@ -46,7 +46,7 @@ export default function RegisterForm() {
         setErrors(newErrors)
         if (Object.keys(newErrors).length === 0) {
             try {
-                const user = await authApi.register(values.name, values.email, values.password)
+                const user = await auth.register(values.name, values.email, values.password)
                 console.log("User registered successfully", user);
                 navigate("/dashboard")
             } catch (err) {
