@@ -20,7 +20,7 @@ exports.createHabit = async (userId, habitData) => {
   }
 
   // Step 2: Create habit
-  const newHabit = await Habit.create({ ...habitData, user: userId });
+  const newHabit = await Habit.create({ ...habitData, ownerId: userId });
 
   // Step 3: Link habit to user
   user.habits.push(newHabit._id);

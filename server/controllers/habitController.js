@@ -14,3 +14,15 @@ router.get("/", auth, async (req, res) => {
 });
 
 module.exports = router;
+
+router.post("/create", auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const habitData = req.body;
+
+    const createdHabit = await habitService.createHabit(userId, habitData);
+    res.json(createdHabit);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
