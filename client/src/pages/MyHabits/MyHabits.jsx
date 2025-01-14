@@ -14,84 +14,21 @@ import { useQuery } from "react-query"
 import * as habitsApi from '../../actions/habitActions.js';
 import formatDateToReadable from '../../utils/formatDateToReadable.js';
 import { useGenericMutation } from '../../hooks/useMutation.js';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
-// const initialHabits = [
-//     {
-//         id: 1,
-//         name: 'Drink Water',
-//         frequency: 'Daily',
-//         completed: false,
-//         streak: 5,
-//         goal: '8 glasses',
-//         timesPerWeek: 7, // Always 7 for Daily habits
-//         history: [
-//             { date: '2024-12-01', status: 'completed' },
-//             { date: '2024-12-02', status: 'skipped' }
-//         ]
-//     },
-//     {
-//         id: 2,
-//         name: 'Exercise',
-//         frequency: '3x/week',
-//         completed: false,
-//         streak: 2,
-//         goal: '30 minutes',
-//         selectedDays: ['Monday', 'Wednesday', 'Friday'], // Required for weekly habits
-//         timesPerWeek: 3,
-//         history: [
-//             { date: '2024-12-01', status: 'completed' },
-//             { date: '2024-12-03', status: 'skipped' }
-//         ]
-//     },
-//     {
-//         id: 3,
-//         name: 'Read',
-//         frequency: 'Daily',
-//         completed: true,
-//         streak: 10,
-//         goal: '30 pages',
-//         timesPerWeek: 7, // Always 7 for Daily habits
-//         history: [
-//             { date: '2024-12-01', status: 'completed' },
-//             { date: '2024-12-02', status: 'completed' }
-//         ]
-//     },
-//     {
-//         id: 4,
-//         name: 'Meditate',
-//         frequency: 'Daily',
-//         completed: false,
-//         streak: 7,
-//         goal: '15 minutes',
-//         timesPerWeek: 7, // Always 7 for Daily habits
-//         history: [
-//             { date: '2024-12-01', status: 'skipped' }
-//         ]
-//     },
-//     {
-//         id: 5,
-//         name: 'Learn a Language',
-//         frequency: '5x/week',
-//         completed: true,
-//         streak: 15,
-//         goal: '20 new words',
-//         selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], // Only for habits with Xx/week
-//         timesPerWeek: 5,
-//         history: [
-//             { date: '2024-12-01', status: 'completed' },
-//             { date: '2024-12-02', status: 'completed' }
-//         ]
-//     }
-// ];
+
 
 
 export default function MyHabits() {
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState(null);
     const { increaseUserPoints, decreaseUserPoints } = useAuth()
+
 
     const today = formatDateToReadable(new Date())
 
@@ -104,10 +41,6 @@ export default function MyHabits() {
         queryKey: ["habits"],
         queryFn: habitsApi.getAll
     })
-
-
-
-
 
 
     const toggleHabitCompletion = (id) => {
@@ -180,14 +113,19 @@ export default function MyHabits() {
     });
 
 
+    const DeleteHabitMutation = useGenericMutation({
+        mutationFn: habitsApi.deleteHabit,
+        queryKey: "habits",
+        onSuccess: (data) => console.log("Habit deleted successfully:", data),
+        onError: (error) => console.error("Error deleting habit:", error),
+    })
+
+
 
     const addOrUpdateHabit = (habit) => {
-        console.log(habit)
         if (habit.id) {
             updateHabitMutation.mutate(habit)
         } else {
-            // Add new habit
-            console.log(habit)
             createHabitMutation.mutate(habit)
         }
         setIsModalOpen(false);
@@ -196,24 +134,41 @@ export default function MyHabits() {
 
     const openConfirmationModal = (habit) => {
         setHabitToDelete(habit);
+        setSearchParams({ habitId: habit._id });
         setIsConfirmationOpen(true);
     };
 
     const closeConfirmationModal = () => {
         setIsConfirmationOpen(false);
+        setSearchParams({});
         setHabitToDelete(null);
     };
 
-    const confirmDeleteHabit = () => {
-        setHabits(habits.filter(habit => habit.id !== habitToDelete.id));
+    const confirmDeleteHabit = (habitId) => {
+        DeleteHabitMutation.mutate(habitId)
         closeConfirmationModal();
     };
 
 
     const openModal = (habit = null) => {
+        if (habit) {
+            // Add habit ID to URL as a query parameter
+            setSearchParams({ habitId: habit._id });
+        } else {
+            // Remove habitId from URL when adding a new habit
+            setSearchParams({});
+        }
+
         setEditingHabit(habit);
         setIsModalOpen(true);
     };
+
+    const closeEditModal = () => {
+        setIsModalOpen(false);
+        setSearchParams({});
+    }
+
+
 
     return (
         <div className="space-y-2">
@@ -324,16 +279,15 @@ export default function MyHabits() {
                     <HabitForm
                         habit={editingHabit || {}}
                         addOrUpdateHabit={addOrUpdateHabit}
-                        onCancel={() => setIsModalOpen(false)}
+                        onCancel={() => closeEditModal()}
                     />
-
                 </div>
             )}
 
             {isConfirmationOpen && (
                 <ConfirmationModal
                     isOpen={isConfirmationOpen}
-                    onConfirm={confirmDeleteHabit}
+                    onConfirm={() => confirmDeleteHabit(habitToDelete._id)}
                     onCancel={closeConfirmationModal}
                     message={
                         <>Are you sure you want to delete <span className="text-primary font-bold">{habitToDelete.name}</span>?</>

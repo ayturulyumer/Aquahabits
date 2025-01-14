@@ -16,7 +16,10 @@ export const createHabit = async (habitData) => {
     const response = await axiosHabits.post("/create", habitData); // Provide the correct endpoint path
     return response.data; // Return the created habit data
   } catch (error) {
-    console.error("Error creating habit:", error?.response?.data || error.message);
+    console.error(
+      "Error creating habit:",
+      error?.response?.data || error.message
+    );
     throw error;
   }
 };
@@ -25,9 +28,26 @@ export const createHabit = async (habitData) => {
 export const updateHabit = async (habitId, habitData) => {
   try {
     const response = await axiosHabits.patch(`/edit/${habitId}`, habitData); // Send habit ID in the path
-    return response.data; // Return the updated habit data
+    return response.data; 
   } catch (error) {
-    console.error("Error updating habit:", error?.response?.data || error.message);
+    console.error(
+      "Error updating habit:",
+      error?.response?.data || error.message
+    );
     throw error;
+  }
+};
+
+// Delete a habit
+export const deleteHabit = async (habitId) => {
+  try {
+    const response = await axiosHabits.delete(`/${habitId}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error deleting habit:",
+      error?.response?.data || error.message
+    );
+    throw error; // Rethrow the error for further handling
   }
 };

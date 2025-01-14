@@ -28,3 +28,13 @@ exports.createHabit = async (userId, habitData) => {
 
   return newHabit;
 };
+
+exports.deleteHabit = async (habitId, userId) => {
+  const deleteRef = await User.findByIdAndUpdate(userId, {
+    $pull: { habits: habitId },
+  });
+
+  await Habit.findByIdAndDelete(habitId);
+
+  return deleteRef;
+};
