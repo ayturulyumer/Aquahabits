@@ -20,8 +20,9 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
             goal: habit.goal || "",
             frequency: habit.frequency || "Daily",
             selectedDays: habit.selectedDays || [],
-            timesPerWeek: habit.timesPerWeek || 1,
             history: habit.history || [],
+            // Only include _id if the habit exists (i.e., we're editing)
+            ...(habit ? { _id: habit._id } : {}),
         },
         addOrUpdateHabit
     );
@@ -54,11 +55,12 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
         changeHandler({ target: { name: "selectedDays", value: updatedDays } });
     };
 
+
     return (
         <form
             onClick={(e) => e.stopPropagation()}
             onSubmit={onSubmit}
-            className="max-w-72 md:max-w-md   mx-4 p-4 bg-base-300 rounded-box"
+            className="max-w-72 md:max-w-md mx-4 p-4 bg-base-300 rounded-box"
         >
             {/* Habit Name */}
             <div className="form-control w-full mb-4">
@@ -79,22 +81,22 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
             {/* Ready-To-Go Habits */}
             <div className="mb-4 w-full">
                 <div className="flex py-4 gap-2 overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-3 md:gap-2">
-                    {READY_TO_GO_HABITS.map((habit) => (
+                    {READY_TO_GO_HABITS.map((habitOption) => (
                         <button
-                            key={habit}
+                            key={habitOption}
                             type="button"
                             className="btn btn-md"
                             onClick={() =>
-                                changeHandler({ target: { name: "name", value: habit } })
+                                changeHandler({ target: { name: "name", value: habitOption } })
                             }
                         >
-                            {habit}
+                            {habitOption}
                         </button>
                     ))}
                 </div>
             </div>
 
-            {/* What's the goal of this habit */}
+            {/* Goal */}
             <div className="form-control w-full mb-4">
                 <label className="label">
                     <span className="label-text">Goal</span>
@@ -132,7 +134,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     </label>
                     <div className="flex py-4 gap-2 overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-2 ">
                         {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className="form-control ">
+                            <div key={day} className="form-control">
                                 <label className="label cursor-pointer justify-start gap-2">
                                     <input
                                         type="checkbox"
@@ -148,7 +150,6 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                 </div>
             )}
 
-
             {/* Buttons */}
             <div className="flex justify-between gap-2">
                 <Button
@@ -159,7 +160,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     Cancel
                 </Button>
                 <Button type="submit" className="btn btn-primary">
-                    {habit.id ? "Update Habit" : "Create Habit"}
+                    {habit._id ? "Update Habit" : "Create Habit"}
                 </Button>
             </div>
         </form>

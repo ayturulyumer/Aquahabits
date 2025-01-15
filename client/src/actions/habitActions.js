@@ -24,17 +24,17 @@ export const createHabit = async (habitData) => {
   }
 };
 
-// Update an existing habit
-export const updateHabit = async (habitId, habitData) => {
+// Edit an existing habit
+export const editHabit = async ({ habitId, habitData }) => {
   try {
-    const response = await axiosHabits.patch(`/edit/${habitId}`, habitData); // Send habit ID in the path
-    return response.data; 
+    const response = await axiosHabits.put(`/${habitId}`, habitData);
+    return response.data; // Return the updated habit data
   } catch (error) {
     console.error(
       "Error updating habit:",
       error?.response?.data || error.message
     );
-    throw error;
+    throw error; // Rethrow the error for further handling
   }
 };
 

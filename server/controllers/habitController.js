@@ -28,6 +28,21 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
+router.put("/:habitId", auth, async (req, res) => {
+  const userId = req.user.id;
+  const { habitId } = req.params;
+  const habitData = req.body;
+
+  try {
+    const updatedHabit = await habitService.editHabit(habitId, habitData);
+    res.status(200).json(updatedHabit);
+  } catch (err) {
+    const statusCode = err.message === "Habit not found" ? 404 : 400;
+    res.status(statusCode).json({ message: err.message });
+  }
+});
+
+
 router.delete("/:habitId", auth, async (req, res) => {
   const userId = req.user.id;
   const { habitId } = req.params;

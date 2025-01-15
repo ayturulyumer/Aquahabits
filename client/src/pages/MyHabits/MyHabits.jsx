@@ -14,14 +14,14 @@ import { useQuery } from "react-query"
 import * as habitsApi from '../../actions/habitActions.js';
 import formatDateToReadable from '../../utils/formatDateToReadable.js';
 import { useGenericMutation } from '../../hooks/useMutation.js';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import Spinner from '../../components/Spinner/Spinner.jsx';
 
 
 
 
 
 export default function MyHabits() {
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingHabit, setEditingHabit] = useState(null);
@@ -105,9 +105,10 @@ export default function MyHabits() {
         onError: (error) => console.error("Error creating habit:", error),
     });
 
+
     const updateHabitMutation = useGenericMutation({
-        mutationFn: habitsApi.updateHabit,
-        queryKey: "habits", // Automatically invalidates "habits" after success
+        mutationFn: habitsApi.editHabit,
+        queryKey: "habits",
         onSuccess: (data) => console.log("Habit updated successfully:", data),
         onError: (error) => console.error("Error updating habit:", error),
     });
@@ -123,8 +124,11 @@ export default function MyHabits() {
 
 
     const addOrUpdateHabit = (habit) => {
-        if (habit.id) {
-            updateHabitMutation.mutate(habit)
+        if (habit._id) {
+            updateHabitMutation.mutate({
+                habitId: habit._id,
+                habitData: habit
+            })
         } else {
             createHabitMutation.mutate(habit)
         }
@@ -178,103 +182,110 @@ export default function MyHabits() {
             </div>
 
             {/* Habit Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {habits?.map(habit => (
-                    <div key={habit._id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
-                        <div className="card-body p-6">
+            {habitsLoading ?
+                <div className='flex justify-center align-middle'>
+                    <Spinner />
 
-                            <div className="flex  gap-4 items-start">
+                </div>
+                :
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {habits?.map(habit => (
+                        <div key={habit._id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
+                            <div className="card-body p-6">
 
-                                <h3 className="card-title text-lg font-semibold text-neutral ">{habit.name}</h3>
-                                <input
-                                    type="checkbox"
-                                    checked={habit.completed}
-                                    onChange={() => toggleHabitCompletion(habit.id)}
-                                    className="checkbox checkbox-success"
-                                />
-                                <span className="absolute top-7.5 right-2 badge ">{habit.frequency}</span>
-                                <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
-                                    <div tabIndex={0} role="button" className="text-2xl">...</div>
-                                    <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
-                                        <li onClick={() => openModal(habit)}><a>Edit</a></li>
-                                        <li onClick={() => openConfirmationModal(habit)}><a>Delete</a></li>
-                                    </ul>
+                                <div className="flex  gap-4 items-start">
+
+                                    <h3 className="card-title text-lg font-semibold text-neutral ">{habit.name}</h3>
+                                    <input
+                                        type="checkbox"
+                                        checked={habit.completed}
+                                        onChange={() => toggleHabitCompletion(habit.id)}
+                                        className="checkbox checkbox-success"
+                                    />
+                                    <span className="absolute top-7.5 right-2 badge ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
+                                    <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
+                                        <div tabIndex={0} role="button" className="text-2xl">...</div>
+                                        <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
+                                            <li onClick={() => openModal(habit)}><a>Edit</a></li>
+                                            <li onClick={() => openConfirmationModal(habit)}><a>Delete</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='w-full flex  justify-between my-3 gap-2  '>
-                                <HabitStat
-                                    label="Completed"
-                                    bgColor='shadow-2xl shadow-teal-500'
-                                    value={habit.completed}
-                                    labelColor="font-mono"
-                                    valueColor="font-mono "
-                                />
-                                <HabitStat label="Consistency" bgColor='shadow-2xl shadow-green-600 ' labelColor="font-mono "
-                                    valueColor="font-mono" value={`${habit.consistency} %`} />
-                                <HabitStat
-                                    label="Streak"
-                                    bgColor='shadow-2xl shadow-primary'
-                                    value={habit.streak}
-                                    labelColor="font-mono "
-                                    valueColor="font-mono"
-                                />
-                            </div>
+                                <div className='w-full flex  justify-between my-3 gap-2  '>
+                                    <HabitStat
+                                        label="Completed"
+                                        bgColor='shadow-2xl shadow-teal-500'
+                                        value={habit.completed}
+                                        labelColor="font-mono"
+                                        valueColor="font-mono "
+                                    />
+                                    <HabitStat label="Consistency" bgColor='shadow-2xl shadow-green-600 ' labelColor="font-mono "
+                                        valueColor="font-mono" value={`${habit.consistency} %`} />
+                                    <HabitStat
+                                        label="Streak"
+                                        bgColor='shadow-2xl shadow-primary'
+                                        value={habit.streak}
+                                        labelColor="font-mono "
+                                        valueColor="font-mono"
+                                    />
+                                </div>
 
-                            <p className="text-white mt-2">{habit.goal}</p>
-                            <div className="mt-4 space-y-3">
-                                <CalendarHeatmap
-                                    startDate={new Date(new Date().setMonth(new Date().getMonth() - 6)).setDate(new Date().getDate() + 1)} // 6 months ago + next day
+                                <p className="text-white mt-2">{habit.goal}</p>
+                                <div className="mt-4 space-y-3">
+                                    <CalendarHeatmap
+                                        startDate={new Date(new Date().setMonth(new Date().getMonth() - 6)).setDate(new Date().getDate() + 1)} // 6 months ago + next day
 
-                                    endDate={new Date()} // Today
-                                    gutterSize={2}
-                                    showWeekdayLabels={true}
-                                    values={habit.history
-                                        .map(entry => ({
-                                            date: new Date(entry), // Convert the string date to a JavaScript Date object
-                                            count: 1
-                                        }))
-                                    }
-                                    classForValue={(value) => {
-                                        if (!value) {
-                                            return 'color-empty'; // Class for empty cells
+                                        endDate={new Date()} // Today
+                                        gutterSize={2}
+                                        showWeekdayLabels={true}
+                                        values={habit.history
+                                            .map(entry => ({
+                                                date: new Date(entry), // Convert the string date to a JavaScript Date object
+                                                count: 1
+                                            }))
                                         }
-                                        return 'color-filled'; // Class for filled cells
-                                    }}
-                                    transformDayElement={(element, value) => {
-                                        if (!value || !value.date) return element; // Skip if no value
+                                        classForValue={(value) => {
+                                            if (!value) {
+                                                return 'color-empty'; // Class for empty cells
+                                            }
+                                            return 'color-filled'; // Class for filled cells
+                                        }}
+                                        transformDayElement={(element, value) => {
+                                            if (!value || !value.date) return element; // Skip if no value
 
 
 
-                                        // Wrap the day element with Tippy for tooltip
-                                        return (
-                                            <Tippy key={value.date} placement='top' animation="scale-subtle" content={`${value.date}`}>
-                                                {element}
-                                            </Tippy>
-                                        );
-                                    }}
-                                />
+                                            // Wrap the day element with Tippy for tooltip
+                                            return (
+                                                <Tippy key={value.date} placement='top' animation="scale-subtle" content={`${value.date}`}>
+                                                    {element}
+                                                </Tippy>
+                                            );
+                                        }}
+                                    />
+
+                                </div>
 
                             </div>
+
+                            {/* Big Check Icon when Completed */}
+                            {habit.history.some(entry => formatDateToReadable(entry) === today) && (
+                                <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            )}
 
                         </div>
 
-                        {/* Big Check Icon when Completed */}
-                        {habit.history.some(entry => formatDateToReadable(entry) === today) && (
-                            <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                        )}
+                    ))}
+                </div>}
 
-                    </div>
-
-                ))}
-            </div>
 
             {/* Add/Edit Habit Modal */}
             {isModalOpen && (
-                <div onClick={() => setIsModalOpen(false)} className="fixed inset-0  bg-black  backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+                <div onClick={() => closeEditModal()} className="fixed inset-0  bg-black  backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
                     <h3 className="text-xl font-semibold text-center hidden mb-2  text-primary">{editingHabit ? 'Edit Habit' : 'Add New Habit'}</h3>
                     <HabitForm
                         habit={editingHabit || {}}
