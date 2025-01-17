@@ -190,7 +190,7 @@ export default function MyHabits() {
                                         checked={isHabitCompletedToday(habit.history)}
                                         onChange={() => toggleHabitCompletion(habit._id)}
                                         disabled={CheckInHabitMutation.isLoading}
-                                        className="checkbox checkbox-success"
+                                        className={`${CheckInHabitMutation.isLoading ? "loading  text-primary" : "checkbox checkbox-success"}`}
                                     />
                                     <span className="absolute top-7.5 right-2 badge ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
                                     <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
