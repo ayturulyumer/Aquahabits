@@ -17,7 +17,7 @@ function DashboardShell({ children }) {
             {!isMobile ? (
                 // Render Sidebar for larger screens
                 <div
-                    className={`bg-custom-gradient   text-neutral transition-all duration-300 ease-in-out ${sidebarOpen ? "w-64" : "w-0"
+                    className={`bg-custom-gradient   text-neutral transition-all duration-300 ease-in-out ${sidebarOpen ? "w-52" : "w-0"
                         }`}
                 >
                     <SidebarNav isOpen={sidebarOpen} />

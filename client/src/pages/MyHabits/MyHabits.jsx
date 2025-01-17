@@ -201,7 +201,7 @@ export default function MyHabits() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className='w-full flex  justify-between my-3 gap-2  '>
+                                <div className='w-full flex  justify-around my-3 gap-2  '>
                                     <HabitStat
                                         label="Completed"
                                         bgColor='shadow-2xl shadow-teal-500'

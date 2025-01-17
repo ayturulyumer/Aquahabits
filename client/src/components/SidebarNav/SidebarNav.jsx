@@ -31,7 +31,7 @@ function SidebarNav({ isOpen }) {
                         }
                     >
                         {({ isActive }) => (
-                            <li className="flex items-center py-2 px-4 rounded">
+                            <li className="flex items-center justify-center py-2 px-4 rounded">
                                 <img className={`h-8 w-8 mr-2  ${isActive ? "animate-bounce" : ""}`} src={item.icon} alt={item.iconAlt} />
                                 {item.name}
                             </li>
