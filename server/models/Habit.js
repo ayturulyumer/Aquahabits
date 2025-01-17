@@ -48,9 +48,13 @@ habitSchema.methods.updateStats = function () {
   const totalDays =
     (new Date() - new Date(this.createdAt)) / (1000 * 60 * 60 * 24);
   const completedDays = this.history.length;
+
   this.consistency =
     totalDays > 0
-      ? Math.max(0, Math.min(100, Math.ceil((completedDays / totalDays) * 100)))
+      ? Math.max(
+          0,
+          Math.min(100, Math.floor((completedDays / totalDays) * 100))
+        )
       : 0;
 };
 

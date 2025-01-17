@@ -224,13 +224,12 @@ export default function MyHabits() {
                                 <div className="mt-4 space-y-3">
                                     <CalendarHeatmap
                                         startDate={new Date(new Date().setMonth(new Date().getMonth() - 6)).setDate(new Date().getDate() + 1)} // 6 months ago + next day
-
-                                        endDate={new Date()} // Today
+                                        endDate={new Date()}
                                         gutterSize={2}
                                         showWeekdayLabels={true}
                                         values={habit.history
                                             .map(entry => ({
-                                                date: new Date(entry), // Convert the string date to a JavaScript Date object
+                                                date: formatDateToReadable(entry), // Convert the string date to a JavaScript Date object
                                                 count: 1
                                             }))
                                         }
