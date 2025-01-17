@@ -43,55 +43,7 @@ export default function MyHabits() {
     })
 
 
-    const toggleHabitCompletion = (id) => {
-        const today = formatDateToReadable(new Date()); // Format today's date
 
-        const updatedHabits = habits.map(habit => {
-            if (habit.id === id) {
-                // Check if today's date is already in the habit history
-                const updatedHistory = habit.history.some(entry => formatDateToReadable(entry) === today)
-                    ? habit.history.filter(entry => formatDateToReadable(entry) !== today) // Remove today's date if unchecking
-                    : [...habit.history, today]; // Add today's date if checking
-
-                const newTotalCompletions = updatedHistory.length; // Update total completions based on the new history
-
-                return {
-                    ...habit,
-                    history: updatedHistory,
-                    totalCompletions: newTotalCompletions,
-                };
-            }
-            return habit;
-        });
-
-        const habit = updatedHabits.find(habit => habit.id === id);
-
-        // Check if current date is not in history
-        if (!habit.history.some(entry => formatDateToReadable(entry) === today)) {
-            const audio = new Audio('/success-sound.mp3');
-            audio.volume = 0.05;
-            audio.play();
-
-            // Trigger confetti
-            confetti({
-                particleCount: 50,
-                angle: Math.random() * (120 - 60) + 60,
-                spread: 80,
-                origin: { x: 0.5, y: 0.7 },
-                colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
-            });
-
-            // Increase points only if the habit hasn't been completed today yet
-            increaseUserPoints(10);
-        } else {
-            const audio = new Audio('/uncheck-sound.mp3');
-            audio.volume = 0.05;
-            audio.play();
-
-            // Decrease points when unchecking (if the habit was completed previously)
-            decreaseUserPoints(10);
-        }
-    };
 
     const isHabitCompletedToday = (history) => {
         const today = formatDateToReadable(new Date());
@@ -121,6 +73,43 @@ export default function MyHabits() {
         onError: (error) => console.error("Error deleting habit:", error),
     })
 
+    const CheckInHabitMutation = useGenericMutation({
+        mutationFn: habitsApi.checkInHabit,
+        queryKey: "habits",
+        onSuccess: (data) => {
+            console.log("Habit checked/unchecked successfully:", data);
+
+            if (data.message === "Checkin") {
+                const audio = new Audio('/success-sound.mp3');
+                audio.volume = 0.05;
+                audio.play();
+
+                // Trigger confetti
+                confetti({
+                    particleCount: 30,
+                    angle: Math.random() * (120 - 60) + 60,
+                    spread: 80,
+                    origin: { x: 0.5, y: 0.7 },
+                    colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
+                });
+
+                // Increase points only if the habit hasn't been completed today yet
+                increaseUserPoints(10);
+            } else if (data.message === "Checkout") {
+                const audio = new Audio('/uncheck-sound.mp3');
+                audio.volume = 0.05;
+                audio.play();
+
+                // Decrease points when unchecking (if the habit was completed previously)
+                decreaseUserPoints(10);
+            }
+        },
+        onError: (error) => console.error("Error checking habit:", error),
+    });
+
+    const toggleHabitCompletion = (id) => {
+        CheckInHabitMutation.mutate(id)
+    };
 
 
     const addOrUpdateHabit = (habit) => {
@@ -198,8 +187,9 @@ export default function MyHabits() {
                                     <h3 className="card-title text-lg font-semibold text-neutral ">{habit.name}</h3>
                                     <input
                                         type="checkbox"
-                                        checked={habit.completed}
-                                        onChange={() => toggleHabitCompletion(habit.id)}
+                                        checked={isHabitCompletedToday(habit.history)}
+                                        onChange={() => toggleHabitCompletion(habit._id)}
+                                        disabled={CheckInHabitMutation.isLoading}
                                         className="checkbox checkbox-success"
                                     />
                                     <span className="absolute top-7.5 right-2 badge ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
@@ -270,7 +260,7 @@ export default function MyHabits() {
 
                             {/* Big Check Icon when Completed */}
                             {habit.history.some(entry => formatDateToReadable(entry) === today) && (
-                                <div onClick={() => toggleHabitCompletion(habit.id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
+                                <div onClick={() => toggleHabitCompletion(habit._id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                     </svg>

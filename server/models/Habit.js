@@ -15,39 +15,43 @@ const habitSchema = new mongoose.Schema({
 
 // Method to calculate streak, completed count, and consistency
 habitSchema.methods.updateStats = function () {
-  // Streak calculation
+  // Ensure history is sorted chronologically
   const sortedHistory = this.history.sort((a, b) => a - b);
+
   let streak = 0;
-  let currentStreak = 0;
+  let currentStreak = 1; // Start with 1 for the first date
 
-  for (let i = sortedHistory.length - 1; i >= 0; i--) {
-    const currentDate = sortedHistory[i];
-    const previousDate = new Date(currentDate);
-    previousDate.setDate(currentDate.getDate() - 1);
+  for (let i = sortedHistory.length - 1; i > 0; i--) {
+    const currentDate = new Date(sortedHistory[i]);
+    const previousDate = new Date(sortedHistory[i - 1]);
 
-    if (
-      i === sortedHistory.length - 1 ||
-      currentDate.getTime() === previousDate.getTime()
-    ) {
-      currentStreak++;
+    // Calculate the difference in days
+    const diffInTime = currentDate.getTime() - previousDate.getTime();
+    const diffInDays = diffInTime / (1000 * 60 * 60 * 24);
+
+    if (diffInDays === 1) {
+      currentStreak++; // Increment streak if consecutive
     } else {
-      currentStreak = 1;
+      currentStreak = 1; // Reset streak
     }
 
-    streak = Math.max(streak, currentStreak);
+    streak = Math.max(streak, currentStreak); // Track maximum streak
   }
 
-  this.streak = streak;
+  // Edge case: If there's only one date in the history, streak is 1
+  this.streak = sortedHistory.length > 0 ? Math.max(streak, currentStreak) : 0;
 
   // Completed count calculation
   this.completed = this.history.length;
 
   // Consistency calculation
-  // Consistency calculation
   const totalDays =
     (new Date() - new Date(this.createdAt)) / (1000 * 60 * 60 * 24);
   const completedDays = this.history.length;
-  this.consistency = totalDays > 0 ? (completedDays / totalDays) * 100 : 0;
+  this.consistency =
+    totalDays > 0
+      ? Math.max(0, Math.min(100, Math.ceil((completedDays / totalDays) * 100)))
+      : 0;
 };
 
 // Pre-save hook to update stats whenever habit is saved

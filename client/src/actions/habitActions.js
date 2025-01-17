@@ -51,3 +51,17 @@ export const deleteHabit = async (habitId) => {
     throw error; // Rethrow the error for further handling
   }
 };
+
+// Check or uncheck a habit
+export const checkInHabit = async (habitId) => {
+  try {
+    const response = await axiosHabits.post(`/check-in`, { habitId });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error checking in/unchecking habit:",
+      error?.response?.data || error.message
+    );
+    throw error;
+  }
+};

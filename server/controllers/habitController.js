@@ -29,7 +29,6 @@ router.post("/create", auth, async (req, res) => {
 });
 
 router.put("/:habitId", auth, async (req, res) => {
-  const userId = req.user.id;
   const { habitId } = req.params;
   const habitData = req.body;
 
@@ -42,13 +41,23 @@ router.put("/:habitId", auth, async (req, res) => {
   }
 });
 
-
 router.delete("/:habitId", auth, async (req, res) => {
   const userId = req.user.id;
   const { habitId } = req.params;
   try {
-    const result = await habitService.deleteHabit(habitId , userId);
+    const result = await habitService.deleteHabit(habitId, userId);
     res.status(200).json({ message: "Habit deleted successfully" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.post("/check-in", auth, async (req, res) => {
+  const userId = req.user.id;
+  const { habitId } = req.body;
+  try {
+    const result = await habitService.checkInHabit(userId, habitId);
+    res.status(200).json({ message: result.message, habit: result.habit });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

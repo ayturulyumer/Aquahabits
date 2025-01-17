@@ -39,3 +39,36 @@ exports.deleteHabit = async (habitId, userId) => {
 
   await Habit.findByIdAndDelete(habitId);
 };
+
+exports.checkInHabit = async (userId, habitId) => {
+  const habit = await Habit.findOne({ _id: habitId, ownerId: userId });
+
+  if (!habit) {
+    throw new Error("Habit not found");
+  }
+
+  const today = new Date();
+  // Normalize the current date to only compare the date part (set time to midnight)
+  const normalizedToday = new Date(today.setHours(0, 0, 0, 0));
+
+  // Check if today is already in the history (compare only the date part)
+  if (
+    habit.history.some(
+      (date) =>
+        new Date(date).setHours(0, 0, 0, 0) === normalizedToday.getTime()
+    )
+  ) {
+    // If already checked in, remove today's date (uncheck)
+    habit.history = habit.history.filter(
+      (date) =>
+        new Date(date).setHours(0, 0, 0, 0) !== normalizedToday.getTime()
+    );
+    await habit.save();
+    return { message: "Checkout", habit };
+  } else {
+    // If not checked in, add today's date
+    habit.history.push(normalizedToday);
+    await habit.save();
+    return { message: "Checkin", habit };
+  }
+};
