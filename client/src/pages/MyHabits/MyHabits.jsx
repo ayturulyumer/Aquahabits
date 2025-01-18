@@ -27,7 +27,7 @@ export default function MyHabits() {
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState(null);
-    const { increaseUserPoints, decreaseUserPoints } = useAuth()
+    const { updateAquaCoins } = useAuth()
 
 
     const today = formatDateToReadable(new Date())
@@ -83,7 +83,7 @@ export default function MyHabits() {
                 const audio = new Audio('/success-sound.mp3');
                 audio.volume = 0.05;
                 audio.play();
-
+                updateAquaCoins(data.userCoins)
                 // Trigger confetti
                 confetti({
                     particleCount: 30,
@@ -94,14 +94,14 @@ export default function MyHabits() {
                 });
 
                 // Increase points only if the habit hasn't been completed today yet
-                increaseUserPoints(10);
+
             } else if (data.message === "Checkout") {
                 const audio = new Audio('/uncheck-sound.mp3');
                 audio.volume = 0.05;
                 audio.play();
 
-                // Decrease points when unchecking (if the habit was completed previously)
-                decreaseUserPoints(10);
+                updateAquaCoins(data.userCoins)
+
             }
         },
         onError: (error) => console.error("Error checking habit:", error),
@@ -220,7 +220,7 @@ export default function MyHabits() {
                                     />
                                 </div>
 
-                                <p className="text-white mt-2">{habit.goal}</p>
+                                <p className="text-white text-sm mt-2">{habit.goal}</p>
                                 <div className="mt-4 space-y-3">
                                     <CalendarHeatmap
                                         startDate={new Date(new Date().setMonth(new Date().getMonth() - 6)).setDate(new Date().getDate() + 1)} // 6 months ago + next day

@@ -57,7 +57,9 @@ router.post("/check-in", auth, async (req, res) => {
   const { habitId } = req.body;
   try {
     const result = await habitService.checkInHabit(userId, habitId);
-    res.status(200).json({ message: result.message, habit: result.habit });
+    res
+      .status(200)
+      .json({ message: result.message, userCoins: result.userCoins });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

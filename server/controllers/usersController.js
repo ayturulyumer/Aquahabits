@@ -59,9 +59,7 @@ router.get("/me", auth, async (req, res) => {
     const userId = req.user.id;
 
     const userData = await userService.getUserData(userId);
-    res
-      .status(200)
-      .json({ id: userData._id, email: userData.email, name: userData.name });
+    res.status(200).json(userData);
   } catch (err) {
     const statusCode = err.message === "No user found with this ID" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });

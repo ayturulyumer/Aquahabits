@@ -1,5 +1,6 @@
 const Habit = require("../models/Habit");
 const User = require("../models/User");
+const COIN_REWARD = 20; // You can adjust this reward as needed
 
 exports.getAll = async (userId) => {
   const habits = await Habit.find({ ownerId: userId }).exec();
@@ -42,9 +43,14 @@ exports.deleteHabit = async (habitId, userId) => {
 
 exports.checkInHabit = async (userId, habitId) => {
   const habit = await Habit.findOne({ _id: habitId, ownerId: userId });
+  const user = await User.findById(userId);
 
   if (!habit) {
     throw new Error("Habit not found");
+  }
+
+  if (!user) {
+    throw new Error("User not found");
   }
 
   const today = new Date();
@@ -67,12 +73,22 @@ exports.checkInHabit = async (userId, habitId) => {
         new Date(date).toISOString().split("T")[0] !==
         normalizedToday.toISOString().split("T")[0]
     );
+    // Deduct coins if checking out, ensuring balance doesn't go below 0
+    if (user.aquaCoins >= COIN_REWARD) {
+      user.aquaCoins -= COIN_REWARD;
+    } else {
+      user.aquaCoins = 0; // Ensure AquaCoins can't go below 0
+    }
     await habit.save();
-    return { message: "Checkout", habit };
+    await user.save();
+
+    return { message: "Checkout", userCoins: user.aquaCoins };
   } else {
     // If not checked in, add today's date
     habit.history.push(normalizedToday);
+    user.aquaCoins += COIN_REWARD;
     await habit.save();
-    return { message: "Checkin", habit };
+    await user.save();
+    return { message: "Checkin", userCoins: user.aquaCoins };
   }
 };
