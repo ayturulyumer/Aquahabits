@@ -30,13 +30,13 @@ function SidebarNav({ isOpen }) {
                         {({ isActive }) => (
                             <li className={`flex items-center justify-center font-semibold tracking-wide py-2 px-4 rounded relative text-sm ${isActive ? "text-base" : ""}`}>
                                 <img
-                                    className="h-6 w-6 mr-2"
+                                    className="h-6 w-6 mr-2 "
                                     src={item.icon}
                                     alt={item.iconAlt}
                                 />
                                 {item.name}
                                 {item.showIndicator && (
-                                    <div className="indicator absolute -right-3 -top-1">
+                                    <div className="indicator absolute -right-5 -top-1">
                                         <span className="indicator-item badge badge-xs badge-success animate-pulse"></span>
                                     </div>
                                 )}

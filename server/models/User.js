@@ -6,9 +6,11 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   habits: [{ type: mongoose.Schema.Types.ObjectId, ref: "Habit" }],
-  habitStats: { type: mongoose.Schema.Types.ObjectId, ref: "HabitStats" },
   creatures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Creature" }],
   aquaCoins: { type: Number, default: 0 },
+  quests: {
+    firstHabitCompleted: { type: Boolean, default: false },
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
