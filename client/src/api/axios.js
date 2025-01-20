@@ -19,6 +19,16 @@ export const axiosHabits = Axios.create({
   withCredentials: true,
 });
 
+export const axiosQuests = Axios.create({
+  baseURL: `${BASE_URL}/quests/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});
+
 sessionInterceptor(axios);
 sessionInterceptor(axiosHabits);
-responseInterceptor(axiosHabits)
+sessionInterceptor(axiosQuests);
+responseInterceptor(axiosHabits);
+responseInterceptor(axiosQuests);

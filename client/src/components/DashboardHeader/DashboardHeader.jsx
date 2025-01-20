@@ -2,7 +2,6 @@ import AquaGemIcon from "../../assets/aquagem.png"
 import Tippy from "@tippyjs/react";
 import "tippy.js/animations/scale-extreme.css";
 import { useAuth } from "../../context/authContext.jsx";
-import { useContext } from "react";
 
 const TooltipMessage = "Earn by completing habits, use to grow your aquarium friends"
 

@@ -1,33 +1,50 @@
 import { QuestsCard } from '../../components/Quests/QuestsCard.jsx';
-import { QuestsCompleted } from '../../components/Quests/QuestsCompleted.jsx';
+import Spinner from '../../components/Spinner/Spinner.jsx';
 import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
 
+import { useGenericMutation } from '../../hooks/useMutation.js';
+import { useQuery } from 'react-query';
+import * as questsApi from "../../actions/questActions.js"
 
-const missions = [
-  { id: 1, title: 'First win of the day', description: 'Complete a habit for the first time today', points: 25, daysRequired: 1, progress: 0, icon: FirstWinIcon },
-  { id: 2, title: 'Consistency Starter', description: 'Complete a habit 3 days in a row', points: 50, daysRequired: 3, progress: 1, icon: FlameIcon },
-  { id: 3, title: 'Daily Streak', description: 'Complete any habit for 5 consecutive days', points: 75, daysRequired: 5, progress: 2, icon: ConsistencyIcon },
-];
 
-const completedMissions = [
-  { id: 101, title: 'First Dip', description: 'Complete your first habit ever', points: 25 },
-];
+
+
+
 
 
 export default function MyQuests() {
 
+  const {
+    data: quests,
+    isLoading: questsLoading,
+    error: questsError,
+  } = useQuery({
+    queryKey: ["quests"],
+    queryFn: questsApi.getAll
+  })
+
+
+
+
+
   return (
-    <div className="min-h-screen mx-4 ">
+    <div className="min-h-fit mx-4 ">
       <main className="mt-8">
-        <h2 className="text-2xl font-bold mb-4 text-neutral">Daily Quests</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {missions.map((mission) => (
-            <QuestsCard key={mission.id} mission={mission} />
-          ))}
-        </div>
-        <QuestsCompleted missions={completedMissions} />
+        <h2 className="text-2xl font-bold mb-4 text-primary  uppercase ">Daily Quests</h2>
+        {questsLoading ?
+          <div className='flex justify-center align-middle'>
+            <Spinner />
+
+          </div>
+          :
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {quests?.map((quest) => (
+              <QuestsCard key={quest._id} quest={quest} />
+            ))}
+          </div>
+        }
       </main>
     </div>
   );

@@ -1,6 +1,16 @@
 import AquaCoins from "../../assets/aquagem.png"
-export function QuestsCard({ mission }) {
-    const { title, description, points, daysRequired, habitsRequired, progress, icon } = mission;
+import ConsistencyIcon from '../../assets/consistency.png';
+import FlameIcon from '../../assets/flame.png';
+import FirstWinIcon from '../../assets/firstwin.png';
+
+const iconMap = {
+    'First win of the day': FirstWinIcon,
+    'Consistency Starter': FlameIcon,
+    'Daily Streak': ConsistencyIcon,
+};
+
+export function QuestsCard({ quest }) {
+    const { title, description, points, daysRequired, habitsRequired, progress, icon } = quest;
     const total = daysRequired || habitsRequired || 1;
     const progressPercentage = (progress / total) * 100;
 
@@ -10,7 +20,7 @@ export function QuestsCard({ mission }) {
                 <div className="flex justify-between">
                     <h2 className="card-title text-primary">{title}</h2>
                     <img
-                        src={icon}
+                        src={iconMap[title]}
                         alt="Quest Icon"
                         className="h-16 w-16 ml-2 "
                     />

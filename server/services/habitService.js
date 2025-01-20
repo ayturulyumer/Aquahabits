@@ -1,6 +1,6 @@
 const Habit = require("../models/Habit");
 const User = require("../models/User");
-const COIN_REWARD = 20; // You can adjust this reward as needed
+const COIN_REWARD = 20; 
 
 exports.getAll = async (userId) => {
   const habits = await Habit.find({ ownerId: userId }).exec();

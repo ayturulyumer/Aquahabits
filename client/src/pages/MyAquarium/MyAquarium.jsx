@@ -16,7 +16,7 @@ const GRID_SIZE = 6;
 
 
 export default function MyAquarium() {
-  const { userPoints, increaseUserPoints, decreaseUserPoints } = useAuth()
+  const { userCoins, increaseUserPoints, decreaseUserPoints } = useAuth()
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
@@ -46,7 +46,7 @@ export default function MyAquarium() {
   }, [isMuted]);
 
   const handleItemSelect = (row, col, item) => {
-    if (userPoints >= item.cost) {
+    if (userCoins >= item.cost) {
       const newGrid = [...grid];
       const itemCopy = { ...item };
       newGrid[row][col] = itemCopy;
@@ -76,7 +76,7 @@ export default function MyAquarium() {
             : null;
 
       // Validate if the user has enough Aqua Coins
-      if (currentCost !== null && userPoints >= currentCost) {
+      if (currentCost !== null && userCoins >= currentCost) {
         growSound.volume = 0.1;
         growSound.play();
 
@@ -128,7 +128,7 @@ export default function MyAquarium() {
             removeAnimal={removeAnimal}
             setActiveCell={setActiveCell}
             activeCell={activeCell}
-            userPoints={userPoints} />
+            userCoins={userCoins} />
           {/* Render the bubbles container */}
           <BubbleContainer />
 

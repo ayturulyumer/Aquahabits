@@ -14,8 +14,7 @@ export const AuthProvider = ({ children }) => {
   const updateAquaCoins = (aquaCoins) => {
     setUserCoins(aquaCoins)
   }
-
-  console.log(userCoins)
+  
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
 
