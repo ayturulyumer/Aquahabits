@@ -7,7 +7,6 @@ import MuteIcon from "../../svg/mute-icon.svg";
 
 import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
-import UnlockGrid from "../../components/UnlockGrid/UnlockGrid.jsx";
 import { useAuth } from "../../context/authContext.jsx";
 import { GROWTH_COSTS } from "../../utils/constants.js";
 
@@ -16,7 +15,7 @@ const GRID_SIZE = 6;
 
 
 export default function MyAquarium() {
-  const { userCoins, increaseUserPoints, decreaseUserPoints } = useAuth()
+  const { user, increaseUserPoints, decreaseUserPoints } = useAuth()
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
@@ -46,7 +45,7 @@ export default function MyAquarium() {
   }, [isMuted]);
 
   const handleItemSelect = (row, col, item) => {
-    if (userCoins >= item.cost) {
+    if (user?.aquaCoins >= item.cost) {
       const newGrid = [...grid];
       const itemCopy = { ...item };
       newGrid[row][col] = itemCopy;
@@ -76,7 +75,7 @@ export default function MyAquarium() {
             : null;
 
       // Validate if the user has enough Aqua Coins
-      if (currentCost !== null && userCoins >= currentCost) {
+      if (currentCost !== null && user?.aquaCoins >= currentCost) {
         growSound.volume = 0.1;
         growSound.play();
 
@@ -128,7 +127,7 @@ export default function MyAquarium() {
             removeAnimal={removeAnimal}
             setActiveCell={setActiveCell}
             activeCell={activeCell}
-            userCoins={userCoins} />
+            aquaCoins={user?.aquaCoins} />
           {/* Render the bubbles container */}
           <BubbleContainer />
 

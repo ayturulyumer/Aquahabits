@@ -6,7 +6,7 @@ import { useAuth } from "../../context/authContext.jsx";
 const TooltipMessage = "Earn by completing habits, use to grow your aquarium friends"
 
 function DashboardHeader({ toggleSidebar }) {
-  const { userCoins } = useAuth()
+  const { user } = useAuth()
   return (
     <header className="flex items-center justify-between px-4 py-4 border-b border-accent">
       <div className="flex items-center">
@@ -31,7 +31,7 @@ function DashboardHeader({ toggleSidebar }) {
         <span className="text-sm font-medium">Welcome, Hero!</span>
         <Tippy content={TooltipMessage} placement="bottom-start" animation="scale-extreme">
           <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full  font-medium text-neutral">
-            <span>{userCoins}</span>
+            <span>{user?.aquaCoins}</span>
             <img src={AquaGemIcon} alt="Aquagem" className="w-6 h-6" />
           </div>
         </Tippy>

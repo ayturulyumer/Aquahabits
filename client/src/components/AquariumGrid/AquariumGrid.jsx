@@ -7,7 +7,7 @@ import LevelUpIcon from "../../svg/levelup-icon.svg";
 import AquaCoins from "../../assets/aquagem.png"
 import { ITEM_TYPES, GROWTH_COSTS } from "../../utils/constants.js";
 
-export default function AquariumGrid({ grid, handleItemSelect, growAnimal, removeAnimal, setActiveCell, activeCell, userCoins }) {
+export default function AquariumGrid({ grid, handleItemSelect, growAnimal, removeAnimal, setActiveCell, activeCell, aquaCoins }) {
     // Memoize the grid rendering
     const renderedGrid = useMemo(() => {
         return grid.map((row, rowIndex) =>
@@ -25,7 +25,7 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                                         className="bg-blue-500 text-white"
                                         onClick={() => growAnimal(rowIndex, colIndex)}
                                         disabled={
-                                            cell.level === 3 || userCoins < GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]
+                                            cell.level === 3 || aquaCoins < GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]
                                         }
                                     >
                                         {cell.level === 3
@@ -52,10 +52,10 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                                 {ITEM_TYPES.map((item) => (
                                     <button
                                         key={item.name}
-                                        className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${userCoins >= item.cost ? "bg-green-500/30" : "bg-red-500/30 cursor-not-allowed"
+                                        className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${aquaCoins >= item.cost ? "bg-green-500/30" : "bg-red-500/30 cursor-not-allowed"
                                             }`}
                                         onClick={() => handleItemSelect(rowIndex, colIndex, item)}
-                                        disabled={userCoins < item.cost}
+                                        disabled={aquaCoins < item.cost}
                                     >
                                         <img src={item.icon} alt={item.name} className="w-8 h-8 mb-1" />
                                         <span className="text-sm">{item.name}</span>
@@ -101,7 +101,7 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                 </Tippy>
             ))
         );
-    }, [grid, growAnimal, removeAnimal, setActiveCell, activeCell, userCoins]);
+    }, [grid, growAnimal, removeAnimal, setActiveCell, activeCell, aquaCoins]);
 
     return <>{renderedGrid}</>;
 }

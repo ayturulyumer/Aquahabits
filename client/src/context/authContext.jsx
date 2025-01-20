@@ -7,14 +7,13 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userCoins, setUserCoins] = useState(0)
   const [accessToken, setAccessToken] = useState(null);
 
 
-  const updateAquaCoins = (aquaCoins) => {
-    setUserCoins(aquaCoins)
+  const updateAquaCoins = (updatedCoins) => {
+    setUser((prevUser) => ({ ...prevUser, aquaCoins: updatedCoins }))
   }
-  
+
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
 
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateAquaCoins, userCoins }}>
+    <AuthContext.Provider value={{ user, login, logout, updateAquaCoins }}>
       {children}
     </AuthContext.Provider>
   );
