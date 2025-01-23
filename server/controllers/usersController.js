@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const { existingUser, accessToken, refreshToken } = await userService.login(
+    const { userWithoutPassword, accessToken, refreshToken } = await userService.login(
       email,
       password
     );
@@ -41,16 +41,21 @@ router.post("/login", async (req, res) => {
     setRefreshToken(res, refreshToken);
 
     res.status(200).json({
-      user: {
-        id: existingUser._id,
-        name: existingUser.name,
-        email: existingUser.email,
-      },
+      user: userWithoutPassword,
       accessToken,
     });
   } catch (err) {
     const statusCode = err.message === "Invalid credintials" ? 401 : 500;
     res.status(statusCode).json({ message: err.message });
+  }
+});
+
+router.post("/logout", auth, (req, res) => {
+  try {
+    res.clearCookie("refreshToken");
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error logging out" });
   }
 });
 

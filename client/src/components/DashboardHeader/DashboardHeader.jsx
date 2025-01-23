@@ -1,12 +1,27 @@
+import { useAuth } from "../../context/authContext.jsx";
+import { useNavigate } from "react-router-dom";
 import AquaGemIcon from "../../assets/aquagem.png"
+import LogoutIcon from "../../svg/logout-icon.svg"
 import Tippy from "@tippyjs/react";
 import "tippy.js/animations/scale-extreme.css";
-import { useAuth } from "../../context/authContext.jsx";
+import Button from "../Button/Button.jsx"
+import * as auth from "../../actions/authActions.js"
 
 const TooltipMessage = "Earn by completing habits, use to grow your aquarium friends"
 
 function DashboardHeader({ toggleSidebar }) {
-  const { user } = useAuth()
+  const { user, removeUserState } = useAuth()
+  const navigate = useNavigate()
+
+  const handleUserLogout = async () => {
+    try {
+      await auth.logout()
+      removeUserState()
+      navigate("/")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
   return (
     <header className="flex items-center justify-between px-4 py-4 border-b border-accent">
       <div className="flex items-center">
@@ -27,14 +42,15 @@ function DashboardHeader({ toggleSidebar }) {
         </button>
         <h1 className="ml-4 text-2xl font-bold">Habitect</h1>
       </div>
-      <div className="flex items-center space-x-4">
-        <span className="text-sm font-medium">Welcome, Hero!</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-medium">Welcome, {user?.name} !</span>
         <Tippy content={TooltipMessage} placement="bottom-start" animation="scale-extreme">
           <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full  font-medium text-neutral">
-            <span>{user?.aquaCoins}</span>
+            <span >{user?.aquaCoins}</span>
             <img src={AquaGemIcon} alt="Aquagem" className="w-6 h-6" />
           </div>
         </Tippy>
+        <Button onClick={handleUserLogout} variant="btn-ghost" size="btn-xs" isCircle iconRight={LogoutIcon} iconAlt="Logout Icon"></Button>
 
       </div>
     </header>

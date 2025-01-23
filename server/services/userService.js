@@ -38,10 +38,14 @@ exports.login = async (email, password) => {
     throw new Error("Invalid credintials !");
   }
 
+  // Don't return password
+  const userWithoutPassword = existingUser.toObject(); // Convert to plain JavaScript object
+  delete userWithoutPassword.password; // Remove the password field
+
   const accessToken = generateToken(existingUser, JWT_ACCESS_EXPIRY);
   const refreshToken = generateToken(existingUser, JWT_REFRESH_EXPIRY);
 
-  return { existingUser, accessToken, refreshToken };
+  return { userWithoutPassword, accessToken, refreshToken };
 };
 
 exports.getUserData = async (userId) => {

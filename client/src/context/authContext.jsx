@@ -10,8 +10,13 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
 
 
+
   const updateAquaCoins = (updatedCoins) => {
     setUser((prevUser) => ({ ...prevUser, aquaCoins: updatedCoins }))
+  }
+
+  const updateUnclaimedRewards = (newUnclaimedRewards) => {
+    setUser((prevUser) => ({ ...prevUser, unclaimedRewards: newUnclaimedRewards }))
   }
 
   useEffect(() => {
@@ -61,14 +66,14 @@ export const AuthProvider = ({ children }) => {
     setAccessToken(token);
   };
 
-  const logout = () => {
+  const removeUserState = () => {
     setUser(null);
     setAccessToken(null);
     localStorage.removeItem("accessToken");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateAquaCoins }}>
+    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUnclaimedRewards }}>
       {children}
     </AuthContext.Provider>
   );
