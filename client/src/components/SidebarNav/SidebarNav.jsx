@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/authContext.jsx";
 
 import habitIcon from "../../svg/habit-icon.svg";
 import missionIcon from "../../svg/mission-icon.svg";
@@ -6,11 +7,16 @@ import oceanIcon from "../../svg/ocean-icon.svg";
 
 const menuItems = [
     { name: "Habits", href: "/dashboard/my-habits", icon: habitIcon, iconAlt: "Habits Icon" },
-    { name: "Quests", href: "/dashboard/my-quests", icon: missionIcon, iconAlt: "Mission Icon", showIndicator: true },
+    { name: "Quests", href: "/dashboard/my-quests", icon: missionIcon, iconAlt: "Mission Icon", checkUnclaimed: true },
     { name: "Aquarium", href: "/dashboard/my-aquarium", icon: oceanIcon, iconAlt: "Aquarium Icon" },
 ];
 
 function SidebarNav({ isOpen }) {
+    const { user } = useAuth()
+    // console.log(user)
+    const hasUnclaimedRewards = user?.questProgress?.some((quest) => quest.isCompleted && !quest.isClaimed === true)
+    console.log(hasUnclaimedRewards)
+
     if (!isOpen) {
         return null;
     }
@@ -35,11 +41,11 @@ function SidebarNav({ isOpen }) {
                                     alt={item.iconAlt}
                                 />
                                 {item.name}
-                                {item.showIndicator && (
+                                {hasUnclaimedRewards && item.checkUnclaimed &&
                                     <div className="indicator absolute -right-5 -top-1">
                                         <span className="indicator-item badge badge-xs badge-success animate-pulse"></span>
                                     </div>
-                                )}
+                                }
                             </li>
                         )}
                     </NavLink>

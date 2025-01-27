@@ -3,25 +3,22 @@ const mongoose = require("mongoose");
 
 // const missions = [
 //   {
-//     id: 1,
-//     title: "First win of the day",
-//     description: "Complete a habit for the first time today",
-//     points: 25,
-//     daysRequired: 1,
+//     title: "Starting Strong",
+//     description: "Complete your first check-in",
+//     reward: 30,
+//     requirement: "First Checkin", // This is one of the conditions in your calculateProgress method
 //   },
 //   {
-//     id: 2,
 //     title: "Consistency Starter",
 //     description: "Complete a habit 3 days in a row",
-//     points: 50,
-//     daysRequired: 3,
+//     reward: 80,
+//     requirement: "Reach 3 days streak", // This is the condition where user has to complete a streak of 3 days
 //   },
 //   {
-//     id: 3,
-//     title: "Daily Streak",
-//     description: "Complete any habit for 5 consecutive days",
-//     points: 75,
-//     daysRequired: 5,
+//     title: "Week of Dedication",
+//     description: "Complete a habit 7 days in a row",
+//     reward: 120,
+//     requirement: "Reach 7 days streak", // User needs to complete 7 days of streak
 //   },
 // ];
 
@@ -37,7 +34,6 @@ const connectDB = async () => {
   }
 };
 
-// Quest Seeding
 // async function seedQuests() {
 //   try {
 //     await mongoose.connect(DB_URL);

@@ -1,6 +1,7 @@
 const Habit = require("../models/Habit");
 const User = require("../models/User");
-const COIN_REWARD = 20; 
+
+const COIN_REWARD = 20;
 
 exports.getAll = async (userId) => {
   const habits = await Habit.find({ ownerId: userId }).exec();
@@ -79,6 +80,7 @@ exports.checkInHabit = async (userId, habitId) => {
     } else {
       user.aquaCoins = 0; // Ensure AquaCoins can't go below 0
     }
+
     await habit.save();
     await user.save();
 
@@ -87,8 +89,12 @@ exports.checkInHabit = async (userId, habitId) => {
     // If not checked in, add today's date
     habit.history.push(normalizedToday);
     user.aquaCoins += COIN_REWARD;
+
     await habit.save();
     await user.save();
-    return { message: "Checkin", userCoins: user.aquaCoins };
+    return {
+      message: "Checkin",
+      userCoins: user.aquaCoins,
+    };
   }
 };

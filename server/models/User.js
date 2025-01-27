@@ -6,13 +6,26 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   habits: [{ type: mongoose.Schema.Types.ObjectId, ref: "Habit" }],
-  creatures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Creature" }],
   aquaCoins: { type: Number, default: 0 },
-  quests: {
-    firstHabitCompleted: { type: Boolean, default: false },
-  },
+  questProgress: [
+    {
+      questId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Quest",
+        index: true,
+      }, // Link to the Quest
+      currentProgress: { type: Number, default: 0 }, // Progress made by the user (e.g., streak count)
+      isCompleted: { type: Boolean, default: false }, // True if the user has completed the quest
+      isClaimed: { type: Boolean, default: true }, // True if the reward hasn't been claimed yet
+    },
+  ],
+  creatures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Creature" }],
   createdAt: { type: Date, default: Date.now },
 });
+
+userSchema.index({ email: 1 });
+userSchema.index({ name: 1 });
+userSchema.index({ "questProgress.questId": 1 });
 
 userSchema.pre("save", async function () {
   const hash = await bcrypt.hash(this.password, 10);

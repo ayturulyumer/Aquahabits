@@ -2,17 +2,17 @@ import AquaCoins from "../../assets/aquagem.png"
 import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
+import TreasureChest from "../../assets/treasure-chest.png"
 
 const iconMap = {
-    'First win of the day': FirstWinIcon,
+    'Starting Strong': FirstWinIcon,
     'Consistency Starter': FlameIcon,
-    'Daily Streak': ConsistencyIcon,
+    'Week of Dedication': ConsistencyIcon,
 };
 
 export function QuestsCard({ quest }) {
-    const { title, description, points, daysRequired, habitsRequired, progress, icon } = quest;
-    const total = daysRequired || habitsRequired || 1;
-    const progressPercentage = (progress / total) * 100;
+    const { title, description, reward, currentProgress, isCompleted, isClaimed, requirement } = quest;
+
 
     return (
         <div className="card bg-gradient-to-r from-slate-900 to-slate-700 shadow-xl">
@@ -26,18 +26,25 @@ export function QuestsCard({ quest }) {
                     />
                 </div>
                 <p>{description}</p>
-                <div className="flex justify-between gap-4 items-center mt-4">
+                <section className="flex justify-between gap-2 items-center mt-4">
                     <progress
                         className="progress progress-success w-56"
-                        value={progress}
-                        max={total}
+                        value={currentProgress}
+                        max={requirement}
                     ></progress>
-                    <div className="badge flex gap-2 badge-ghost shadow-2xl shadow-teal-300 ">{points}
-                        <img className="w-4  h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />
-                    </div>
-                </div>
+                    {isCompleted ?
+                        <button type="button" className="animate-bounce cursor-pointer h-14 w-14 ">
+                            <img className="h-full w-full  object-fill" src={TreasureChest} alt="Claim Reward" />
+                        </button>
+                        :
+                        <div className="badge text-primary flex gap-2 badge-ghost shadow-2xl shadow-teal-300 ">{reward}
+                            <img className="w-4  h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />
+                        </div>
+                    }
+
+                </section>
                 <p className="text-sm text-left mt-2">
-                    Progress: {progress} / {total} {daysRequired ? 'days' : 'habits'}
+                    Progress: {currentProgress} / <span className="text-primary  font-medium">{requirement} </span>
                 </p>
             </div>
         </div>

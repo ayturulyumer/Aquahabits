@@ -116,7 +116,7 @@ export default function MyAquarium() {
 
   return (
     <div className="container  mx-auto p-2">
-      <h2 className="text-2xl font-bold text-primary mb-4">My Ocean</h2>
+      <h2 className="text-2xl font-bold text-primary mb-4">My Aquarium</h2>
 
       <div className="flex flex-wrap justify-around gap-4 p-2">
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">

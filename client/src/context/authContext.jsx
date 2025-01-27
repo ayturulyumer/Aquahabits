@@ -15,9 +15,29 @@ export const AuthProvider = ({ children }) => {
     setUser((prevUser) => ({ ...prevUser, aquaCoins: updatedCoins }))
   }
 
-  const updateUnclaimedRewards = (newUnclaimedRewards) => {
-    setUser((prevUser) => ({ ...prevUser, unclaimedRewards: newUnclaimedRewards }))
-  }
+  const updateUserQuestProgress = (updatedQuestProgress) => {
+    setUser((prevUser) => {
+      const updatedProgress = prevUser.questProgress.map((questProgress) => {
+        if (questProgress.questId === updatedQuestProgress.questId) {
+          // If quest progress exists, update it
+          return {
+            ...questProgress,  // Keep existing progress
+            ...updatedQuestProgress,  // Overwrite with the new progress data
+          };
+        }
+        return questProgress;  // Return the other quests unchanged
+      });
+
+      // If no matching questId was found, add the new progress
+      if (!prevUser.questProgress.some((quest) => quest.questId === updatedQuestProgress.questId)) {
+        updatedProgress.push(updatedQuestProgress);
+      }
+
+      // Return the updated user state with updated questProgress
+      return { ...prevUser, questProgress: updatedProgress };
+    });
+  };
+
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
@@ -73,7 +93,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUnclaimedRewards }}>
+    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress }}>
       {children}
     </AuthContext.Provider>
   );

@@ -59,7 +59,7 @@ function App() {
       ],
     },
   ]);
-  /// NEED TO IMPLEMENT REACT QUERY
+
   return <AuthProvider>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />

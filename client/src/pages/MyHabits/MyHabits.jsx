@@ -12,6 +12,7 @@ import "tippy.js/animations/scale-subtle.css";
 import { useAuth } from '../../context/authContext.jsx';
 import { useQuery } from "react-query"
 import * as habitsApi from '../../actions/habitActions.js';
+import * as questApi from '../../actions/questActions.js';
 import formatDateToReadable from '../../utils/formatDateToReadable.js';
 import { useGenericMutation } from '../../hooks/useMutation.js';
 import { useSearchParams } from 'react-router-dom';
@@ -27,7 +28,7 @@ export default function MyHabits() {
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState(null);
-    const { updateAquaCoins } = useAuth()
+    const { updateAquaCoins, updateUserQuestProgress } = useAuth()
 
 
     const today = formatDateToReadable(new Date())
@@ -76,7 +77,7 @@ export default function MyHabits() {
     const CheckInHabitMutation = useGenericMutation({
         mutationFn: habitsApi.checkInHabit,
         queryKey: "habits",
-        onSuccess: (data) => {
+        onSuccess: async (data, variables) => {
             console.log("Habit checked/unchecked successfully:", data);
 
             if (data.message === "Checkin") {
@@ -93,7 +94,13 @@ export default function MyHabits() {
                     colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
                 });
 
-                // Increase points only if the habit hasn't been completed today yet
+                // **Trigger the second API request (e.g., quest progress update)**
+                try {
+                    const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
+                    updateUserQuestProgress(updatedQuestProgress);
+                } catch (error) {
+                    console.error("Error updating quest progress:", error);
+                }
 
             } else if (data.message === "Checkout") {
                 const audio = new Audio('/uncheck-sound.mp3');
@@ -256,15 +263,6 @@ export default function MyHabits() {
                                 </div>
 
                             </div>
-
-                            {/* Big Check Icon when Completed */}
-                            {habit.history.some(entry => formatDateToReadable(entry) === today) && (
-                                <div onClick={() => toggleHabitCompletion(habit._id)} className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black cursor-pointer rounded-box bg-opacity-80 z-40">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            )}
 
                         </div>
 
