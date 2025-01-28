@@ -17,7 +17,7 @@ import confetti from 'canvas-confetti';
 
 export default function MyQuests() {
   const [claimRewardModal, setClaimRewardModal] = useState({ isVisible: false, reward: null });
-  const { updateAquaCoins, updateUserQuestProgress } = useAuth()
+  const { user, updateAquaCoins, updateUserQuestProgress } = useAuth()
   const {
     data,
     isLoading: questsLoading,
@@ -71,7 +71,7 @@ export default function MyQuests() {
           :
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.quests?.map((quest) => (
-              <QuestsCard key={quest.questId} quest={quest} handleClaimRewardClick={handleClaimRewardClick} closeClaimRewardModal={closeClaimRewardModal} />
+              <QuestsCard key={quest.questId} quest={quest} user={user} handleClaimRewardClick={handleClaimRewardClick} closeClaimRewardModal={closeClaimRewardModal} />
             ))}
           </div>
         }

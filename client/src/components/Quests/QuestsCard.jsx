@@ -4,7 +4,6 @@ import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
 import CompletedIcon from "../../svg/completed-icon.svg"
 import Button from "../Button/Button.jsx";
-import { useAuth } from "../../context/authContext.jsx";
 
 const iconMap = {
     'Starting Strong': FirstWinIcon,
@@ -12,18 +11,18 @@ const iconMap = {
     'Week of Dedication': ConsistencyIcon,
 };
 
-export function QuestsCard({ quest, handleClaimRewardClick }) {
-    const { user } = useAuth();
+export function QuestsCard({ user, quest, handleClaimRewardClick }) {
     const { title, description, reward, currentProgress, requirement, questId } = quest;
-
 
     // Find the current quest progress in user.questProgress
     const currentQuestProgress = user.questProgress?.find(q => q.questId === questId);
 
+    // Determine currentProgress: if the user has progress, use it, otherwise fall back to the quest's currentProgress
+    const questProgress = currentQuestProgress?.currentProgress || currentProgress;
+
     // Extract isCompleted and isClaimed, or set default values if not found
     const isCompleted = currentQuestProgress?.isCompleted || false;
     const isClaimed = currentQuestProgress?.isClaimed || false;
-
 
     return (
         <div className="card bg-gradient-to-r from-slate-900 to-slate-700 shadow-xl">
@@ -40,7 +39,7 @@ export function QuestsCard({ quest, handleClaimRewardClick }) {
                 <section className="flex justify-between gap-2 items-center mt-4">
                     <progress
                         className={`progress ${isCompleted ? "progress-success" : "progress-primary"}  w-56`}
-                        value={currentProgress}
+                        value={questProgress}
                         max={requirement}
                     ></progress>
 
@@ -56,7 +55,7 @@ export function QuestsCard({ quest, handleClaimRewardClick }) {
                     )}
                 </section>
                 <p className="text-sm text-left mt-2">
-                    Progress: {currentProgress} / <span className="text-primary font-medium">{requirement}</span>
+                    Progress: {questProgress} / <span className="text-primary font-medium">{requirement}</span>
                 </p>
             </div>
         </div>
