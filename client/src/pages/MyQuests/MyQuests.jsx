@@ -7,7 +7,7 @@ import { useQuery } from 'react-query';
 import * as questsApi from "../../actions/questActions.js"
 import { useAuth } from '../../context/authContext.jsx';
 import { useState } from 'react';
-
+import confetti from 'canvas-confetti';
 
 
 
@@ -27,6 +27,16 @@ export default function MyQuests() {
 
   const handleClaimRewardClick = () => {
     setCLaimRewardModal(true)
+    confetti({
+      particleCount: 30,
+      angle: Math.random() * (120 - 60) + 60,
+      spread: 80,
+      origin: { x: 0.5, y: 0.7 },
+      colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
+    });
+    const audio = new Audio('/quest-completed-sound.mp3');
+    audio.volume = 0.05;
+    audio.play();
   }
 
   const closeClaimRewardModal = () => {
@@ -52,7 +62,7 @@ export default function MyQuests() {
         }
       </main>
 
-      {claimRewardModal && <QuestRewardModal onClose={closeClaimRewardModal} />}
+      {claimRewardModal && <QuestRewardModal onClose={closeClaimRewardModal} earnedCoins={20} />}
     </div>
   );
 }

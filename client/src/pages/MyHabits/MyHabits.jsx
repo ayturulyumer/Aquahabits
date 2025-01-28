@@ -86,13 +86,7 @@ export default function MyHabits() {
                 audio.play();
                 updateAquaCoins(data.userCoins)
                 // Trigger confetti
-                confetti({
-                    particleCount: 30,
-                    angle: Math.random() * (120 - 60) + 60,
-                    spread: 80,
-                    origin: { x: 0.5, y: 0.7 },
-                    colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
-                });
+
 
                 // **Trigger the second API request (e.g., quest progress update)**
                 try {
