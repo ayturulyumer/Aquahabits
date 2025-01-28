@@ -31,7 +31,6 @@ export default function MyHabits() {
     const { updateAquaCoins, updateUserQuestProgress } = useAuth()
 
 
-    const today = formatDateToReadable(new Date())
 
 
     const {

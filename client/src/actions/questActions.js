@@ -21,3 +21,13 @@ export const updateQuestProgressForHabit = async (habitId) => {
     throw error;
   }
 };
+
+export const claimQuestReward = async (questId) => {
+  try {
+    const response = await axiosQuests.post("/claim-reward", { questId });
+    return response.data;
+  } catch (error) {
+    console.error("There was an error with this request:", error);
+    throw error;
+  }
+};

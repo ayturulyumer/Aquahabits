@@ -207,7 +207,6 @@ exports.claimQuestReward = async (userId, questId) => {
   }
 
   // Grant the reward to the user (e.g., adding coins, items, etc.)
-  // Assuming the quest reward is stored in `quest.reward`
   if (quest.reward) {
     user.aquaCoins += quest.reward; // Add the reward to the user's coins
   }
@@ -218,7 +217,10 @@ exports.claimQuestReward = async (userId, questId) => {
   // Save the updated user object
   await user.save();
 
+  // Return the updated quest progress along with the reward
   return {
-    reward: quest.reward,
+    earned: quest.reward,
+    reward: user.aquaCoins,
+    updatedQuestProgress: questProgress,
   };
 };

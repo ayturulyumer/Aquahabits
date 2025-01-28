@@ -2,8 +2,9 @@ import AquaCoins from "../../assets/aquagem.png"
 import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
-import TreasureChest from "../../assets/treasure-chest.png"
+import CompletedIcon from "../../svg/completed-icon.svg"
 import Button from "../Button/Button.jsx";
+import { useAuth } from "../../context/authContext.jsx";
 
 const iconMap = {
     'Starting Strong': FirstWinIcon,
@@ -12,7 +13,16 @@ const iconMap = {
 };
 
 export function QuestsCard({ quest, handleClaimRewardClick }) {
-    const { title, description, reward, currentProgress, isCompleted, isClaimed, requirement } = quest;
+    const { user } = useAuth();
+    const { title, description, reward, currentProgress, requirement, questId } = quest;
+
+
+    // Find the current quest progress in user.questProgress
+    const currentQuestProgress = user.questProgress?.find(q => q.questId === questId);
+
+    // Extract isCompleted and isClaimed, or set default values if not found
+    const isCompleted = currentQuestProgress?.isCompleted || false;
+    const isClaimed = currentQuestProgress?.isClaimed || false;
 
 
     return (
@@ -29,24 +39,24 @@ export function QuestsCard({ quest, handleClaimRewardClick }) {
                 <p>{description}</p>
                 <section className="flex justify-between gap-2 items-center mt-4">
                     <progress
-                        className="progress progress-success w-56"
+                        className={`progress ${isCompleted ? "progress-success" : "progress-primary"}  w-56`}
                         value={currentProgress}
                         max={requirement}
                     ></progress>
-                    {isCompleted ?
-                        // <button onClick={handleClaimRewardClick} type="button" className="animate-bounce cursor-pointer h-14 w-14 ">
-                        //     <img className="h-full w-full  object-fill" src={TreasureChest} alt="Claim Reward" />
-                        // </button>
-                        <Button onClick={handleClaimRewardClick} className="" >Claim Reward</Button>
-                        :
-                        <div className="badge text-primary flex gap-2 badge-ghost shadow-2xl shadow-teal-300 ">{reward}
-                            <img className="w-4  h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />
-                        </div>
-                    }
 
+                    {isCompleted && !isClaimed ? (
+                        <Button onClick={() => handleClaimRewardClick(questId)}>Claim Reward</Button>
+                    ) : isClaimed ? (
+                        <img src={CompletedIcon} alt="Claimed Icon" className="w-14 h-14" />
+                    ) : (
+                        <div className="badge text-primary flex gap-2 badge-ghost shadow-2xl shadow-teal-300">
+                            {reward}
+                            <img className="w-4 h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />
+                        </div>
+                    )}
                 </section>
                 <p className="text-sm text-left mt-2">
-                    Progress: {currentProgress} / <span className="text-primary  font-medium">{requirement} </span>
+                    Progress: {currentProgress} / <span className="text-primary font-medium">{requirement}</span>
                 </p>
             </div>
         </div>

@@ -14,8 +14,10 @@ import confetti from 'canvas-confetti';
 
 
 
+
 export default function MyQuests() {
-  const [claimRewardModal, setCLaimRewardModal] = useState(false)
+  const [claimRewardModal, setClaimRewardModal] = useState({ isVisible: false, reward: null });
+  const { updateAquaCoins, updateUserQuestProgress } = useAuth()
   const {
     data,
     isLoading: questsLoading,
@@ -25,22 +27,35 @@ export default function MyQuests() {
     queryFn: questsApi.getAllWithUserProgress
   })
 
-  const handleClaimRewardClick = () => {
-    setCLaimRewardModal(true)
-    confetti({
-      particleCount: 50,
-      angle: Math.random() * (120 - 60) + 60,
-      spread: 80,
-      origin: { x: 0.5, y: 0.7 },
-      colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
-    });
-    const audio = new Audio('/quest-completed-sound.mp3');
-    audio.volume = 0.05;
-    audio.play();
+  const claimRewardMutation = useGenericMutation({
+    mutationFn: questsApi.claimQuestReward,
+    queryKey: ["quests"],
+    onSuccess: (data) => {
+      setClaimRewardModal({ isVisible: true, reward: data.earned });
+      const audio = new Audio('/quest-completed-sound.mp3');
+      confetti({
+        particleCount: 50,
+        angle: Math.random() * (120 - 60) + 60,
+        spread: 80,
+        origin: { x: 0.5, y: 0.7 },
+        colors: ['#ffa500', '#ff6347', '#32cd32', '#1e90ff', '#800080'],
+      });
+      audio.volume = 0.05;
+      audio.play();
+      updateAquaCoins(data.reward)
+      updateUserQuestProgress(data.updatedQuestProgress)
+
+    },
+    onError: (error) => console.error("Error claiming quest reward:", error),
+  })
+
+  const handleClaimRewardClick = (questId) => {
+    claimRewardMutation.mutate(questId)
   }
 
+
   const closeClaimRewardModal = () => {
-    setCLaimRewardModal(false)
+    setClaimRewardModal({ isVisible: false, reward: null });
   }
 
 
@@ -62,7 +77,7 @@ export default function MyQuests() {
         }
       </main>
 
-      {claimRewardModal && <QuestRewardModal onClose={closeClaimRewardModal} earnedCoins={20} />}
+      {claimRewardModal.isVisible && <QuestRewardModal onClose={closeClaimRewardModal} earnedCoins={claimRewardModal.reward} />}
     </div>
   );
 }

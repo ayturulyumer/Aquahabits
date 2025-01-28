@@ -10,7 +10,7 @@ export default function QuestRewardModal({ earnedCoins, onClose }) {
                         <img src={TreasureChestIcon} alt="Treasure Chest" className="animate-bounce bg-transparent mx-auto mb-4 w-24 h-24" />
                         <p className="text-2xl font-bold font-mono text-success md:text-4xl">Quest Completed!</p>
                         <p className="font-mono text-xl  inline-flex justify-center gap-4 mb-4">
-                            You've earned <span className="text-primary ">20</span> <span>
+                            You've earned <span className="text-primary ">{earnedCoins}</span> <span>
                                 <img className="w-6 h-6" src={AquaCoins} alt="Aqua Coins" />
                             </span>
                         </p>
