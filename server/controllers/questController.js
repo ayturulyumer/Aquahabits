@@ -22,7 +22,6 @@ router.post("/update-quest-progress", auth, async (req, res) => {
       userId,
       habitId
     );
-    console.log(result);
     // return directly the quest progress object without array
     res.status(200).json(result);
   } catch (err) {
@@ -30,4 +29,14 @@ router.post("/update-quest-progress", auth, async (req, res) => {
   }
 });
 
+router.post("/claim-reward", auth, async (req, res) => {
+  const userId = req.user.id;
+  const { questId } = req.body;
+  try {
+    const result = await questService.claimQuestReward(userId, questId);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 module.exports = router;

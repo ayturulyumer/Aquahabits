@@ -1,7 +1,3 @@
-// IMPORTANT: getAllWithUserProgress currently does 2 things: gets all quests/calculates progress for the user and pushes user's quest progress to the user document.
-//  This is not ideal. We should separate these two functionalities.
-// The user's quest progress should be updated separately from fetching all quests and calculating progress for the user.
-// This will make the code more modular and easier to maintain.
 const Quest = require("../models/Quest.js");
 const User = require("../models/User.js");
 const Habit = require("../models/Habit.js");
@@ -174,4 +170,55 @@ exports.updateQuestProgressForHabit = async (userId, habitId) => {
   await user.save();
 
   return questProgress; // Return the updated quest progress object (or the default message)
+};
+
+exports.claimQuestReward = async (userId, questId) => {
+  // Fetch the user
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Find the quest progress for the given questId
+  const questProgress = user.questProgress.find((q) =>
+    q.questId.equals(questId)
+  );
+
+  if (!questProgress) {
+    throw new Error("Quest progress not found for this quest");
+  }
+
+  // Check if the quest is completed
+  if (!questProgress.isCompleted) {
+    throw new Error("Quest is not completed yet");
+  }
+
+  // Check if the reward has already been claimed
+  if (questProgress.isClaimed) {
+    throw new Error("Reward for this quest has already been claimed");
+  }
+
+  // Fetch the quest to get the reward details
+  const quest = await Quest.findById(questId);
+
+  if (!quest) {
+    throw new Error("Quest not found");
+  }
+
+  // Grant the reward to the user (e.g., adding coins, items, etc.)
+  // Assuming the quest reward is stored in `quest.reward`
+  if (quest.reward) {
+    user.aquaCoins += quest.reward; // Add the reward to the user's coins
+  }
+
+  // Mark the quest as claimed
+  questProgress.isClaimed = true;
+
+  // Save the updated user object
+  await user.save();
+
+  return {
+    reward: quest.reward,
+  };
 };
