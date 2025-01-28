@@ -3,6 +3,7 @@ import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
 import TreasureChest from "../../assets/treasure-chest.png"
+import Button from "../Button/Button.jsx";
 
 const iconMap = {
     'Starting Strong': FirstWinIcon,
@@ -10,7 +11,7 @@ const iconMap = {
     'Week of Dedication': ConsistencyIcon,
 };
 
-export function QuestsCard({ quest }) {
+export function QuestsCard({ quest, handleClaimRewardClick }) {
     const { title, description, reward, currentProgress, isCompleted, isClaimed, requirement } = quest;
 
 
@@ -33,9 +34,10 @@ export function QuestsCard({ quest }) {
                         max={requirement}
                     ></progress>
                     {isCompleted ?
-                        <button type="button" className="animate-bounce cursor-pointer h-14 w-14 ">
-                            <img className="h-full w-full  object-fill" src={TreasureChest} alt="Claim Reward" />
-                        </button>
+                        // <button onClick={handleClaimRewardClick} type="button" className="animate-bounce cursor-pointer h-14 w-14 ">
+                        //     <img className="h-full w-full  object-fill" src={TreasureChest} alt="Claim Reward" />
+                        // </button>
+                        <Button onClick={handleClaimRewardClick} className="" >Claim Reward</Button>
                         :
                         <div className="badge text-primary flex gap-2 badge-ghost shadow-2xl shadow-teal-300 ">{reward}
                             <img className="w-4  h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />

@@ -1,10 +1,12 @@
 import { QuestsCard } from '../../components/Quests/QuestsCard.jsx';
+import QuestRewardModal from '../../components/QuestRewardModal/QuestRewardModal.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useEffect } from 'react';
 import { useGenericMutation } from '../../hooks/useMutation.js';
 import { useQuery } from 'react-query';
 import * as questsApi from "../../actions/questActions.js"
 import { useAuth } from '../../context/authContext.jsx';
+import { useState } from 'react';
 
 
 
@@ -13,6 +15,7 @@ import { useAuth } from '../../context/authContext.jsx';
 
 
 export default function MyQuests() {
+  const [claimRewardModal, setCLaimRewardModal] = useState(false)
   const {
     data,
     isLoading: questsLoading,
@@ -22,9 +25,13 @@ export default function MyQuests() {
     queryFn: questsApi.getAllWithUserProgress
   })
 
+  const handleClaimRewardClick = () => {
+    setCLaimRewardModal(true)
+  }
 
-
-
+  const closeClaimRewardModal = () => {
+    setCLaimRewardModal(false)
+  }
 
 
 
@@ -39,11 +46,13 @@ export default function MyQuests() {
           :
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.quests?.map((quest) => (
-              <QuestsCard key={quest.questId} quest={quest} />
+              <QuestsCard key={quest.questId} quest={quest} handleClaimRewardClick={handleClaimRewardClick} closeClaimRewardModal={closeClaimRewardModal} />
             ))}
           </div>
         }
       </main>
+
+      {claimRewardModal && <QuestRewardModal onClose={closeClaimRewardModal} />}
     </div>
   );
 }
