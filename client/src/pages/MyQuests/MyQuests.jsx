@@ -28,7 +28,7 @@ export default function MyQuests() {
   const handleClaimRewardClick = () => {
     setCLaimRewardModal(true)
     confetti({
-      particleCount: 30,
+      particleCount: 50,
       angle: Math.random() * (120 - 60) + 60,
       spread: 80,
       origin: { x: 0.5, y: 0.7 },
