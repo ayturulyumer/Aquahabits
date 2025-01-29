@@ -31,7 +31,6 @@ export default function LoginForm() {
         if (Object.keys(newErrors).length === 0) {
             try {
                 const response = await auth.login(values.email, values.password)
-                console.log(response)
                 login(response.user, response.accessToken)
                 navigate("/dashboard")
             } catch (err) {

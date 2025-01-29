@@ -6,24 +6,17 @@ const { setRefreshToken } = require("../utils/auth.js");
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const { newUser, accessToken, refreshToken } = await userService.register(
-      name,
-      email,
-      password
-    );
-
-    setRefreshToken(refreshToken);
+    const { userWithoutPassword, accessToken, refreshToken } =
+      await userService.register(name, email, password);
+    setRefreshToken(res, refreshToken);
 
     // Send access token to the client
-    res.json({
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-      },
+    res.status(200).json({
+      user: userWithoutPassword,
       accessToken,
     });
   } catch (err) {
+    console.log(err);
     const statusCode = err.message === "User already exists !" ? 400 : 500;
     res.status(statusCode).json({ message: err.message });
   }
@@ -33,10 +26,8 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const { userWithoutPassword, accessToken, refreshToken } = await userService.login(
-      email,
-      password
-    );
+    const { userWithoutPassword, accessToken, refreshToken } =
+      await userService.login(email, password);
 
     setRefreshToken(res, refreshToken);
 

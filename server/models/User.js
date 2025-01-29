@@ -19,7 +19,24 @@ const userSchema = new mongoose.Schema({
       isClaimed: { type: Boolean, default: true }, // True if the reward hasn't been claimed yet
     },
   ],
-  creatures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Creature" }],
+  creatures: [
+    {
+      creatureId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Creature", // Reference to the Creature model
+        required: true,
+      },
+      level: {
+        type: Number,
+        default: 1, // Default level for the user's creature
+      },
+      size: {
+        type: String,
+        enum: ["small", "medium", "large"],
+        default: "small", // Default size for the user's creature
+      },
+    },
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 

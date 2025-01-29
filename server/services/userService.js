@@ -21,10 +21,14 @@ exports.register = async (name, email, password) => {
 
   const newUser = await User.create({ name, email, password: hashedPassword });
 
+    // Don't return password
+    const userWithoutPassword = newUser.toObject(); // Convert to plain JavaScript object
+    delete userWithoutPassword.password; // Remove the password field
+
   const accessToken = generateToken(newUser, JWT_ACCESS_EXPIRY);
   const refreshToken = generateToken(newUser, JWT_REFRESH_EXPIRY);
 
-  return { newUser, accessToken, refreshToken };
+  return { userWithoutPassword, accessToken, refreshToken };
 };
 
 exports.login = async (email, password) => {

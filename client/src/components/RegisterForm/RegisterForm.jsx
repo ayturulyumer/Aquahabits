@@ -8,10 +8,13 @@ import RegisterIcon from "../../svg/add-user-icon.svg";
 
 import Button from "../Button/Button.jsx";
 
+import { useAuth } from "../../context/authContext.jsx";
+
 import * as auth from "../../actions/authActions.js";
 
 export default function RegisterForm() {
     const [errors, setErrors] = useState({})
+    const { login } = useAuth()
 
     const navigate = useNavigate()
 
@@ -46,8 +49,8 @@ export default function RegisterForm() {
         setErrors(newErrors)
         if (Object.keys(newErrors).length === 0) {
             try {
-                const user = await auth.register(values.name, values.email, values.password)
-                console.log("User registered successfully", user);
+                const response = await auth.register(values.name, values.email, values.password)
+                login(response.user, response.accessToken)
                 navigate("/dashboard")
             } catch (err) {
                 console.log(err)
