@@ -13,9 +13,8 @@ const menuItems = [
 
 function SidebarNav({ isOpen }) {
     const { user } = useAuth()
-    // console.log(user)
+
     const hasUnclaimedRewards = user?.questProgress?.some((quest) => quest.isCompleted && !quest.isClaimed === true)
-    console.log(hasUnclaimedRewards)
 
     if (!isOpen) {
         return null;

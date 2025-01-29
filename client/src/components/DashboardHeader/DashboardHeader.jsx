@@ -46,8 +46,8 @@ function DashboardHeader({ toggleSidebar }) {
         <span className="text-sm font-medium">Welcome, {user?.name} !</span>
         <Tippy content={TooltipMessage} placement="bottom-start" animation="scale-extreme">
           <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full  font-medium text-neutral">
-            <span >{user?.aquaCoins}</span>
-            <img src={AquaGemIcon} alt="Aquagem" className="w-6 h-6" />
+            <img src={AquaGemIcon} alt="Aquagem" className="w-5 h-5" />
+            <span className="text-primary" >{user?.aquaCoins}</span>
           </div>
         </Tippy>
         <Button onClick={handleUserLogout} variant="btn-ghost" size="btn-xs" isCircle iconRight={LogoutIcon} iconAlt="Logout Icon"></Button>
