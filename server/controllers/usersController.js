@@ -84,4 +84,18 @@ router.post("/refresh-session", async (req, res) => {
   }
 });
 
+router.post("/addCreature", auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const creatureData = req.body;
+
+    const result = await userService.addCreature(userId, creatureData);
+
+    res.status(200).json(result);
+  } catch (err) {
+    const statusCode = err.message === "User not found" ? 404 : 500;
+    res.status(statusCode).json({ message: err.message });
+  }
+});
+
 module.exports = router;

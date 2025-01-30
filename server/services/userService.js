@@ -21,9 +21,9 @@ exports.register = async (name, email, password) => {
 
   const newUser = await User.create({ name, email, password: hashedPassword });
 
-    // Don't return password
-    const userWithoutPassword = newUser.toObject(); // Convert to plain JavaScript object
-    delete userWithoutPassword.password; // Remove the password field
+  // Don't return password
+  const userWithoutPassword = newUser.toObject(); // Convert to plain JavaScript object
+  delete userWithoutPassword.password; // Remove the password field
 
   const accessToken = generateToken(newUser, JWT_ACCESS_EXPIRY);
   const refreshToken = generateToken(newUser, JWT_REFRESH_EXPIRY);
@@ -73,4 +73,30 @@ exports.refreshTokens = async (refreshToken) => {
   const newRefreshToken = generateToken(user, JWT_REFRESH_EXPIRY);
 
   return { newAccessToken, newRefreshToken };
+};
+
+exports.addCreature = async (userId, creatureData) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Add the creature to the user's creatures array
+  user.creatures.push({
+    id: creatureData.creatureId,
+    name: creatureData.name,
+    icon: creatureData.icon,
+    rarity: creatureData.rarity,
+    level: creatureData.level,
+    x: creatureData.x, // Store X coordinate
+    y: creatureData.y, // Store Y coordinate
+  });
+
+  // Deduct AquaCoins for the cost
+  user.aquaCoins -= creatureData.cost;
+
+  await user.save();
+
+  return { creatures: user.creatures, aquaCoins: user.aquaCoins };
 };
