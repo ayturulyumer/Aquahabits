@@ -26,9 +26,19 @@ export const axiosQuests = Axios.create({
   },
   withCredentials: true,
 });
+export const axiosCreatures = Axios.create({
+  baseURL: `${BASE_URL}/creatures/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});
 
 sessionInterceptor(axios);
 sessionInterceptor(axiosHabits);
 sessionInterceptor(axiosQuests);
+sessionInterceptor(axiosCreatures);
+
 responseInterceptor(axiosHabits);
 responseInterceptor(axiosQuests);
+responseInterceptor(axiosCreatures);

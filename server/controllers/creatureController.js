@@ -1,4 +1,4 @@
-const router = require("./habitController.js");
+const router = require("express").Router();
 const { auth } = require("../middlewares/authMiddleware.js");
 const creatureService = require("../services/creatureService");
 

@@ -6,6 +6,5 @@ exports.getAll = async () => {
   if (!creatures) {
     throw new Error("No creatures found");
   }
-
   return creatures;
 };

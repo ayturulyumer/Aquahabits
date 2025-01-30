@@ -4,10 +4,19 @@ import "tippy.js/animations/scale-extreme.css";
 import Tippy from "@tippyjs/react";
 import Button from "../Button/Button.jsx";
 import LevelUpIcon from "../../svg/levelup-icon.svg";
-import AquaCoins from "../../assets/aquagem.png"
-import { ITEM_TYPES, GROWTH_COSTS } from "../../utils/constants.js";
+import AquaCoins from "../../assets/aquagem.png";
+import { ITEM_TYPES } from "../../utils/constants.js";
 
-export default function AquariumGrid({ grid, handleItemSelect, growAnimal, removeAnimal, setActiveCell, activeCell, aquaCoins }) {
+export default function AquariumGrid({
+    creatures,
+    grid,
+    handleItemSelect,
+    growAnimal,
+    removeAnimal,
+    setActiveCell,
+    activeCell,
+    aquaCoins,
+}) {
     // Memoize the grid rendering
     const renderedGrid = useMemo(() => {
         return grid.map((row, rowIndex) =>
@@ -18,25 +27,25 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                         cell ? (
                             <div className="p-1 flex flex-col gap-2">
                                 <h4 className="font-semibold text-lg">{cell.name}</h4>
-                                <p className="text-sm badge ">Rarity: {cell.rarity}</p>
+                                <p className="text-sm badge">Rarity: {cell.rarity}</p>
                                 <p className="text-sm badge">Level: {cell.level}</p>
                                 <div className="flex gap-2">
                                     <Button
                                         className="bg-blue-500 text-white"
                                         onClick={() => growAnimal(rowIndex, colIndex)}
                                         disabled={
-                                            cell.level === 3 || aquaCoins < GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]
+                                            cell.level === 3 ||
+                                            aquaCoins < cell.growthCost[`level${cell.level + 1}`]
                                         }
                                     >
-                                        {cell.level === 3
-                                            ? "Max Level"
-                                            : (
-                                                <>
-                                                    <img className="w-4 h-4" src={AquaCoins} alt="Aqua Coins" />
-                                                    {GROWTH_COSTS[cell.rarity][`level${cell.level + 1}`]}
-                                                </>
-                                            )}
-
+                                        {cell.level === 3 ? (
+                                            "Max Level"
+                                        ) : (
+                                            <>
+                                                <img className="w-4 h-4" src={AquaCoins} alt="Aqua Coins" />
+                                                {cell.growthCost[`level${cell.level + 1}`]}
+                                            </>
+                                        )}
                                     </Button>
 
                                     <Button
@@ -49,7 +58,7 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 max-w-42 max-h-32 md:max-h-48 md:grid-cols-2 lg:max-h-52 transition-all ease-in-out duration-500 overflow-y-auto gap-4 p-2 transform hover:scale-105">
-                                {ITEM_TYPES.map((item) => (
+                                {creatures.map((item) => (
                                     <button
                                         key={item.name}
                                         className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${aquaCoins >= item.cost ? "bg-green-500/30" : "bg-red-500/30 cursor-not-allowed"
@@ -59,7 +68,8 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                                     >
                                         <img src={item.icon} alt={item.name} className="w-8 h-8 mb-1" />
                                         <span className="text-sm">{item.name}</span>
-                                        <div className="flex text-primary font-medium gap-2">{item.cost}
+                                        <div className="flex text-primary font-medium gap-2">
+                                            {item.cost}
                                             <img className="w-4 h-4" src={AquaCoins} alt="Aqua Coins" />
                                         </div>
                                     </button>
@@ -84,10 +94,10 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                                 src={cell.icon}
                                 alt={cell.name}
                                 className={`transition-transform duration-200 ease-in-out ${cell.level === 1
-                                    ? "w-6 h-6 md:w-8 md:h-8 "
-                                    : cell.level === 2
-                                        ? "w-8 h-8 md:w-10 md:h-10"
-                                        : "w-10 h-10 md:w-14 md:h-14 "
+                                        ? "w-6 h-6 md:w-8 md:h-8 "
+                                        : cell.level === 2
+                                            ? "w-8 h-8 md:w-10 md:h-10"
+                                            : "w-10 h-10 md:w-14 md:h-14 "
                                     }`}
                             />
                         )}
@@ -101,7 +111,7 @@ export default function AquariumGrid({ grid, handleItemSelect, growAnimal, remov
                 </Tippy>
             ))
         );
-    }, [grid, growAnimal, removeAnimal, setActiveCell, activeCell, aquaCoins]);
+    }, [grid, growAnimal, removeAnimal, setActiveCell, activeCell, aquaCoins, creatures]);
 
     return <>{renderedGrid}</>;
 }

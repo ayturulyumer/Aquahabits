@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Button from "../../components/Button/Button.jsx";
 import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
+import { useQuery } from "react-query";
+import * as creaturesApi from "../../actions/creatureActions.js";
 
 
 
@@ -44,13 +46,24 @@ export default function MyAquarium() {
     };
   }, [isMuted]);
 
+  const {
+    data: creatures,
+    isLoading: creaturesLoading,
+    error: creaturesError,
+  } = useQuery({
+    queryKey: "creatures",
+    queryFn: creaturesApi.getAll
+  })
+
+
   const handleItemSelect = (row, col, item) => {
+    console.log("Item selected:", item);
     if (user?.aquaCoins >= item.cost) {
       const newGrid = [...grid];
       const itemCopy = { ...item };
       newGrid[row][col] = itemCopy;
       setGrid(newGrid);
-      decreaseUserPoints(item.cost);
+      // decreaseUserPoints(item.cost);
       splashSound.volume = 0.05;
       splashSound.play();
 
@@ -122,6 +135,7 @@ export default function MyAquarium() {
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
           <AquariumGrid
             grid={grid}
+            creatures={creatures}
             handleItemSelect={handleItemSelect}
             growAnimal={growAnimal}
             removeAnimal={removeAnimal}
