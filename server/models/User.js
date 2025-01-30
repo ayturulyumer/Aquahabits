@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         enum: ["small", "medium", "large"],
         default: "small", // Default size for the user's creature
       },
+      coordinates: {
+        x: { type: Number, required: true }, // X coordinate on the grid
+        y: { type: Number, required: true }, // Y coordinate on the grid
+      },
     },
   ],
   createdAt: { type: Date, default: Date.now },
