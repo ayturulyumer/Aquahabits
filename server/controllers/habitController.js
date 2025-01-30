@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { auth } = require("../middlewares/authMiddleware.js");
 const habitService = require("../services/habitService.js");
-const questService = require("../services/questService.js");
 
 router.get("/", auth, async (req, res) => {
   const userId = req.user.id;
