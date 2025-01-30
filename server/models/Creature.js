@@ -8,7 +8,7 @@ const creatureSchema = new mongoose.Schema({
   },
   rarity: {
     type: String,
-    enum: ["common", "rare", "legendary"],
+    enum: ["common", "rare", "epic", "legendary"],
     required: true,
   },
   cost: {

@@ -54,45 +54,45 @@ export const solutionPointsData = {
 
 export const ITEM_TYPES = [
   // Easy Creatures to Unlock (Common)
-  { name: "Seahorse", rarity: "common", cost: 50, icon: SeahorseIcon, size: "small", level: 1 },
-  { name: "Clownfish", rarity: "common", cost: 60, icon: ClownfishIcon, size: "small", level: 1 },
-  { name: "Crab", rarity: "common", cost: 70, icon: CrabIcon, size: "small", level: 1 },
+  { name: "Seahorse", rarity: "common", cost: 35, icon: SeahorseIcon, size: "small" },
+  { name: "Clownfish", rarity: "common", cost: 45, icon: ClownfishIcon, size: "small" },
+  { name: "Crab", rarity: "common", cost: 55, icon: CrabIcon, size: "small" },
 
   // Mid-Level Creatures (Uncommon)
-  { name: "Jellyfish", rarity: "uncommon", cost: 100, icon: JellyfishIcon, size: "small", level: 1 },
-  { name: "Piranha", rarity: "uncommon", cost: 120, icon: PiranhaIcon, size: "small", level: 1 },
-  { name: "Stingray", rarity: "uncommon", cost: 130, icon: StingrayIcon, size: "small", level: 1 },
+  { name: "Jellyfish", rarity: "rare", cost: 70, icon: JellyfishIcon, size: "small" },
+  { name: "Piranha", rarity: "rare", cost: 90, icon: PiranhaIcon, size: "small" },
+  { name: "Stingray", rarity: "rare", cost: 95, icon: StingrayIcon, size: "small" },
 
   // Advanced Creatures (Rare)
-  { name: "Starfish", rarity: "rare", cost: 150, icon: StarfishIcon, size: "small", level: 1 },
-  { name: "Dolphin", rarity: "rare", cost: 180, icon: DolphinIcon, size: "small", level: 1 },
-  { name: "Octopus", rarity: "rare", cost: 200, icon: OctopusIcon, size: "small", level: 1 },
-  { name: "Sea Turtle", rarity: "rare", cost: 220, icon: SeaTurtleIcon, size: "small", level: 1 },
+  { name: "Starfish", rarity: "epic", cost: 120, icon: StarfishIcon, size: "small" },
+  { name: "Dolphin", rarity: "epic", cost: 140, icon: DolphinIcon, size: "small" },
+  { name: "Octopus", rarity: "epic", cost: 160, icon: OctopusIcon, size: "small" },
+  { name: "Sea Turtle", rarity: "epic", cost: 175, icon: SeaTurtleIcon, size: "small" },
+  { name: "Shark", rarity: "epic", cost: 220, icon: SharkIcon, size: "small" },
 
   // High-Level Creatures (Legendary)
-  { name: "Shark", rarity: "legendary", cost: 300, icon: SharkIcon, size: "small", level: 1 },
-  { name: "Whale", rarity: "legendary", cost: 350, icon: WhaleIcon, size: "small", level: 1 },
-  { name: "Kraken", rarity: "legendary", cost: 400, icon: KrakenIcon, size: "small", level: 1 },
-  { name: "Axolotl", rarity: "legendary", cost: 450, icon: AxolotlIcon, size: "small", level: 1 },
-  { name: "Triturus", rarity: "legendary", cost: 500, icon: TriturusIcon, size: "small", level: 1 },
+  { name: "Whale", rarity: "legendary", cost: 250, icon: WhaleIcon, size: "small" },
+  { name: "Kraken", rarity: "legendary", cost: 280, icon: KrakenIcon, size: "small" },
+  { name: "Axolotl", rarity: "legendary", cost: 310, icon: AxolotlIcon, size: "small" },
+  { name: "Triturus", rarity: "legendary", cost: 360, icon: TriturusIcon, size: "small" },
 ];
 
 export const GROWTH_COSTS = {
   common: {
-    level2: 30,
-    level3: 60,
-  },
-  uncommon: {
-    level2: 50,
-    level3: 100,
+    level2: 20,
+    level3: 40,
   },
   rare: {
-    level2: 80,
-    level3: 150,
+    level2: 40,
+    level3: 70,
+  },
+  epic: {
+    level2: 70,
+    level3: 120,
   },
   legendary: {
-    level2: 150,
-    level3: 300,
+    level2: 120,
+    level3: 240,
   },
 };
 
