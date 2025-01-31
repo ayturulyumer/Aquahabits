@@ -89,18 +89,25 @@ exports.addCreature = async (userId, creatureData) => {
   }
 
   // Add the creature to the user's creatures array
-  user.creatures.push({
+
+  const newCreature = {
     creatureId: creatureData.creatureId,
     coordinates: {
       x: creatureData.coordinates.x,
       y: creatureData.coordinates.y,
     },
-  });
+  };
+
+  user.creatures.push(newCreature);
 
   // Deduct AquaCoins for the cost
+  if (creature.cost > user.aquaCoins) {
+    throw new Error("Not enough AquaCoins");
+  }
+
   user.aquaCoins -= creature.cost;
 
   await user.save();
 
-  return { creatures: user.creatures, aquaCoins: user.aquaCoins };
+  return { addedCreature: newCreature, aquaCoins: user.aquaCoins };
 };

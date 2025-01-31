@@ -19,7 +19,7 @@ const GRID_SIZE = 6;
 
 
 export default function MyAquarium() {
-  const { user, increaseUserPoints, decreaseUserPoints } = useAuth()
+  const { user, updateAquaCoins, updateUserCreatures } = useAuth()
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
@@ -48,6 +48,25 @@ export default function MyAquarium() {
     };
   }, [isMuted]);
 
+
+  // Update the grid when the user or creatures data changes
+  useEffect(() => {
+    if (user?.creatures) {
+      const newGrid = Array(GRID_SIZE)
+        .fill(null)
+        .map(() => Array(GRID_SIZE).fill(null));
+
+      user.creatures.forEach(({ creatureId, coordinates }) => {
+        const creature = creatures?.find((c) => c._id === creatureId);
+        if (creature) {
+          newGrid[coordinates.x][coordinates.y] = { ...creature, x: coordinates.x, y: coordinates.y };
+        }
+      });
+
+      setGrid(newGrid);
+    }
+  }, [user]);
+
   const {
     data: creatures,
     isLoading: creaturesLoading,
@@ -57,16 +76,22 @@ export default function MyAquarium() {
     queryFn: creaturesApi.getAll
   })
 
+
+
+
   const addCreatureMutation = useGenericMutation({
     mutationFn: creaturesApi.addCreature,
     queryKey: "creatures",
-    onSuccess: (data) => console.log("Creature added to user successfully:", data),
+    onSuccess: (data) => {
+      updateAquaCoins(data.aquaCoins)
+      updateUserCreatures(data.addedCreature)
+    }
+    ,
     onError: (error) => console.error("Error adding creature to user:", error),
   })
 
 
   const handleItemSelect = (row, col, item) => {
-    console.log("Item selected:", item, "at position:", row, col);
     if (user?.aquaCoins >= item.cost) {
       const newGrid = [...grid];
       const itemCopy = { ...item, x: row, y: col }; // Store coordinates in item object

@@ -20,12 +20,12 @@ router.post("/add-creature", auth, async (req, res) => {
     const userId = req.user.id;
     const creatureData = req.body;
 
-    const { creatures, aquaCoins } = await userService.addCreature(
+    const { addedCreature, aquaCoins } = await userService.addCreature(
       userId,
       creatureData
     );
 
-    res.status(200).json({ creatures, aquaCoins });
+    res.status(200).json({ addedCreature, aquaCoins });
   } catch (err) {
     const statusCode = err.message === "User not found" ? 404 : 500;
     res.status(statusCode).json({ message: err.message });

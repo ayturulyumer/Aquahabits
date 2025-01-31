@@ -15,6 +15,14 @@ export const AuthProvider = ({ children }) => {
     setUser((prevUser) => ({ ...prevUser, aquaCoins: updatedCoins }))
   }
 
+  const updateUserCreatures = (newCreature) => {
+    setUser((prevUser) => ({
+      ...prevUser, // Keep all previous user properties
+      creatures: [...prevUser.creatures, newCreature], // Append new creature
+    }));
+  };
+
+
   const updateUserQuestProgress = (updatedQuestProgress) => {
     setUser((prevUser) => {
       const updatedProgress = prevUser.questProgress.map((questProgress) => {
@@ -93,7 +101,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress }}>
+    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress, updateUserCreatures }}>
       {children}
     </AuthContext.Provider>
   );
