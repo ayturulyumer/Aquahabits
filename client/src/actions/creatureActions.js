@@ -9,3 +9,14 @@ export const getAll = async () => {
     throw error;
   }
 };
+
+// Creatures are added in users aquarium / that's the reason i'm  using user actions here
+export const addCreature = async (creature) => {
+  try {
+    const response = await axiosCreatures.post("/add-creature", creature);
+    return response.data;
+  } catch (error) {
+    console.error("There was an error with this request:", error);
+    throw error;
+  }
+};

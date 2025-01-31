@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const User = require("../models/User.js");
+const Creature = require("../models/Creature.js");
 
 const { generateToken } = require("../utils/auth.js");
 
@@ -77,24 +78,27 @@ exports.refreshTokens = async (refreshToken) => {
 
 exports.addCreature = async (userId, creatureData) => {
   const user = await User.findById(userId);
+  const creature = await Creature.findById(creatureData.creatureId);
 
   if (!user) {
     throw new Error("User not found");
   }
 
+  if (!creature) {
+    throw new Error("Creature not found");
+  }
+
   // Add the creature to the user's creatures array
   user.creatures.push({
-    id: creatureData.creatureId,
-    name: creatureData.name,
-    icon: creatureData.icon,
-    rarity: creatureData.rarity,
-    level: creatureData.level,
-    x: creatureData.x, // Store X coordinate
-    y: creatureData.y, // Store Y coordinate
+    creatureId: creatureData.creatureId,
+    coordinates: {
+      x: creatureData.coordinates.x,
+      y: creatureData.coordinates.y,
+    },
   });
 
   // Deduct AquaCoins for the cost
-  user.aquaCoins -= creatureData.cost;
+  user.aquaCoins -= creature.cost;
 
   await user.save();
 

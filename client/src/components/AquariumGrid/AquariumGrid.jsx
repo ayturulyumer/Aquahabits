@@ -58,7 +58,7 @@ export default function AquariumGrid({
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 max-w-42 max-h-32 md:max-h-48 md:grid-cols-2 lg:max-h-52 transition-all ease-in-out duration-500 overflow-y-auto gap-4 p-2 transform hover:scale-105">
-                                {creatures.map((item) => (
+                                {creatures?.map((item) => (
                                     <button
                                         key={item.name}
                                         className={`p-2 rounded-lg shadow-md flex md:flex-col items-center justify-between gap-2 ${aquaCoins >= item.cost ? "bg-green-500/30" : "bg-red-500/30 cursor-not-allowed"

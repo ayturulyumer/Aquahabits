@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Button from "../../components/Button/Button.jsx";
 import UnmuteIcon from "../../svg/unmute-icon.svg";
 import MuteIcon from "../../svg/mute-icon.svg";
-import { useQuery } from "react-query";
+
 import * as creaturesApi from "../../actions/creatureActions.js";
+import { useQuery } from "react-query";
+import { useGenericMutation } from "../../hooks/useMutation.js";
 
 
 
@@ -55,14 +57,25 @@ export default function MyAquarium() {
     queryFn: creaturesApi.getAll
   })
 
+  const addCreatureMutation = useGenericMutation({
+    mutationFn: creaturesApi.addCreature,
+    queryKey: "creatures",
+    onSuccess: (data) => console.log("Creature added to user successfully:", data),
+    onError: (error) => console.error("Error adding creature to user:", error),
+  })
+
 
   const handleItemSelect = (row, col, item) => {
-    console.log("Item selected:", item);
+    console.log("Item selected:", item, "at position:", row, col);
     if (user?.aquaCoins >= item.cost) {
       const newGrid = [...grid];
-      const itemCopy = { ...item };
+      const itemCopy = { ...item, x: row, y: col }; // Store coordinates in item object
       newGrid[row][col] = itemCopy;
       setGrid(newGrid);
+      addCreatureMutation.mutate({
+        creatureId: item._id,
+        coordinates: { x: row, y: col },
+      })
       // decreaseUserPoints(item.cost);
       splashSound.volume = 0.05;
       splashSound.play();
