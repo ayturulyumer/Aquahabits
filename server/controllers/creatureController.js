@@ -13,8 +13,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
-
 router.post("/add-creature", auth, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -31,3 +29,24 @@ router.post("/add-creature", auth, async (req, res) => {
     res.status(statusCode).json({ message: err.message });
   }
 });
+
+router.patch("/levelup-creature", auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { creatureModelId, userCreatureId } = req.body;
+
+    const { updatedCreature, updatedAquaCoins } =
+      await userService.levelUpCreature(
+        userId,
+        creatureModelId,
+        userCreatureId
+      );
+
+    res.status(200).json({ updatedCreature, updatedAquaCoins });
+  } catch (err) {
+    const statusCode = err.message === "User not found" ? 404 : 500;
+    res.status(statusCode).json({ message: err.message });
+  }
+});
+
+module.exports = router;

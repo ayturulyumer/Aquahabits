@@ -88,26 +88,94 @@ exports.addCreature = async (userId, creatureData) => {
     throw new Error("Creature not found");
   }
 
-  // Add the creature to the user's creatures array
+  // Deduct AquaCoins before adding the creature
+  if (creature.cost > user.aquaCoins) {
+    throw new Error("Not enough AquaCoins");
+  }
+  user.aquaCoins -= creature.cost;
 
-  const newCreature = {
+  // Create a new creature object
+  user.creatures.push({
     creatureId: creatureData.creatureId,
+    level: 1, // Default level
+    size: "small", // Default size
     coordinates: {
       x: creatureData.coordinates.x,
       y: creatureData.coordinates.y,
     },
-  };
+  });
 
-  user.creatures.push(newCreature);
-
-  // Deduct AquaCoins for the cost
-  if (creature.cost > user.aquaCoins) {
-    throw new Error("Not enough AquaCoins");
-  }
-
-  user.aquaCoins -= creature.cost;
+  // Get the newly added creature (last item in the array)
+  const addedCreature = user.creatures[user.creatures.length - 1];
 
   await user.save();
 
-  return { addedCreature: newCreature, aquaCoins: user.aquaCoins };
+  return { addedCreature, aquaCoins: user.aquaCoins };
+};
+
+exports.levelUpCreature = async (userId, creatureModelId, userCreatureId) => {
+  // Step 1: Find the user
+  const user = await User.findById(userId);
+  const baseCreature = await Creature.findById(creatureModelId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (!baseCreature) {
+    throw new Error("Creature not found");
+  }
+
+  // Step 2: Find the creature in the user's creatures list
+  const creatureIndex = user.creatures.findIndex(
+    (creature) => creature._id.toString() === userCreatureId
+  );
+
+  if (creatureIndex === -1) {
+    throw new Error("Creature not found in user's creatures list");
+  }
+
+  const creature = user.creatures[creatureIndex];
+
+  // Step 3: Check if the creature has reached the maximum level (3)
+  if (creature.level >= 3) {
+    throw new Error("Creature has reached the maximum level");
+  }
+
+  // Step 4: Determine the growth cost based on the level
+  let growthCost = 0;
+
+  if (creature.level === 1) {
+    console.log(baseCreature)
+    growthCost = baseCreature.growthCost.level2; // Cost for leveling up from level 1 to 2
+  } else if (creature.level === 2) {
+    growthCost = baseCreature.growthCost.level3; // Cost for leveling up from level 2 to 3
+  }
+
+  // Step 5: Check if the user has enough AquaCoins
+  if (user.aquaCoins < growthCost) {
+    throw new Error("Not enough AquaCoins to level up the creature");
+  }
+
+  // Step 6: Deduct the AquaCoins
+  user.aquaCoins -= growthCost;
+
+  // Step 7: Level up the creature
+  creature.level += 1; // Increase level by 1
+
+  // Step 8: Adjust the creature's size based on the new level
+  if (creature.level === 2) {
+    creature.size = "medium"; // Size changes to medium at level 2
+  } else if (creature.level === 3) {
+    creature.size = "large"; // Size changes to large at level 3
+  }
+
+  await user.save(); // Save the user with updated AquaCoins and creatures
+
+
+  // Step 9: Return the updated creature and AquaCoins
+  return {
+    updatedCreature: creature,
+    updatedAquaCoins: user.aquaCoins,
+  };
 };

@@ -22,28 +22,33 @@ export const AuthProvider = ({ children }) => {
     }));
   };
 
+  
+  
+
 
   const updateUserQuestProgress = (updatedQuestProgress) => {
-    setUser((prevUser) => {
-      const updatedProgress = prevUser.questProgress.map((questProgress) => {
-        if (questProgress.questId === updatedQuestProgress.questId) {
-          // If quest progress exists, update it
-          return {
-            ...questProgress,  // Keep existing progress
-            ...updatedQuestProgress,  // Overwrite with the new progress data
-          };
+    if (updatedQuestProgress) {
+      setUser((prevUser) => {
+        const updatedProgress = prevUser.questProgress.map((questProgress) => {
+          if (questProgress.questId === updatedQuestProgress.questId) {
+            // If quest progress exists, update it
+            return {
+              ...questProgress,  // Keep existing progress
+              ...updatedQuestProgress,  // Overwrite with the new progress data
+            };
+          }
+          return questProgress;  // Return the other quests unchanged
+        });
+
+        // If no matching questId was found, add the new progress
+        if (!prevUser.questProgress.some((quest) => quest.questId === updatedQuestProgress.questId)) {
+          updatedProgress.push(updatedQuestProgress);
         }
-        return questProgress;  // Return the other quests unchanged
+
+        // Return the updated user state with updated questProgress
+        return { ...prevUser, questProgress: updatedProgress };
       });
-
-      // If no matching questId was found, add the new progress
-      if (!prevUser.questProgress.some((quest) => quest.questId === updatedQuestProgress.questId)) {
-        updatedProgress.push(updatedQuestProgress);
-      }
-
-      // Return the updated user state with updated questProgress
-      return { ...prevUser, questProgress: updatedProgress };
-    });
+    }
   };
 
 

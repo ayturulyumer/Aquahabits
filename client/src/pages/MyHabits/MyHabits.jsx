@@ -90,6 +90,7 @@ export default function MyHabits() {
                 // **Trigger the second API request (e.g., quest progress update)**
                 try {
                     const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
+                    console.log(updatedQuestProgress)
                     updateUserQuestProgress(updatedQuestProgress);
                 } catch (error) {
                     console.error("Error updating quest progress:", error);

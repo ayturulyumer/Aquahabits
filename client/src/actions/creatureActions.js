@@ -20,3 +20,16 @@ export const addCreature = async (creature) => {
     throw error;
   }
 };
+
+export const levelUpCreature = async ({creatureModelId, userCreatureId}) => {
+  try {
+    const response = await axiosCreatures.patch("/levelup-creature", {
+      creatureModelId,
+      userCreatureId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("There was an error with this request:", error);
+    throw error;
+  }
+};

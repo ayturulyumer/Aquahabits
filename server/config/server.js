@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const corsOptions = {
   origin: "http://localhost:5173", // Allow requests from frontend
-  methods: "GET,POST,PUT,DELETE", // You can specify methods you want to allow
+  methods: "GET,POST,PUT,PATCH,DELETE", // You can specify methods you want to allow
   allowedHeaders: "Content-Type, Authorization", // You can specify headers you want to allow
   credentials: true, // Allow cookies if needed
 };

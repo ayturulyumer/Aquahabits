@@ -26,7 +26,7 @@ export default function MyAquarium() {
       .map(() => Array(GRID_SIZE).fill(null))
   );
 
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [activeCell, setActiveCell] = useState(null); // Track the active cell for tooltip visibility
 
   const bubbleSound = new Audio("/aquarium-sound.mp3");
@@ -49,23 +49,8 @@ export default function MyAquarium() {
   }, [isMuted]);
 
 
-  // Update the grid when the user or creatures data changes
-  useEffect(() => {
-    if (user?.creatures) {
-      const newGrid = Array(GRID_SIZE)
-        .fill(null)
-        .map(() => Array(GRID_SIZE).fill(null));
 
-      user.creatures.forEach(({ creatureId, coordinates }) => {
-        const creature = creatures?.find((c) => c._id === creatureId);
-        if (creature) {
-          newGrid[coordinates.x][coordinates.y] = { ...creature, x: coordinates.x, y: coordinates.y };
-        }
-      });
 
-      setGrid(newGrid);
-    }
-  }, [user]);
 
   const {
     data: creatures,
@@ -76,40 +61,111 @@ export default function MyAquarium() {
     queryFn: creaturesApi.getAll
   })
 
+  useEffect(() => {
+    if (user?.creatures && creatures) {
+      const newGrid = Array(GRID_SIZE)
+        .fill(null)
+        .map(() => Array(GRID_SIZE).fill(null));
+
+      user.creatures.forEach(({ _id, creatureId, coordinates, level, size }) => {
+        // Find the base creature model from the creatures array
+        const creature = creatures?.find((c) => c._id === creatureId);
+        if (creature) {
+          // Merge creature properties with user-specific data (level, size, coordinates)
+          const mixedCreature = {
+            ...creature,               // Base creature properties (e.g., name, pricing, rarity)
+            level,                     // User-specific level
+            size,                      // User-specific size
+            x: coordinates.x,          // User-specific coordinates (x)
+            y: coordinates.y,          // User-specific coordinates (y)
+            _id: _id,       // User creature's _id
+            creatureId: creature._id,  // Base creature's _id
+          };
+
+
+          // Place the merged creature into the grid at the appropriate position
+          newGrid[coordinates.x][coordinates.y] = mixedCreature;
+        }
+      });
+
+      setGrid(newGrid);
+    }
+  }, [user?.creatures, creatures]);
 
 
 
   const addCreatureMutation = useGenericMutation({
     mutationFn: creaturesApi.addCreature,
     queryKey: "creatures",
-    onSuccess: (data) => {
-      updateAquaCoins(data.aquaCoins)
-      updateUserCreatures(data.addedCreature)
-    }
-    ,
-    onError: (error) => console.error("Error adding creature to user:", error),
-  })
+    onSuccess: (data, variables) => {
+      const { item } = variables;
+      updateAquaCoins(data.aquaCoins);
+      updateUserCreatures(data.addedCreature);
+
+      //  Merge addedCreature with the item data
+      setGrid((prevGrid) => {
+        const newGrid = [...prevGrid];
+        const { x, y } = data.addedCreature.coordinates;
+
+        // Merge addedCreature and item, give priority to addedCreature's properties (e.g. level, size)
+        const mixedCreature = {
+          ...data.addedCreature, // properties like level, size, etc.
+          ...item,               // properties like pricing, rarity, etc.
+          x,                     // Ensure coordinates are correctly placed in the grid
+          y,
+        };
+        console.log(mixedCreature)
+        newGrid[x][y] = mixedCreature; // Update grid with the merged object
+
+        return newGrid;
+      });
 
 
-  const handleItemSelect = (row, col, item) => {
-    if (user?.aquaCoins >= item.cost) {
-      const newGrid = [...grid];
-      const itemCopy = { ...item, x: row, y: col }; // Store coordinates in item object
-      newGrid[row][col] = itemCopy;
-      setGrid(newGrid);
-      addCreatureMutation.mutate({
-        creatureId: item._id,
-        coordinates: { x: row, y: col },
-      })
-      // decreaseUserPoints(item.cost);
       splashSound.volume = 0.05;
       splashSound.play();
 
       setActiveCell(null);
+    },
+    onError: (error) => console.error("Error adding creature to user:", error),
+  });
+
+  const levelUpCreatureMutation = useGenericMutation({
+    mutationFn: creaturesApi.levelUpCreature,
+    queryKey: "creatures",
+    onSuccess: (data) => {
+      const updatedCreature = data.updatedCreature;
+
+      // Play sound when leveling up
+      growSound.volume = 0.1;
+      growSound.play();
+
+      updateUserCreatures(updatedCreature);
+      updateAquaCoins(data.updatedAquaCoins);
+    },
+    onError: (error) => console.error("Error leveling up creature:", error),
+  });
+
+
+
+
+  const handleItemSelect = (row, col, item) => {
+    if (user?.aquaCoins >= item.cost) {
+      // Pass both the item and coordinates to the mutation
+      addCreatureMutation.mutate({
+        creatureId: item._id,
+        coordinates: { x: row, y: col },
+        item, // Pass the item along
+      });
+
     } else {
       alert("Not enough points to add this item!");
     }
   };
+
+
+
+
+
 
 
   const growAnimal = (row, col) => {
@@ -117,42 +173,18 @@ export default function MyAquarium() {
     const animal = newGrid[row][col];
 
     if (animal) {
-      // Determine the growth cost
-      const currentCost =
-        animal.level === 1
-          ? GROWTH_COSTS[animal.rarity].level2
-          : animal.level === 2
-            ? GROWTH_COSTS[animal.rarity].level3
-            : null;
-
-      // Validate if the user has enough Aqua Coins
-      if (currentCost !== null && user?.aquaCoins >= currentCost) {
-        growSound.volume = 0.1;
-        growSound.play();
-
-        // Deduct the coins and trigger growth animation
-        decreaseUserPoints(currentCost);
-        animal.isGrowing = true; // Trigger animation
-        setGrid(newGrid);
-
-        setTimeout(() => {
-          animal.isGrowing = false; // Remove animation after it ends
-          if (animal.level === 1) {
-            animal.level = 2;
-          } else if (animal.level === 2) {
-            animal.level = 3;
-          }
-          setGrid([...newGrid]);
-        }, 400); // Duration matches CSS animation
-      } else {
-        console.log("Not enough Aqua Coins!"); // Notify user
-        // Optionally, you could trigger a UI alert here
-      }
+      levelUpCreatureMutation.mutate({
+        creatureModelId: animal.creatureId,
+        userCreatureId: animal._id
+      })
+      animal.isGrowing = true
     }
+
+
   };
 
 
-  const removeAnimal = (row, col) => {
+  const removeAnimal = (row, col, item) => {
     const newGrid = [...grid];
     const animal = newGrid[row][col];
 
@@ -165,6 +197,7 @@ export default function MyAquarium() {
 
 
 
+
   return (
     <div className="container  mx-auto p-2">
       <h2 className="text-2xl font-bold text-primary mb-4">My Aquarium</h2>
@@ -172,6 +205,8 @@ export default function MyAquarium() {
       <div className="flex flex-wrap justify-around gap-4 p-2">
         <div className="grid  grid-cols-6 max-w-2xl bg-gradient-to-b from-blue-500 to-blue-950 w-full gap-0 relative">
           <AquariumGrid
+            levelUpCreatureMutation={levelUpCreatureMutation}
+            user={user}
             grid={grid}
             creatures={creatures}
             handleItemSelect={handleItemSelect}
