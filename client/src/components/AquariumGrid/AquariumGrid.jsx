@@ -26,6 +26,8 @@ export default function AquariumGrid({
         epic: 'bg-purple-800',
     };
 
+
+
     const getRarityClass = (rarity) => {
         return rarityClassMap[rarity.toLowerCase()] || 'bg-gray-400'; // default to common if not found
     };

@@ -20,7 +20,7 @@ const GRID_SIZE = 6;
 
 
 export default function MyAquarium() {
-  const { user, updateAquaCoins, updateUserCreatures } = useAuth()
+  const { user, updateAquaCoins, updateUserCreatures, removeUserCreature } = useAuth()
   const [grid, setGrid] = useState(
     Array(GRID_SIZE)
       .fill(null)
@@ -70,6 +70,8 @@ export default function MyAquarium() {
         .fill(null)
         .map(() => Array(GRID_SIZE).fill(null));
 
+      console.log(user?.creatures)
+
       user.creatures.forEach(({ _id, creatureId, coordinates, level, size }) => {
         // Find the base creature model from the creatures array
         const creature = creatures?.find((c) => c._id === creatureId);
@@ -117,7 +119,6 @@ export default function MyAquarium() {
           x,                     // Ensure coordinates are correctly placed in the grid
           y,
         };
-        console.log(mixedCreature)
         newGrid[x][y] = mixedCreature; // Update grid with the merged object
 
         return newGrid;
@@ -151,7 +152,17 @@ export default function MyAquarium() {
   const removeCreatureMutation = useGenericMutation({
     mutationFn: creaturesApi.removeCreature,
     queryKey: "creatures",
-    onSuccess: (data) => console.log(data),
+    // This will force re-rendering of the grid immediately when the creature is removed
+    onSuccess: (data, variables) => {
+      const { userCreatureId } = variables;
+
+
+      updateAquaCoins(data.updatedAquaCoins);
+      removeUserCreature(userCreatureId); // This should now correctly remove the creature
+    },
+
+
+
     onError: (error) => console.error("Error leveling up creature:", error)
   })
 
@@ -185,7 +196,9 @@ export default function MyAquarium() {
     if (animal) {
       levelUpCreatureMutation.mutate({
         creatureModelId: animal.creatureId,
-        userCreatureId: animal._id
+        userCreatureId: animal._id,
+        x: animal.x,
+        y: animal.y
       })
       animal.isGrowing = true
     }
@@ -231,6 +244,7 @@ export default function MyAquarium() {
             growAnimal={growAnimal}
             removeAnimal={removeAnimal}
             setActiveCell={setActiveCell}
+            confirmRemoveAnimal={confirmRemoveAnimal}
             activeCell={activeCell}
             aquaCoins={user?.aquaCoins} />
           {/* Render the bubbles container */}

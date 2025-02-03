@@ -22,8 +22,16 @@ export const AuthProvider = ({ children }) => {
     }));
   };
 
-  
-  
+  const removeUserCreature = (creatureId) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      creatures: prevUser.creatures.filter((creature) => creature._id !== creatureId),
+    }));
+  };
+
+
+
+
 
 
   const updateUserQuestProgress = (updatedQuestProgress) => {
@@ -106,7 +114,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress, updateUserCreatures }}>
+    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress, updateUserCreatures, removeUserCreature }}>
       {children}
     </AuthContext.Provider>
   );
