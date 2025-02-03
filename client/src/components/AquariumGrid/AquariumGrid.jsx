@@ -67,7 +67,10 @@ export default function AquariumGrid({
 
                                     <Button
                                         className="bg-red-500 text-white"
-                                        onClick={() => removeAnimal(rowIndex, colIndex)}
+                                        onClick={() => {
+                                            removeAnimal(rowIndex, colIndex)
+                                            setActiveCell(null); // Close the tooltip
+                                        }}
                                     >
                                         Remove
                                     </Button>

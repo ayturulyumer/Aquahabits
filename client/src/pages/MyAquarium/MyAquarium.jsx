@@ -13,6 +13,7 @@ import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
 import { useAuth } from "../../context/authContext.jsx";
 import { GROWTH_COSTS } from "../../utils/constants.js";
+import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal.jsx";
 
 const GRID_SIZE = 6;
 
@@ -28,6 +29,8 @@ export default function MyAquarium() {
 
   const [isMuted, setIsMuted] = useState(true);
   const [activeCell, setActiveCell] = useState(null); // Track the active cell for tooltip visibility
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
+  const [selectedCreatureToRemove, setSelectedCreatureToRemove] = useState(null)
 
   const bubbleSound = new Audio("/aquarium-sound.mp3");
   const splashSound = new Audio("/splash-sound.mp3");
@@ -145,6 +148,13 @@ export default function MyAquarium() {
     onError: (error) => console.error("Error leveling up creature:", error),
   });
 
+  const removeCreatureMutation = useGenericMutation({
+    mutationFn: creaturesApi.removeCreature,
+    queryKey: "creatures",
+    onSuccess: (data) => console.log(data),
+    onError: (error) => console.error("Error leveling up creature:", error)
+  })
+
 
 
 
@@ -183,15 +193,23 @@ export default function MyAquarium() {
 
   };
 
-
   const removeAnimal = (row, col, item) => {
-    const newGrid = [...grid];
-    const animal = newGrid[row][col];
+    const animal = grid[row][col];
+    if (animal) {
+      setSelectedCreatureToRemove({ animal });
+      setIsRemoveModalOpen(true);
+    }
+  };
 
-    if (animal && animal.level) {
-      newGrid[row][col] = null; // Remove the animal
-      setGrid(newGrid);
-      increaseUserPoints(animal.cost)
+  const confirmRemoveAnimal = () => {
+    if (selectedCreatureToRemove) {
+      removeCreatureMutation.mutate({
+        creatureModelId: selectedCreatureToRemove.animal.creatureId,
+        userCreatureId: selectedCreatureToRemove.animal._id,
+      });
+
+      setIsRemoveModalOpen(false);
+      setSelectedCreatureToRemove(null);
     }
   };
 
@@ -228,6 +246,12 @@ export default function MyAquarium() {
           />
         </div>
       </div>
+      {isRemoveModalOpen &&
+        (<ConfirmationModal
+          isOpen={isRemoveModalOpen}
+          onConfirm={confirmRemoveAnimal}
+          onCancel={() => setIsRemoveModalOpen(false)}
+          message={"You will receive only a 50% refund of animal's original cost"} />)}
     </div>
   );
 }
