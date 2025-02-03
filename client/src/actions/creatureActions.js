@@ -21,7 +21,20 @@ export const addCreature = async (creature) => {
   }
 };
 
-export const levelUpCreature = async ({creatureModelId, userCreatureId}) => {
+export const removeCreature = async ({ creatureModelId, userCreatureId }) => {
+  try {
+    const response = await axiosCreatures.post("/remove-creature", {
+      creatureModelId,
+      userCreatureId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("There was an error with this request:", error);
+    throw error;
+  }
+};
+
+export const levelUpCreature = async ({ creatureModelId, userCreatureId }) => {
   try {
     const response = await axiosCreatures.patch("/levelup-creature", {
       creatureModelId,

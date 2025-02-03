@@ -113,6 +113,41 @@ exports.addCreature = async (userId, creatureData) => {
   return { addedCreature, aquaCoins: user.aquaCoins };
 };
 
+exports.removeCreature = async (userId, creatureModelId, userCreatureId) => {
+  const user = await User.findById(userId);
+  const baseCreature = await Creature.findById(creatureModelId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (!baseCreature) {
+    throw new Error("Creature not found");
+  }
+
+  const creatureIndex = user.creatures.findIndex(
+    (creature) => creature._id.toString() === userCreatureId
+  );
+
+  if (creatureIndex === -1) {
+    throw new Error("Creature not found in user's creatures list");
+  }
+
+  // Refund 50% of the base creature's cost
+  const refundAmount = Math.floor(baseCreature.cost * 0.5);
+
+  // Remove the creature from user's creatures list
+  user.creatures.splice(creatureIndex, 1);
+
+  // Add refund to user's aquaCoins
+  user.aquaCoins += refundAmount;
+
+  // Save the updated user data
+  await user.save();
+
+  return { updatedAquaCoins: user.aquaCoins };
+};
+
 exports.levelUpCreature = async (userId, creatureModelId, userCreatureId) => {
   // Step 1: Find the user
   const user = await User.findById(userId);
@@ -146,7 +181,7 @@ exports.levelUpCreature = async (userId, creatureModelId, userCreatureId) => {
   let growthCost = 0;
 
   if (creature.level === 1) {
-    console.log(baseCreature)
+    console.log(baseCreature);
     growthCost = baseCreature.growthCost.level2; // Cost for leveling up from level 1 to 2
   } else if (creature.level === 2) {
     growthCost = baseCreature.growthCost.level3; // Cost for leveling up from level 2 to 3
@@ -171,7 +206,6 @@ exports.levelUpCreature = async (userId, creatureModelId, userCreatureId) => {
   }
 
   await user.save(); // Save the user with updated AquaCoins and creatures
-
 
   // Step 9: Return the updated creature and AquaCoins
   return {
