@@ -181,7 +181,6 @@ exports.levelUpCreature = async (userId, creatureModelId, userCreatureId) => {
   let growthCost = 0;
 
   if (creature.level === 1) {
-    console.log(baseCreature);
     growthCost = baseCreature.growthCost.level2; // Cost for leveling up from level 1 to 2
   } else if (creature.level === 2) {
     growthCost = baseCreature.growthCost.level3; // Cost for leveling up from level 2 to 3

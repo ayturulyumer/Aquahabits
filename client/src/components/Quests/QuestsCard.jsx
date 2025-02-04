@@ -1,9 +1,9 @@
-import AquaCoins from "../../assets/aquagem.png"
 import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
-import CompletedIcon from "../../svg/completed-icon.svg"
+import Completed from "../../../public/completed-icon.png"
 import Button from "../Button/Button.jsx";
+import LockedChest from "../../assets/treasure-chest-locked.png"
 
 const iconMap = {
     'Starting Strong': FirstWinIcon,
@@ -46,12 +46,9 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
                     {isCompleted && !isClaimed ? (
                         <Button onClick={() => handleClaimRewardClick(questId)}>Claim Reward</Button>
                     ) : isClaimed ? (
-                        <img src={CompletedIcon} alt="Claimed Icon" className="w-14 h-14" />
+                        <img src={Completed} alt="Claimed Icon" className="w-10 h-10" />
                     ) : (
-                        <div className="badge text-primary flex gap-2 badge-ghost shadow-2xl shadow-teal-300">
-                            {reward}
-                            <img className="w-4 h-4 shadow-2xl" src={AquaCoins} alt="Aqua Coins" />
-                        </div>
+                        <img src={LockedChest} alt="Claimed Icon" className="w-10 h-10" />
                     )}
                 </section>
                 <p className="text-sm text-left mt-2">

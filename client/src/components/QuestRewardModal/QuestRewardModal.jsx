@@ -3,8 +3,8 @@ import TreasureChestIcon from "../../assets/treasure-chest.png";
 import AquaCoins from "../../assets/aquagem.png";
 export default function QuestRewardModal({ earnedCoins, onClose }) {
     return (
-        <div onClick={onClose} className={`modal-enter  fixed inset-0  bg-black bg-opacity-95  cursor-pointer flex items-center justify-center p-4 `}>
-            <div className="rounded  max-w-lg ">
+        <div onClick={onClose} className={`fixed inset-0  backdrop-blur-sm  cursor-pointer flex items-center justify-center p-4 `}>
+            <div className="modal-enter rounded-box glass   max-w-lg ">
                 <div className="p-6 text-center ">
                     <div className="flex flex-col gap-2 ">
                         <img src={TreasureChestIcon} alt="Treasure Chest" className="animate-bounce bg-transparent mx-auto mb-4 w-24 h-24" />

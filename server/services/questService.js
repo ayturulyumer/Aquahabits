@@ -20,7 +20,6 @@ exports.getAllWithUserProgress = async (userId) => {
   // Calculate the user's highest streak across all habits
   const highestStreak = user.habits.reduce((maxStreak, habit) => {
     const streak = countStreak(habit.history, habit.history.length); // Get the streak for the current habit
-    console.log(habit.history);
     return Math.max(maxStreak, streak);
   }, 0);
 
