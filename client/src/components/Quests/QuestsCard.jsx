@@ -25,7 +25,7 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
     const isClaimed = currentQuestProgress?.isClaimed || false;
 
     return (
-        <div className="card bg-gradient-to-r from-slate-900 to-slate-700 shadow-xl">
+        <div className="card max-w-sm  bg-gradient-to-r from-slate-900 to-slate-700 shadow-xl">
             <div className="card-body">
                 <div className="flex justify-between">
                     <h2 className="card-title text-primary">{title}</h2>
@@ -36,7 +36,7 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
                     />
                 </div>
                 <p>{description}</p>
-                <section className="flex justify-between gap-2 items-center mt-4">
+                <section className="flex justify-between gap-2 items-center ">
                     <progress
                         className={`progress ${isCompleted ? "progress-success" : "progress-primary"}  w-56`}
                         value={questProgress}
@@ -46,12 +46,12 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
                     {isCompleted && !isClaimed ? (
                         <Button onClick={() => handleClaimRewardClick(questId)}>Claim Reward</Button>
                     ) : isClaimed ? (
-                        <img src={Completed} alt="Claimed Icon" className="w-10 h-10" />
+                        <img src={Completed} alt="Claimed Icon" className="mr-3 w-10 h-10" />
                     ) : (
-                        <img src={LockedChest} alt="Claimed Icon" className="w-10 h-10" />
+                        <img src={LockedChest} alt="Claimed Icon" className="mr-3 w-10 h-10" />
                     )}
                 </section>
-                <p className="text-sm text-left mt-2">
+                <p className={`text-sm text-left mt-2 ${isCompleted ? "line-through" : ""}`}>
                     Progress: {questProgress} / <span className="text-primary font-medium">{requirement}</span>
                 </p>
             </div>

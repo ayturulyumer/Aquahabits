@@ -61,7 +61,7 @@ export default function MyQuests() {
 
 
   return (
-    <div className="min-h-fit mx-4 ">
+    <div className="min-h-fit flex justify-center md:justify-normal mx-4 ">
       <main className="mt-8">
         <h2 className="text-2xl font-bold mb-4 text-primary  uppercase ">Quests</h2>
         {questsLoading ?
@@ -69,7 +69,7 @@ export default function MyQuests() {
             <Spinner />
           </div>
           :
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.quests?.map((quest) => (
               <QuestsCard key={quest.questId} quest={quest} user={user} handleClaimRewardClick={handleClaimRewardClick} closeClaimRewardModal={closeClaimRewardModal} />
             ))}
