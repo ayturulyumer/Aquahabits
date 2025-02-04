@@ -20,6 +20,7 @@ habitSchema.methods.updateStats = function () {
 
   let streak = 0;
   let currentStreak = 1; // Start with 1 for the first date
+  let missedDays = 0; // Track the number of missed days
 
   for (let i = sortedHistory.length - 1; i > 0; i--) {
     const currentDate = new Date(sortedHistory[i]);
@@ -33,6 +34,7 @@ habitSchema.methods.updateStats = function () {
       currentStreak++; // Increment streak if consecutive
     } else {
       currentStreak = 1; // Reset streak
+      missedDays += diffInDays - 1; // Calculate the number of missed days (gap between dates)
     }
 
     streak = Math.max(streak, currentStreak); // Track maximum streak
@@ -49,13 +51,15 @@ habitSchema.methods.updateStats = function () {
     (new Date() - new Date(this.createdAt)) / (1000 * 60 * 60 * 24);
   const completedDays = this.history.length;
 
-  this.consistency =
-    totalDays > 0
-      ? Math.max(
-          0,
-          Math.min(100, Math.floor((completedDays / totalDays) * 100))
-        )
-      : 0;
+  // Calculate the normal consistency first
+  let normalConsistency =
+    totalDays > 0 ? Math.floor((completedDays / totalDays) * 100) : 0;
+
+  // Penalize for missed days (e.g., subtract 2% for each missed day)
+  const penalty = missedDays * 2; // 2% penalty for each missed day
+
+  // Adjust consistency after applying penalty
+  this.consistency = Math.max(0, Math.min(100, normalConsistency - penalty));
 };
 
 // Pre-save hook to update stats whenever habit is saved

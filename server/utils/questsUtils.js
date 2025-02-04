@@ -19,7 +19,7 @@ const countStreak = (history, days) => {
 
   streak = Math.max(streak, currentStreak); // Final streak check
 
-  return streak >= days ? streak : 0; // Return streak if it meets the required days
+  return streak >= days ? streak : 1; // Return streak if it meets the required days
 };
 
 module.exports = { countStreak };
