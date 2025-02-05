@@ -1,7 +1,7 @@
 import ConsistencyIcon from '../../assets/consistency.png';
 import FlameIcon from '../../assets/flame.png';
 import FirstWinIcon from '../../assets/firstwin.png';
-import Completed from "../../../public/completed-icon.png"
+import Completed from "../../assets/completed-icon.png"
 import Button from "../Button/Button.jsx";
 import LockedChest from "../../assets/treasure-chest-locked.png"
 
