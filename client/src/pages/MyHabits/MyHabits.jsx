@@ -180,7 +180,7 @@ export default function MyHabits() {
                 :
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {habits?.map(habit => (
-                        <div key={habit._id} className={`relative card xl:max-w-96 mx-2 bg-gradient-to-r from-slate-900 to-slate-700 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
+                        <div key={habit._id} className={`relative card xl:max-w-96 mx-2 bg-black/80 border-primary shadow-xl hover:shadow-blue-500 transition-shadow duration-300 `}>
                             <div className="card-body p-6">
 
                                 <div className="flex  gap-4 items-start">
@@ -193,7 +193,7 @@ export default function MyHabits() {
                                         disabled={CheckInHabitMutation.isLoading}
                                         className={`${CheckInHabitMutation.isLoading ? "loading  text-primary" : "checkbox checkbox-success"}`}
                                     />
-                                    <span className="absolute top-7.5 right-2 badge ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
+                                    <span className="absolute top-7.5 right-2 badge badge-outline badge-primary badge-sm font-mono  ">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
                                     <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
                                         <div tabIndex={0} role="button" className="text-2xl">...</div>
                                         <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">

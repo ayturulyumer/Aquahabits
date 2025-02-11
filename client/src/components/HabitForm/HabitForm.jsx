@@ -60,10 +60,10 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
         <form
             onClick={(e) => e.stopPropagation()}
             onSubmit={onSubmit}
-            className="max-w-72  md:max-w-md  mx-4 p-4 bg-base-300 rounded-box"
+            className="max-w-72 h-fit my-auto  md:max-w-md  mx-4 p-4 bg-base-300 rounded-box"
         >
             {/* Habit Name */}
-            <div className="form-control  w-full mb-4">
+            <div className="form-control  w-full ">
                 <label className="label">
                     <span className="label-text">Habit Name</span>
                 </label>
@@ -79,8 +79,8 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
             </div>
 
             {/* Ready-To-Go Habits */}
-            <div className="mb-4 w-full">
-                <div className="flex py-4 gap-2  overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-3 md:gap-2">
+            <div className=" w-full">
+                <div className="flex py-4 gap-2  overflow-x-auto md:overflow-x-hidden md:grid md:grid-cols-3 md:gap-2">
                     {READY_TO_GO_HABITS.map((habitOption) => (
                         <button
                             key={habitOption}
@@ -97,7 +97,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
             </div>
 
             {/* Goal */}
-            <div className="form-control w-full mb-4">
+            <div className="form-control w-full ">
                 <label className="label">
                     <span className="label-text">Goal</span>
                 </label>
@@ -111,7 +111,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
             </div>
 
             {/* Frequency */}
-            <div className="form-control w-full mb-4">
+            <div className="form-control w-full mb-4 ">
                 <label className="label">
                     <span className="label-text">Frequency</span>
                 </label>
@@ -132,7 +132,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     <label className="label">
                         <span className="label-text">Select Days</span>
                     </label>
-                    <div className="flex  overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-3 ">
+                    <div className="flex  overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-3 gap-1 ">
                         {DAYS_OF_WEEK.map((day) => (
                             <div key={day} className="form-control">
                                 <label className="label cursor-pointer justify-start gap-1">

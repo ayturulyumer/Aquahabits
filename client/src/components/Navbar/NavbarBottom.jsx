@@ -11,20 +11,19 @@ const menuItems = [
 
 export default function NavbarBottom() {
     return (
-        <header>
-            <nav className="btm-nav  glass h-8 rounded-t-2xl z-50 backdrop-blur-sm flex justify-between items-center ">
-                {menuItems.map((item) => (
-                    <NavLink
-                        key={item.name}
-                        to={item.href}
-                        className={({ isActive }) =>
-                            `flex flex-col items-center justify-center  ${isActive ? "bg-primary  rounded" : ""}`
-                        }
-                    >
-                        <img className="w-8 h-8" src={item.icon} alt={item.iconAlt} />
-                    </NavLink>
-                ))}
-            </nav>
-        </header>
+        <nav className="btm-nav  btm-nav-lg bg-transparent h-fit rounded-t-2xl z-50 backdrop-blur-sm flex justify-between items-center ">
+            {menuItems.map((item) => (
+                <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                        `flex flex-col items-center justify-center  ${isActive ? "bg-primary  rounded" : ""}`
+                    }
+                >
+                    <img className="w-8 h-8" src={item.icon} alt={item.iconAlt} />
+                </NavLink>
+            ))}
+        </nav>
+
     );
 }
