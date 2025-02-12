@@ -5,7 +5,7 @@ import { useForm } from "../../hooks/useForm.jsx";
 
 import GoogleIcon from "../../svg/google-icon.svg";
 import RegisterIcon from "../../svg/add-user-icon.svg";
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 import Button from "../Button/Button.jsx";

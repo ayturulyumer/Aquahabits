@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import GoogleIcon from "../../svg/google-icon.svg";
 import LoginIcon from "../../svg/login-icon.svg";
 import Button from "../Button/Button.jsx";
+import { useGoogleLogin } from "@react-oauth/google"
 
 import { useForm } from "../../hooks/useForm.jsx";
 
@@ -41,6 +42,27 @@ export default function LoginForm() {
             console.log(errors)
         }
     }
+
+    const handleGoogleSuccess = async (tokenResponse) => {
+        try {
+            const response = await auth.googleAuth(tokenResponse.code)
+            login(response.user, response.accessToken)
+            navigate("/dashboard")
+
+        } catch (error) {
+            console.error("Google login failed:", error);
+        }
+    };
+
+    const handleGoogleError = (error) => {
+        console.error("Google login error:", error);
+    };
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: handleGoogleSuccess,
+        onError: handleGoogleError,
+        flow: "auth-code"
+    });
     const { values, changeHandler, onSubmit } = useForm({ email: "", password: "" }, handleLoginSubmit)
 
     return (
@@ -49,7 +71,7 @@ export default function LoginForm() {
                 <div className="mt-6 flex flex-col items-center">
                     <div className="w-full flex-1 ">
                         <div className="flex flex-col items-center">
-                            <Button isBlock iconLeft={GoogleIcon} iconAlt="Google Icon" variant="btn-outline" className="btn-primary-content">Login with google</Button>
+                            <Button onClick={() => googleLogin()} isBlock iconLeft={GoogleIcon} iconAlt="Google Icon" variant="btn-outline" className="btn-primary-content">Login with Google</Button>
                         </div>
                         <div className="my-12 border-b  border-gray-900 text-center">
                             <div className="leading-none px-2 inline-block text-sm   uppercase  tracking-wide font-medium  transform translate-y-1/2">

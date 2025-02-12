@@ -11,10 +11,8 @@ const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.handleGoogleAuth = async (name, email, googleId) => {
-  // console.log("INSIDE GOOGLE AUTH SERVICE", name, email, googleId);
   // Check if the user already exists
   let user = await User.findOne({ email });
-  console.log(!user);
 
   if (!user) {
     try {
