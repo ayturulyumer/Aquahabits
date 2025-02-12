@@ -3,6 +3,15 @@ const userService = require("../services/userService.js");
 const { auth } = require("../middlewares/authMiddleware.js");
 const { setRefreshToken } = require("../utils/auth.js");
 
+
+router.post("/google" , async (req,res) => {
+  const authCode = req.body
+
+
+
+
+})
+
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
