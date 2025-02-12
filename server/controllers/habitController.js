@@ -43,6 +43,7 @@ router.delete("/:habitId", auth, async (req, res) => {
   const userId = req.user.id;
   const { habitId } = req.params;
   try {
+    // Check this
     const result = await habitService.deleteHabit(habitId, userId);
     res.status(200).json({ message: "Habit deleted successfully" });
   } catch (err) {

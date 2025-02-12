@@ -5,6 +5,8 @@ import { useForm } from "../../hooks/useForm.jsx";
 
 import GoogleIcon from "../../svg/google-icon.svg";
 import RegisterIcon from "../../svg/add-user-icon.svg";
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+
 
 import Button from "../Button/Button.jsx";
 
@@ -63,6 +65,35 @@ export default function RegisterForm() {
 
     }
 
+    const handleGoogleSuccess = async (tokenResponse) => {
+        try {
+            console.log(tokenResponse)
+            // const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+            //     headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+            // });
+
+            // const user = response.data;
+            // console.log("Google user info:", user);
+
+            // // Handle user data (send it to your backend for registration/login)
+            // const responseData = await auth.googleRegister(user.name, user.email);
+            // login(responseData.user, responseData.accessToken);
+            // navigate("/dashboard");
+        } catch (error) {
+            console.error("Google login failed:", error);
+        }
+    };
+
+    const handleGoogleError = (error) => {
+        console.error("Google login error:", error);
+    };
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: handleGoogleSuccess,
+        onError: handleGoogleError,
+        flow: "auth-code"
+    });
+
     const { values, changeHandler, onSubmit } = useForm({ name: "", email: "", password: "", rePassword: "" }, handleRegisterSubmit)
 
     return (
@@ -72,9 +103,9 @@ export default function RegisterForm() {
                 <div className="mt-6 flex flex-col items-center">
                     <div className="w-full flex-1 ">
                         <div className="flex flex-col items-center">
-                            <Button isBlock iconLeft={GoogleIcon} iconAlt="Google Icon" variant="btn-outline" className="btn-primary-content">Sign up with google</Button>
+                            <Button onClick={() => googleLogin()} isBlock iconLeft={GoogleIcon} iconAlt="Google Icon" variant="btn-outline" className="btn-primary-content">Sign up with google</Button>
                         </div>
-                        <div className="my-12 border-b  border-gray-900 text-center">
+                        <div className="my-12 border-b border-gray-900 text-center">
                             <div className="leading-none px-2 inline-block text-sm   uppercase  tracking-wide font-medium  transform translate-y-1/2">
                                 Or
                             </div>
