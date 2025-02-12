@@ -10,6 +10,34 @@ const JWT_ACCESS_EXPIRY = process.env.JWT_ACCESS_EXPIRY;
 const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY;
 const JWT_SECRET = process.env.JWT_SECRET;
 
+exports.handleGoogleAuth = async (name, email, googleId) => {
+  // console.log("INSIDE GOOGLE AUTH SERVICE", name, email, googleId);
+  // Check if the user already exists
+  let user = await User.findOne({ email });
+  console.log(!user);
+
+  if (!user) {
+    try {
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        authProvider: "google",
+      });
+      console.log("New user created:", user);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw new Error("Failed to create a new user.");
+    }
+  }
+
+  // Generate access and refresh tokens
+  const accessToken = generateToken(user, process.env.JWT_ACCESS_EXPIRY);
+  const refreshToken = generateToken(user, process.env.JWT_REFRESH_EXPIRY);
+
+  return { user, accessToken, refreshToken };
+};
+
 // Registers user
 exports.register = async (name, email, password) => {
   // check if user exists
@@ -38,7 +66,7 @@ exports.login = async (email, password) => {
     throw new Error("Invalid credintials !");
   }
 
-  const isPasswordValid = bcrypt.compare(password, existingUser.password);
+  const isPasswordValid = await bcrypt.compare(password, existingUser.password);
   if (!isPasswordValid) {
     throw new Error("Invalid credintials !");
   }

@@ -2,9 +2,16 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: {
+    type: String,
+    required: function () {
+      return this.authProvider === "local";
+    }, // Required only for local users
+  },
+  googleId: { type: String, unique: true },
+  authProvider: { type: String, enum: ["local", "google"], default: "local" },
   habits: [{ type: mongoose.Schema.Types.ObjectId, ref: "Habit" }],
   aquaCoins: { type: Number, default: 0 },
   questProgress: [
@@ -48,9 +55,15 @@ userSchema.index({ email: 1 });
 userSchema.index({ name: 1 });
 userSchema.index({ "questProgress.questId": 1 });
 
-userSchema.pre("save", async function () {
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
+userSchema.pre("save", async function (next) {
+  try {
+    if (this.authProvider === "local" && this.isModified("password")) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 const User = mongoose.model("User", userSchema);

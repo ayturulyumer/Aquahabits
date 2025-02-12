@@ -3,14 +3,44 @@ const userService = require("../services/userService.js");
 const { auth } = require("../middlewares/authMiddleware.js");
 const { setRefreshToken } = require("../utils/auth.js");
 
+const { OAuth2Client } = require("google-auth-library");
+const GoogleClient = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "postmessage"
+);
 
-router.post("/google" , async (req,res) => {
-  const authCode = req.body
+router.post("/google", async (req, res) => {
+  const { authCode } = req.body;
 
+  try {
+    // Exchange auth code for tokens
+    const { tokens } = await GoogleClient.getToken({
+      code: authCode,
+    });
 
+    // Verify and extract user data
+    const ticket = await GoogleClient.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
+    const payload = ticket.getPayload();
+    const { email, name, sub: googleId } = payload;
 
-})
+    const { user, accessToken, refreshToken } =
+      await userService.handleGoogleAuth(name, email, googleId);
+    setRefreshToken(res, refreshToken);
+
+    res.status(200).json({
+      user: user,
+      accessToken,
+    });
+  } catch (error) {
+    // console.error("Error exchanging token:", error);
+    res.status(500).json({ error: "Failed to exchange token" });
+  }
+});
 
 router.post("/signup", async (req, res) => {
   try {

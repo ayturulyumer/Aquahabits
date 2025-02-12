@@ -7,10 +7,24 @@ export const register = async (name, email, password) => {
       email,
       password,
     });
-    return response.data; // Assuming the server sends the result as `data`
+    return response.data;
   } catch (error) {
     console.error("Registration failed:", error);
-    throw error; // Propagate the error
+    throw error; 
+  }
+};
+
+// Authenticates a user with google
+export const googleAuth = async (authCode) => {
+  console.log(authCode)
+  try {
+    const response = await axios.post("google", {
+      authCode,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Google auth failed:", error);
+    throw error; 
   }
 };
 

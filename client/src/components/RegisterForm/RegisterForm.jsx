@@ -67,18 +67,10 @@ export default function RegisterForm() {
 
     const handleGoogleSuccess = async (tokenResponse) => {
         try {
-            console.log(tokenResponse)
-            // const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
-            //     headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-            // });
+            const response = await auth.googleAuth(tokenResponse.code)
+            login(response.user, response.accessToken)
+            navigate("/dashboard")
 
-            // const user = response.data;
-            // console.log("Google user info:", user);
-
-            // // Handle user data (send it to your backend for registration/login)
-            // const responseData = await auth.googleRegister(user.name, user.email);
-            // login(responseData.user, responseData.accessToken);
-            // navigate("/dashboard");
         } catch (error) {
             console.error("Google login failed:", error);
         }
