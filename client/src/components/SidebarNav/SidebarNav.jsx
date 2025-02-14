@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../context/authContext.jsx";
+
 
 import habitIcon from "../../svg/habit-icon.svg";
 import missionIcon from "../../svg/mission-icon.svg";
@@ -11,10 +11,8 @@ const menuItems = [
     { name: "Aquarium", href: "/dashboard/my-aquarium", icon: oceanIcon, iconAlt: "Aquarium Icon" },
 ];
 
-function SidebarNav({ isOpen }) {
-    const { user } = useAuth()
+function SidebarNav({ hasUnclaimedRewards, isOpen }) {
 
-    const hasUnclaimedRewards = user?.questProgress?.some((quest) => quest.isCompleted && !quest.isClaimed === true)
 
     if (!isOpen) {
         return null;

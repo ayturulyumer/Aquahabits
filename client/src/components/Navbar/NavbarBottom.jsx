@@ -5,11 +5,11 @@ import oceanIcon from "../../svg/ocean-icon.svg";
 
 const menuItems = [
     { name: "Habits", href: "/dashboard/my-habits", icon: habitIcon, iconAlt: "Habits Icon" },
-    { name: "Quests", href: "/dashboard/my-quests", icon: missionIcon, iconAlt: "Mission Icon" },
+    { name: "Quests", href: "/dashboard/my-quests", icon: missionIcon, iconAlt: "Mission Icon", checkUnclaimed: true },
     { name: "Aquarium", href: "/dashboard/my-aquarium", icon: oceanIcon, iconAlt: "Aquarium Icon" },
 ];
 
-export default function NavbarBottom() {
+export default function NavbarBottom({ hasUnclaimedRewards }) {
     return (
         <nav className="btm-nav  btm-nav-lg bg-transparent h-fit rounded-t-2xl z-50 backdrop-blur-sm flex justify-between items-center ">
             {menuItems.map((item) => (
@@ -17,10 +17,15 @@ export default function NavbarBottom() {
                     key={item.name}
                     to={item.href}
                     className={({ isActive }) =>
-                        `flex flex-col items-center justify-center  ${isActive ? "bg-primary  rounded" : ""}`
+                        `flex flex-col items-center justify-center  ${isActive ? "bg-white/55 rounded" : ""}`
                     }
                 >
                     <img className="w-8 h-8" src={item.icon} alt={item.iconAlt} />
+                    {hasUnclaimedRewards && item.checkUnclaimed &&
+                        <div className="indicator  absolute right-10 -top-1 ">
+                            <span className="indicator-item badge badge-xs badge-success animate-pulse"></span>
+                        </div>
+                    }
                 </NavLink>
             ))}
         </nav>
