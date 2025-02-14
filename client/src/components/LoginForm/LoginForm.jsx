@@ -10,6 +10,8 @@ import { useForm } from "../../hooks/useForm.jsx";
 
 import * as auth from "../../actions/authActions.js";
 import { useAuth } from "../../context/authContext.jsx";
+import toast from "react-hot-toast";
+
 
 
 export default function LoginForm() {
@@ -35,11 +37,11 @@ export default function LoginForm() {
                 login(response.user, response.accessToken)
                 navigate("/dashboard")
             } catch (err) {
-                console.error("Login failed:", err.message)
+                toast.error(err.response.data.message);
             }
             setErrors({})
         } else {
-            console.log(errors)
+            toast.error(errors);
         }
     }
 
@@ -50,7 +52,7 @@ export default function LoginForm() {
             navigate("/dashboard")
 
         } catch (error) {
-            console.error("Google login failed:", error);
+            toast.error(error);
         }
     };
 

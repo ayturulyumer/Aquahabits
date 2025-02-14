@@ -18,6 +18,7 @@ import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
 import MyQuests from "./pages/MyQuests/MyQuests.jsx";
 import MyAquarium from "./pages/MyAquarium/MyAquarium.jsx";
+import toast, { Toaster } from "react-hot-toast";
 
 
 const queryClient = new QueryClient();
@@ -61,6 +62,14 @@ function App() {
   ]);
 
   return <AuthProvider>
+    <Toaster
+      position="bottom-right"
+      containerStyle={{ marginTop: "3.5rem" }}
+      toastOptions={{
+        duration: 3000,
+        style: { background: "#0f0f0f", color: "#ffffff" },
+      }}
+    />
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider router={router} />
