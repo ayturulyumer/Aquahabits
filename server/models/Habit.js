@@ -10,6 +10,7 @@ const habitSchema = new mongoose.Schema({
   streak: { type: Number, default: 0 }, // Store streak
   completed: { type: Number, default: 0 }, // Store completed count
   consistency: { type: Number, default: 0 }, // Store consistency
+  consistencyChangePercent: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -58,8 +59,10 @@ habitSchema.methods.updateStats = function () {
   // Penalize for missed days (e.g., subtract 2% for each missed day)
   const penalty = missedDays * 2; // 2% penalty for each missed day
 
-  // Adjust consistency after applying penalty
-  this.consistency = Math.max(0, Math.min(100, normalConsistency - penalty));
+  // Adjust consistency after applying penalty 
+  const newConsistency = Math.max(0, Math.min(100, normalConsistency - penalty));
+  this.consistencyChangePercent = Math.round((newConsistency - this.consistency) * 10) / 10;
+  this.consistency = newConsistency;
 };
 
 // Pre-save hook to update stats whenever habit is saved

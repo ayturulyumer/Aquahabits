@@ -211,7 +211,8 @@ export default function MyHabits() {
                                         valueColor="font-mono "
                                     />
                                     <HabitStat label="Consistency" bgColor='shadow-2xl shadow-green-600 ' labelColor="font-mono "
-                                        valueColor="font-mono" value={`${habit.consistency} %`} />
+                                        valueColor="font-mono" value={`${habit.consistency}%`}
+                                        consistencyPercent={habit.consistencyChangePercent} />
                                     <HabitStat
                                         label="Streak"
                                         bgColor='shadow-2xl shadow-primary'

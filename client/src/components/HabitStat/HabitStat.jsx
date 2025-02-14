@@ -1,20 +1,27 @@
 
-
 export default function HabitStat({
     icon,
     label,
     value,
-    bgColor = 'bg-white/10', // Default background color
-    labelColor = 'text-gray-200', // Default label color
-    valueColor = 'text-white', // Default value color
+    consistencyPercent,
+    bgColor = 'bg-white/10',
+    labelColor = 'text-gray-200',
+    valueColor = 'text-white',
 }) {
-    return (
-        <div className={`flex min-w-10 flex-col  items-center justify-center p-2 ${bgColor} rounded-lg`}>
-            {/* Icon (if you want to use the icon prop, you can include it here) */}
-            {icon && <div className="mb-2">{icon}</div>}
+    // Example percentage change — you can make this dynamic based on your data.
+    const percentageChange = label.toLowerCase() === 'consistency' ? consistencyPercent : null;
 
-            <p className={`text-xs  ${labelColor}`}>{label}</p>
-            <p className={`text-md ${valueColor}`}>{value}</p>
+    return (
+        <div className={`flex min-w-10 flex-col items-center justify-center p-4 ${bgColor} rounded-lg`}>
+            {icon && <div className="mb-2">{icon}</div>}
+            <p className={`text-xs ${labelColor}`}>{label}</p>
+            <p className={`text-md font-sans font-bold ${valueColor}`}>{value}</p>
+
+            {percentageChange !== null && (
+                <span className={`text-[10px] tracking-widest font-semibold  font-sans text-center ${percentageChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {percentageChange >= 0 ? '▲' : '▼'} {`${Math.abs(percentageChange)}%`}
+                </span>
+            )}
         </div>
-    )
+    );
 }
