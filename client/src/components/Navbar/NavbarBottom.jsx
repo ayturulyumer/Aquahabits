@@ -11,7 +11,7 @@ const menuItems = [
 
 export default function NavbarBottom({ hasUnclaimedRewards }) {
     return (
-        <nav className="btm-nav  btm-nav-lg bg-transparent h-fit rounded-t-2xl z-50 backdrop-blur-sm flex justify-between items-center ">
+        <nav className="btm-nav border-t   bg-transparent h-fit rounded-t-md z-50 backdrop-blur-sm flex justify-between items-center ">
             {menuItems.map((item) => (
                 <NavLink
                     key={item.name}
