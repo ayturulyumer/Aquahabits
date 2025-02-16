@@ -12,7 +12,7 @@ export default function HabitStat({
     const percentageChange = label.toLowerCase() === 'consistency' ? consistencyPercent : null;
 
     return (
-        <div className={`flex min-w-10 flex-col items-center justify-center p-4 ${bgColor} rounded-lg`}>
+        <div className={`flex min-w-10 flex-col items-center justify-center p-2 ${bgColor} rounded-lg`}>
             {icon && <div className="mb-2">{icon}</div>}
             <p className={`text-xs ${labelColor}`}>{label}</p>
             <p className={`text-md font-sans font-bold ${valueColor}`}>{value}</p>

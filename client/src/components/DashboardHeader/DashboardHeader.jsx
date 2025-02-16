@@ -23,7 +23,7 @@ function DashboardHeader({ toggleSidebar }) {
     }
   }
   return (
-    <header className="flex items-center justify-between px-4 py-4 border-b border-accent">
+    <header className="flex items-center justify-between px-2 py-4 border-b border-accent">
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}
@@ -40,10 +40,10 @@ function DashboardHeader({ toggleSidebar }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <h1 className="ml-4 text-2xl font-bold">AquaHabits</h1>
+        <h1 className="ml-2 mr-4 md:text-2xl font-bold">AquaHabits</h1>
       </div>
-      <div className="flex items-center space-x-2">
-        <span className="text-sm font-medium">Welcome, {user?.name} !</span>
+      <div className="flex items-center justify-around  space-x-2">
+        <span className="text-xs font-semibold ">Welcome, {user?.name} </span>
         <Tippy content={TooltipMessage} placement="bottom-start" animation="scale-extreme">
           <div className="flex items-center space-x-2  px-2.5 py-0.5 rounded-full  font-medium text-neutral">
             <img src={AquaGemIcon} alt="Aquagem" className="w-5 h-5" />
