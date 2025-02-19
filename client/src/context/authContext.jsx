@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   console.log(import.meta.env.PROD)
   console.log(import.meta.env.VITE_APP_PRODUCTION_URL)
-  console.log(import.meta.env.VITE_APP_BASEUR)
+  console.log(import.meta.env.VITE_APP_BASEURL)
 
 
   const updateAquaCoins = (updatedCoins) => {
