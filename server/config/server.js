@@ -2,11 +2,15 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const corsOptions = {
-  origin: "http://localhost:5173", // Allow requests from frontend
-  methods: "GET,POST,PUT,PATCH,DELETE", // You can specify methods you want to allow
-  allowedHeaders: "Content-Type, Authorization", // You can specify headers you want to allow
-  credentials: true, // Allow cookies if needed
+  origin: isProduction
+    ? "https://habitect-9qgr.vercel.app"
+    : "http://localhost:5173",
+  methods: "GET,POST,PUT,PATCH,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true,
 };
 
 const configureServer = (app) => {
