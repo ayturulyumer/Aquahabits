@@ -1,7 +1,10 @@
 import Axios from "axios";
 import { responseInterceptor, sessionInterceptor } from "./interceptors.js";
 
-const BASE_URL = `${import.meta.env.VITE_APP_BASEURL}`;
+const BASE_URL = import.meta.env.PROD // Checks if it's running in production
+  ? import.meta.env.VITE_APP_PRODUCTION_URL
+  : import.meta.env.VITE_APP_BASEURL;
+
 
 export const axios = Axios.create({
   baseURL: `${BASE_URL}/auth/`,
