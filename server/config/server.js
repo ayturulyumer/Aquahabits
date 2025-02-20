@@ -5,10 +5,8 @@ const cors = require("cors");
 const isProduction = process.env.NODE_ENV === "production";
 
 const corsOptions = {
-  origin: isProduction
-    ? "https://habitect-9qgr.vercel.app"
-    : "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE","OPTIONS"],
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Allow cookies and authentication headers
 };
