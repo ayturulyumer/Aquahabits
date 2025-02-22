@@ -70,7 +70,7 @@ export default function HeroSection() {
                     <p className="mb-3 leading-relaxed font-medium text-center w-11/12 ">
                         Make growth fun and simple with gamified habits
                     </p>
-                    <Link to="/dashboard">
+                    <Link to="/login">
 
                         <div className='z-50  '>
                             <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>

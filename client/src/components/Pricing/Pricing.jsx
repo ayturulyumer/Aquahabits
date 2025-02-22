@@ -7,7 +7,7 @@ export default function Pricing() {
             title: "Monthly",
             description: "Get started with our basic features.",
             price: "$4.99",
-            features: ["Track Unlimited Habits", "Progress Dashboard", "Daily Reminders", "Build your tower" , "Daily & Weekly Challenges"],
+            features: ["Track Unlimited Habits", "Progress Dashboard", "Daily Reminders", "Build your Aquarium" , "Complete Quests"],
             buttonText: "Gamify your journey",
             onButtonClick: () => alert("Start your journey"),
             showPerMonth: true

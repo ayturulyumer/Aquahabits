@@ -11,7 +11,7 @@ export default function Accordion() {
     }
     return (
         <div className="w-full mt-8 max-w-4xl mx-auto  rounded-lg overflow-hidden">
-            <h1 className="text-4xl mb-4 text-center">Frequently asked question !</h1>
+            <h1 className="text-4xl mb-4 text-center">FAQ</h1>
             {accordionItems.map((item, index) => (
                 <AccordionSingleItem
                     key={index}

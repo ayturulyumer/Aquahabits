@@ -16,19 +16,19 @@ import StarfishIcon from "../assets/starfish.png";
 
 export const accordionItems = [
   {
-    title: "What is actually Habitect?",
+    title: "What is actually AquaHabits?",
     content:
-      "Habitect is a gamified habit tracking app that helps you build and maintain positive habits by turning your daily routines into exciting quests and challenges.",
+      "AquaHabits is a gamified habit tracking app that helps you build and maintain positive habits by turning your daily routines into exciting quests and challenges.",
   },
   {
     title: "Can i track multiple habits at once ?",
     content:
-      "Yes! With Habitect, you can track multiple habits simultaneously.",
+      "Yes! With AquaHabits, you can track multiple habits simultaneously.",
   },
   {
     title: "Is there a mobile app available?",
     content:
-      "Currently, Habitect is available as a web application optimized for both desktop and mobile browsers.",
+      "Currently, AquaHabits is available as a web application optimized for both desktop and mobile browsers.",
   },
 ];
 
