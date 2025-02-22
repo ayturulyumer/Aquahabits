@@ -129,7 +129,7 @@ export default function RegisterForm() {
                                 value={values.email}
                                 onChange={changeHandler}
                                 required
-                                placeholder="habi@tect.com"
+                                placeholder="aqua@habits.com"
                             />
                             {errors.email && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.email}</p>}
                             <label htmlFor="password" className="block mt-5 mb-2 text-sm font-medium ">

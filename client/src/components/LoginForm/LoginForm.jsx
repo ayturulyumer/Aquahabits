@@ -91,7 +91,7 @@ export default function LoginForm() {
                                 type="email"
                                 value={values.email}
                                 onChange={changeHandler}
-                                placeholder="habi@tect.com"
+                                placeholder="aqua@habits.com"
                                 required
                             />
                             {errors.email && <p className="text-red-600 tracking-wider text-sm mt-1">{errors.email}</p>}
@@ -114,7 +114,7 @@ export default function LoginForm() {
 
                     </div>
                 </div>
-                <p className="text-center mt-4">Not a member ? <Link to="/signup" className="link mx-1">Create an account</Link></p>
+                <p className="text-center text-sm mt-4">  New to AquaHabits?<Link to="/signup" className="link mx-1">Create an account</Link></p>
             </div>
         </div>
 
