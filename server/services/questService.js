@@ -23,6 +23,7 @@ exports.getAllWithUserProgress = async (userId) => {
     return Math.max(maxStreak, streak);
   }, 0);
 
+
   // Get the user's quest progress
   const userQuestProgress = user.questProgress || [];
 
