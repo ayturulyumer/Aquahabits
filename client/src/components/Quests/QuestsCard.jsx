@@ -12,7 +12,7 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
 
 
     // Find the current quest progress in user.questProgress
-    const currentQuestProgress = user.questProgress?.find(q => q.questId === questId);
+    const currentQuestProgress = user?.questProgress?.find(q => q.questId === questId);
 
     // Determine currentProgress: if the user has progress, use it, otherwise fall back to the quest's currentProgress
     const questProgress = currentQuestProgress?.currentProgress || currentProgress;
