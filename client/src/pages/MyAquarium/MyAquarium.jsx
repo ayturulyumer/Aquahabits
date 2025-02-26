@@ -70,7 +70,6 @@ export default function MyAquarium() {
         .fill(null)
         .map(() => Array(GRID_SIZE).fill(null));
 
-      console.log(user?.creatures)
 
       user.creatures.forEach(({ _id, creatureId, coordinates, level, size }) => {
         // Find the base creature model from the creatures array

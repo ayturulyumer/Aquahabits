@@ -82,29 +82,25 @@ export default function MyHabits() {
         },
         onSuccess: async (data, variables) => {
             setCheckingInHabitId(null) // if checkin is successfull reset it
-            if (data.message === "Checkin") {
-                const audio = new Audio('/success-sound.mp3');
-                audio.volume = 0.05;
-                audio.play();
-                updateAquaCoins(data.userCoins)
-
-
-                // **Trigger the second API request (quest progress update)
-                try {
-                    const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
-                    updateUserQuestProgress(updatedQuestProgress);
-                } catch (error) {
-                    console.error("Error updating quest progress:", error);
+            // **Trigger the second API request (quest progress update)
+            try {
+                const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
+                updateUserQuestProgress(updatedQuestProgress);
+                if (data.message === "Checkin") {
+                    const audio = new Audio('/success-sound.mp3');
+                    audio.volume = 0.05;
+                    audio.play();
+                    updateAquaCoins(data.userCoins)
+                } else if (data.message === "Checkout") {
+                    const audio = new Audio('/uncheck-sound.mp3');
+                    audio.volume = 0.05;
+                    audio.play();
+                    updateAquaCoins(data.userCoins)
                 }
-
-            } else if (data.message === "Checkout") {
-                const audio = new Audio('/uncheck-sound.mp3');
-                audio.volume = 0.05;
-                audio.play();
-
-                updateAquaCoins(data.userCoins)
-
+            } catch (error) {
+                console.error("Error updating quest progress:", error);
             }
+
         },
         onError: (error) => console.error("Error checking habit:", error),
     });
