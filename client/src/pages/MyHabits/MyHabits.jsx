@@ -81,7 +81,6 @@ export default function MyHabits() {
             setCheckingInHabitId(habitId) // set currently checked in habit's id to state
         },
         onSuccess: async (data, variables) => {
-            setCheckingInHabitId(null) // if checkin is successfull reset it
             // **Trigger the second API request (quest progress update)
             try {
                 const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
@@ -97,6 +96,7 @@ export default function MyHabits() {
                     audio.play();
                     updateAquaCoins(data.userCoins)
                 }
+                setCheckingInHabitId(null) // if checkin is successfull reset it
             } catch (error) {
                 console.error("Error updating quest progress:", error);
             }
