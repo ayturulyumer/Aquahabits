@@ -6,8 +6,8 @@ const questSchema = new mongoose.Schema({
   reward: { type: Number, required: true },
   requirement: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
+  iconUrl: { type: String, required: true },
 });
-
 
 const Quest = mongoose.model("Quest", questSchema);
 module.exports = Quest;

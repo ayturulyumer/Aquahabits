@@ -1,18 +1,15 @@
-import ConsistencyIcon from '../../assets/consistency.png';
-import FlameIcon from '../../assets/flame.png';
-import FirstWinIcon from '../../assets/firstwin.png';
+
 import Completed from "../../assets/completed-icon.png"
-import Button from "../Button/Button.jsx";
 import LockedChest from "../../assets/treasure-chest-locked.png"
 
-const iconMap = {
-    'Starting Strong': FirstWinIcon,
-    'Consistency Starter': FlameIcon,
-    'Week of Dedication': ConsistencyIcon,
-};
+import Button from "../Button/Button.jsx";
 
+
+const COMPLETED_ICON_URL = "https://res.cloudinary.com/dquoir0sw/image/upload/v1740558111/completed-icon_ecltw5.png"
+const LOCKEDCHEST_ICON_URL = "https://res.cloudinary.com/dquoir0sw/image/upload/v1740558057/treasure-chest-locked_m3dgml.png"
 export function QuestsCard({ user, quest, handleClaimRewardClick }) {
-    const { title, description, reward, currentProgress, requirement, questId } = quest;
+    const { title, description, iconUrl, currentProgress, requirement, questId } = quest;
+
 
     // Find the current quest progress in user.questProgress
     const currentQuestProgress = user.questProgress?.find(q => q.questId === questId);
@@ -30,7 +27,8 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
                 <div className="flex justify-between">
                     <h2 className="card-title text-primary">{title}</h2>
                     <img
-                        src={iconMap[title]}
+                        loading="eager"
+                        src={iconUrl}
                         alt="Quest Icon"
                         className="h-16 w-16 ml-2 "
                     />
@@ -46,9 +44,9 @@ export function QuestsCard({ user, quest, handleClaimRewardClick }) {
                     {isCompleted && !isClaimed ? (
                         <Button onClick={() => handleClaimRewardClick(questId)}>Claim Reward</Button>
                     ) : isClaimed ? (
-                        <img src={Completed} alt="Claimed Icon" className="mr-3 w-10 h-10" />
+                        <img src={COMPLETED_ICON_URL} alt="Claimed Icon" className="mr-3 w-10 h-10" />
                     ) : (
-                        <img src={LockedChest} alt="Claimed Icon" className="mr-3 w-10 h-10" />
+                        <img src={LOCKEDCHEST_ICON_URL} alt="Claimed Icon" className="mr-3 w-10 h-10" />
                     )}
                 </section>
                 <p className={`text-sm text-left mt-2 ${isCompleted ? "line-through" : ""}`}>

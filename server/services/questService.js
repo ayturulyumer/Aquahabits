@@ -23,7 +23,6 @@ exports.getAllWithUserProgress = async (userId) => {
     return Math.max(maxStreak, streak);
   }, 0);
 
-
   // Get the user's quest progress
   const userQuestProgress = user.questProgress || [];
 
@@ -78,6 +77,7 @@ exports.getAllWithUserProgress = async (userId) => {
       questId: quest._id,
       title: quest.title,
       description: quest.description,
+      iconUrl: quest.iconUrl,
       reward: quest.reward,
       requirement: quest.requirement,
       currentProgress, // Reflects the user's progress dynamically
