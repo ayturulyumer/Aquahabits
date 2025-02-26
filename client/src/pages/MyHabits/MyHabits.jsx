@@ -28,6 +28,7 @@ export default function MyHabits() {
     const [editingHabit, setEditingHabit] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState(null);
+    const [checkingInHabitId, setCheckingInHabitId] = useState(null); // Check which habit is checking in to disable only that habit card 
     const { updateAquaCoins, updateUserQuestProgress } = useAuth()
 
 
@@ -76,21 +77,21 @@ export default function MyHabits() {
     const CheckInHabitMutation = useGenericMutation({
         mutationFn: habitsApi.checkInHabit,
         queryKey: "habits",
+        onMutate: (habitId) => {
+            setCheckingInHabitId(habitId) // set currently checked in habit's id to state
+        },
         onSuccess: async (data, variables) => {
-            console.log("Habit checked/unchecked successfully:", data);
-
+            setCheckingInHabitId(null) // if checkin is successfull reset it
             if (data.message === "Checkin") {
                 const audio = new Audio('/success-sound.mp3');
                 audio.volume = 0.05;
                 audio.play();
                 updateAquaCoins(data.userCoins)
-                // Trigger confetti
 
 
-                // **Trigger the second API request (e.g., quest progress update)**
+                // **Trigger the second API request (quest progress update)
                 try {
                     const updatedQuestProgress = await questApi.updateQuestProgressForHabit(variables);
-                    console.log(updatedQuestProgress)
                     updateUserQuestProgress(updatedQuestProgress);
                 } catch (error) {
                     console.error("Error updating quest progress:", error);
@@ -190,8 +191,8 @@ export default function MyHabits() {
                                         type="checkbox"
                                         checked={isHabitCompletedToday(habit.history)}
                                         onChange={() => toggleHabitCompletion(habit._id)}
-                                        disabled={CheckInHabitMutation.isLoading}
-                                        className={`${CheckInHabitMutation.isLoading ? "loading  text-primary" : "checkbox checkbox-success"}`}
+                                        disabled={checkingInHabitId === habit._id}
+                                        className={`${checkingInHabitId === habit._id ? "loading  text-primary" : "checkbox checkbox-success"}`}
                                     />
                                     <span className="absolute top-7.5 right-2 badge  badge-primary badge-sm font-bold font-mono">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
                                     <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
