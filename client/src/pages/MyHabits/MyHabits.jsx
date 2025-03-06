@@ -23,6 +23,7 @@ import toast from 'react-hot-toast';
 
 
 
+
 export default function MyHabits() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +44,6 @@ export default function MyHabits() {
         queryKey: ["habits"],
         queryFn: habitsApi.getAll
     })
-
 
 
 
@@ -192,7 +192,20 @@ export default function MyHabits() {
                                         disabled={checkingInHabitId === habit._id}
                                         className={`${checkingInHabitId === habit._id ? "loading  text-primary" : "checkbox checkbox-success"}`}
                                     />
-                                    <span className="absolute top-7.5 right-2 badge  badge-primary badge-sm font-bold font-mono">{habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : habit.frequency}</span>
+                                    {/*Show tippy tooltip only if user has selected days  */}
+                                    {habit.selectedDays.length > 0 ? (
+                                        <Tippy content={habit.selectedDays.join(", ")} placement="bottom-start" animation="scale-subtle">
+                                            <span className="absolute top-7.5 right-2 badge badge-primary badge-sm font-bold font-mono">
+                                                {habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : "Daily"}
+                                            </span>
+                                        </Tippy>
+                                    ) : (
+                                        <span className="absolute top-7.5 right-2 badge badge-primary badge-sm font-bold font-mono">
+                                            {habit.frequency === "weekly" ? `${habit.selectedDays.length}x/week` : "Daily"}
+                                        </span>
+                                    )}
+
+
                                     <div className=" dropdown dropdown-left absolute -top-4   right-0 mr-2">
                                         <div tabIndex={0} role="button" className="text-2xl">...</div>
                                         <ul tabIndex={0} className="dropdown-content menu  bg-black/60   rounded-box z-[1]  shadow">
