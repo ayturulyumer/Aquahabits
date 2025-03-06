@@ -14,6 +14,7 @@ import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.js
 import { useAuth } from "../../context/authContext.jsx";
 import { GROWTH_COSTS } from "../../utils/constants.js";
 import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal.jsx";
+import toast from "react-hot-toast";
 
 const GRID_SIZE = 6;
 
@@ -128,8 +129,9 @@ export default function MyAquarium() {
       splashSound.play();
 
       setActiveCell(null);
+      toast.success(`Added ${item.name} to your aquarium!`);
     },
-    onError: (error) => console.error("Error adding creature to user:", error),
+    onError: (error) => toast.error("Error adding creature to aquarium"),
   });
 
   const levelUpCreatureMutation = useGenericMutation({
@@ -137,6 +139,7 @@ export default function MyAquarium() {
     queryKey: "creatures",
     onSuccess: (data) => {
       const updatedCreature = data.updatedCreature;
+      console.log(updatedCreature)
 
       // Play sound when leveling up
       growSound.volume = 0.1;
@@ -144,8 +147,9 @@ export default function MyAquarium() {
 
       updateUserCreatures(updatedCreature);
       updateAquaCoins(data.updatedAquaCoins);
+      toast.success(`Leveled up creature to level ${updatedCreature.level} !`);
     },
-    onError: (error) => console.error("Error leveling up creature:", error),
+    onError: (error) => toast.error("Error leveling up creature"),
   });
 
   const removeCreatureMutation = useGenericMutation({
@@ -157,12 +161,13 @@ export default function MyAquarium() {
 
 
       updateAquaCoins(data.updatedAquaCoins);
-      removeUserCreature(userCreatureId); // This should now correctly remove the creature
+      removeUserCreature(userCreatureId);
+      toast.success("Removed creature from aquarium!");
     },
 
 
 
-    onError: (error) => console.error("Error leveling up creature:", error)
+    onError: (error) => toast.error("Error removing creature from aquarium"),
   })
 
 
@@ -178,7 +183,7 @@ export default function MyAquarium() {
       });
 
     } else {
-      alert("Not enough points to add this item!");
+      toast.error("You don't have enough Aqua Coins to buy this creature");
     }
   };
 

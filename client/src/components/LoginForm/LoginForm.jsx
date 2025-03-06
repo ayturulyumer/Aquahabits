@@ -36,6 +36,7 @@ export default function LoginForm() {
                 const response = await auth.login(values.email, values.password)
                 login(response.user, response.accessToken)
                 navigate("/dashboard")
+                toast.success("Login successful");
             } catch (err) {
                 toast.error(err.response.data.message);
             }
@@ -46,15 +47,21 @@ export default function LoginForm() {
     }
 
     const handleGoogleSuccess = async (tokenResponse) => {
-        try {
-            const response = await auth.googleAuth(tokenResponse.code)
-            login(response.user, response.accessToken)
-            navigate("/dashboard")
-
-        } catch (error) {
-            toast.error(error);
-        }
+        toast.promise(
+            auth.googleAuth(tokenResponse.code)
+                .then((response) => {
+                    login(response.user, response.accessToken);
+                    navigate("/dashboard");
+                    return response; // Ensures success state is triggered
+                }),
+            {
+                loading: "Logging in...",
+                success: "Login successful!",
+                error: "Login failed. Please try again.",
+            }
+        );
     };
+
 
     const handleGoogleError = (error) => {
         console.error("Google login error:", error);

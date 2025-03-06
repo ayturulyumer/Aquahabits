@@ -66,14 +66,19 @@ export default function RegisterForm() {
     }
 
     const handleGoogleSuccess = async (tokenResponse) => {
-        try {
-            const response = await auth.googleAuth(tokenResponse.code)
-            login(response.user, response.accessToken)
-            navigate("/dashboard")
-
-        } catch (error) {
-            console.error("Google login failed:", error);
-        }
+        toast.promise(
+            auth.googleAuth(tokenResponse.code)
+                .then((response) => {
+                    login(response.user, response.accessToken);
+                    navigate("/dashboard");
+                    return response; 
+                }),
+            {
+                loading: "Please wait...",
+                success: "Registered successfully!",
+                error: "Register failed. Please try again.",
+            }
+        );
     };
 
     const handleGoogleError = (error) => {

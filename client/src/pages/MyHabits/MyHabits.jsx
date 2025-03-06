@@ -17,6 +17,7 @@ import formatDateToReadable from '../../utils/formatDateToReadable.js';
 import { useGenericMutation } from '../../hooks/useMutation.js';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner.jsx';
+import toast from 'react-hot-toast';
 
 
 
@@ -54,24 +55,24 @@ export default function MyHabits() {
     const createHabitMutation = useGenericMutation({
         mutationFn: habitsApi.createHabit,
         queryKey: "habits", // Automatically invalidates "habits" after success
-        onSuccess: (data) => console.log("Habit created successfully:", data),
-        onError: (error) => console.error("Error creating habit:", error),
+        onSuccess: (data) => toast.success("Habit created successfully"),
+        onError: (error) => toast.error("Error creating habit"),
     });
 
 
     const updateHabitMutation = useGenericMutation({
         mutationFn: habitsApi.editHabit,
         queryKey: "habits",
-        onSuccess: (data) => console.log("Habit updated successfully:", data),
-        onError: (error) => console.error("Error updating habit:", error),
+        onSuccess: (data) => toast.success("Habit updated successfully"),
+        onError: (error) => toast.error("Error updating habit"),
     });
 
 
     const DeleteHabitMutation = useGenericMutation({
         mutationFn: habitsApi.deleteHabit,
         queryKey: "habits",
-        onSuccess: (data) => console.log("Habit deleted successfully:", data),
-        onError: (error) => console.error("Error deleting habit:", error),
+        onSuccess: (data) => toast.success("Habit deleted successfully"),
+        onError: (error) => toast.error("Error deleting habit"),
     })
 
     const CheckInHabitMutation = useGenericMutation({
@@ -116,6 +117,7 @@ export default function MyHabits() {
                 habitId: habit._id,
                 habitData: habit
             })
+
         } else {
             createHabitMutation.mutate(habit)
         }
