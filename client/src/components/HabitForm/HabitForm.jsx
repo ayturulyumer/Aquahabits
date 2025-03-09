@@ -75,6 +75,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     value={values.name}
                     onChange={changeHandler}
                     required
+                    maxLength={20}
                 />
             </div>
 
@@ -107,6 +108,7 @@ export default function HabitForm({ habit = {}, addOrUpdateHabit, onCancel }) {
                     placeholder="What's your goal with this habit ?"
                     value={values.goal}
                     onChange={changeHandler}
+                    maxLength={200}
                 ></textarea>
             </div>
 
