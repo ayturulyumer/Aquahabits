@@ -13,6 +13,7 @@
     "@react-oauth/google": "^0.12.1",
     "@tanstack/react-query-devtools": "^5.63.0",
     "@tippyjs/react": "^4.2.6",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
     "react": "^18.3.1",
