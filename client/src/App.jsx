@@ -5,6 +5,8 @@ import "./scss/App.scss"
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools"
 
+import { Analytics } from '@vercel/analytics/react';
+
 import { AuthProvider } from "./context/authContext.jsx";
 
 import Home from "./pages/Home/Home.jsx";
@@ -72,6 +74,7 @@ function App() {
     />
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
+      <Analytics />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </AuthProvider>;
