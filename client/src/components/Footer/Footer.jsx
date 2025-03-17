@@ -50,6 +50,9 @@ export default function Footer() {
                     </a>
                 </div>
             </nav>
+            <p className="text-center ">
+                All icons by <a href="https://www.flaticon.com/search?author_id=1&style_id=&type=standard&word=sea+creatures" target="_blank" rel="noopener noreferrer">Freepik - Flaticon</a>
+            </p>
         </footer>
     )
 }
