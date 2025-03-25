@@ -12,7 +12,7 @@ const setRefreshToken = (res, refreshToken) => {
   return res.cookie("refreshToken", refreshToken, {
     httpOnly: true, // prevents client-side from accessing the cookie
     secure: false, // cookie is sent  only over https
-    sameSite: "lax", // The cookie is only sent for same-site requests, preventing cross-origin misuse. - CHANGE LATER
+    sameSite: "none", // The cookie is only sent for same-site requests, preventing cross-origin misuse. - CHANGE LATER
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
   });
 };
