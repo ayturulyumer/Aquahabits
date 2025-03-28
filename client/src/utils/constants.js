@@ -43,11 +43,11 @@ export const painPointsData = {
 };
 
 export const solutionPointsData = {
-  title: "How Habitect Transforms it",
+  title: "How Aquahabits Transforms it",
   solutions: [
     "Gamified experience to boost motivation",
     "Instant rewards and achievements",
-    "Visual progress tracking and analytics",
+    "Visual progress tracking",
     "Gradual habit stacking for sustainable change",
   ],
 };
