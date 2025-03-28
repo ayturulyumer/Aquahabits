@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
       return this.authProvider === "local";
     }, // Required only for local users
   },
-  googleId: { type: String, unique: true },
+  googleId: { type: String, unique: true, sparse: true },
   authProvider: { type: String, enum: ["local", "google"], default: "local" },
   habits: [{ type: mongoose.Schema.Types.ObjectId, ref: "Habit" }],
   aquaCoins: { type: Number, default: 0 },
