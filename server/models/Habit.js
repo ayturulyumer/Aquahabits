@@ -67,7 +67,7 @@ habitSchema.methods.updateStats = function () {
     totalDays > 0 ? Math.round((this.completed / totalDays) * 100) : 0;
 
   // Penalize for missed days (e.g., subtract 2% for each missed day)
-  const penalty = missedDays * 2; // 2% penalty per missed day
+  const penalty = missedDays * 1; // 2% penalty per missed day
   const newConsistency = Math.max(
     0,
     Math.min(100, normalConsistency - penalty)
