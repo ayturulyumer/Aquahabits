@@ -99,11 +99,11 @@ export default function MyHabits() {
                 }
                 setCheckingInHabitId(null) // if checkin is successfull reset it
             } catch (error) {
-                console.error("Error updating quest progress:", error);
+                toast.error("Error updating quest progress:", error?.response?.data);
             }
 
         },
-        onError: (error) => console.error("Error checking habit:", error),
+        onError: (error) => toast.error(error?.response?.data),
     });
 
     const toggleHabitCompletion = (id) => {
