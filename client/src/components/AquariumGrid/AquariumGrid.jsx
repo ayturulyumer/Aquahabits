@@ -5,7 +5,6 @@ import Tippy from "@tippyjs/react";
 import Button from "../Button/Button.jsx";
 import LevelUpIcon from "../../svg/levelup-icon.svg";
 import AquaCoins from "../../assets/aquagem.png";
-import { ITEM_TYPES } from "../../utils/constants.js";
 
 export default function AquariumGrid({
     creatures,
