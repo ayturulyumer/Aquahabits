@@ -33,7 +33,7 @@ function DashboardShell({ children }) {
                 <div className="flex-1 overflow-y-auto pb-16">
                     <div className="container mx-auto py-6">
                         {React.Children.map(children, (child) =>
-                            React.cloneElement(child, { toggleSidebar })
+                            React.cloneElement(child, { toggleSidebar, sidebarOpen })
                         )}
                     </div>
                 </div>

@@ -9,9 +9,11 @@ import * as auth from "../../actions/authActions.js"
 
 const TooltipMessage = "Earn by completing habits, use to grow your aquarium friends"
 
-function DashboardHeader({ toggleSidebar }) {
+function DashboardHeader({ toggleSidebar, sidebarOpen }) {
   const { user, removeUserState } = useAuth()
   const navigate = useNavigate()
+
+  console.log(toggleSidebar)
 
   const handleUserLogout = async () => {
     try {
@@ -27,7 +29,7 @@ function DashboardHeader({ toggleSidebar }) {
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-md hidden hover:bg-primary hover:text-secondary focus:outline-none focus:ring focus:ring-primary md:block transition-colors duration-200"
+          className={`p-2 rounded-md hidden  md:block  transition-colors duration-200 ${sidebarOpen ? "rotate-90  transition duration-200 ease-in-out" : "rotate-0 transition duration-200 ease-in-out"}`}
           aria-label="Toggle Sidebar"
         >
           <svg
@@ -40,7 +42,7 @@ function DashboardHeader({ toggleSidebar }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <h1 className="ml-2 mr-4 md:text-2xl font-bold">AquaHabits</h1>
+        <h1 className="ml-2 mr-4 md:text-2xl font-bold text-3xl   text-primary tracking-normal">AquaHabits</h1>
       </div>
       <div className="flex items-center justify-around  space-x-2">
         <span className="text-xs font-semibold ">Welcome, {user?.name} </span>
