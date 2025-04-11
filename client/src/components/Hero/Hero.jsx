@@ -10,10 +10,11 @@ import Pricing from '../Pricing/Pricing.jsx'
 
 import Accordion from '../Accordion/Accordion.jsx'
 import Button from '../Button/Button.jsx'
+import LandingAquariumGrid from '../AquariumGrid/LandingAquariumGrid.jsx'
 
 import { painPointsData, solutionPointsData } from '../../utils/constants.js'
 
-
+const GRID_SIZE = 2
 
 
 export default function HeroSection() {
@@ -22,6 +23,11 @@ export default function HeroSection() {
     const [typedText, setTypedText] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
     const [pause, setPause] = useState(false); // New state to handle the pause
+    const [grid, setGrid] = useState(
+        Array(GRID_SIZE)
+            .fill(null)
+            .map(() => Array(GRID_SIZE).fill(null))
+    );
 
     useEffect(() => {
         let typingSpeed = 150;
@@ -67,7 +73,7 @@ export default function HeroSection() {
                             </span>
                         </span>
                     </h1>
-                    <p className="mb-3 leading-relaxed font-medium text-center w-11/12 ">
+                    <p className="mb-3 leading-relaxed italic font-medium text-center w-11/12 ">
                         Make growth fun and simple with gamified habits
                     </p>
                     <Link to="/login">
@@ -78,20 +84,10 @@ export default function HeroSection() {
                     </Link>
                 </section>
 
-                <section className="relative  flex justify-center items-center">
-                    <div className="absolute inset-0 flex items-center justify-center z-0">
-                        <div className="h-64 w-64 max-w-full max-h-full rounded-full bg-blue-400 opacity-50 blur-3xl"></div>
-                    </div>
-
-                    <div className="relative flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-8">
-                            <HabitStat label="Daily Streak" value="7 Days" />
-                            <HabitStat label="Goals Completed" value="15" />
-                            <HabitStat label="Achievements" value="5 Unlocked" />
-                            <div className="flex items-center justify-center p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-                                <span className="text-4xl font-bold text-neutral">+10</span>
-                            </div>
-                        </div>
+                <section className="relative  flex flex-col gap-4 justify-center items-center">
+                <p className='font-mono font-medium text-yellow-500 italic animate-bounce '>Click a cell</p>
+                    <div className="grid  grid-cols-4 max-w-xs bg-gradient-to-b rounded-lg from-blue-800  to-blue-950 w-full gap-0 relative">
+                        <LandingAquariumGrid grid={grid} />
                     </div>
                 </section>
             </div>

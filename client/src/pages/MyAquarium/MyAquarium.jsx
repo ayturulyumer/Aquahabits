@@ -12,7 +12,6 @@ import { useGenericMutation } from "../../hooks/useMutation.js";
 import AquariumGrid from "../../components/AquariumGrid/AquariumGrid.jsx";
 import BubbleContainer from "../../components/BubbleContainer/BubbleContainer.jsx";
 import { useAuth } from "../../context/authContext.jsx";
-import { GROWTH_COSTS } from "../../utils/constants.js";
 import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal.jsx";
 import toast from "react-hot-toast";
 
