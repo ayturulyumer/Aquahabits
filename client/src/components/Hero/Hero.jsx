@@ -85,7 +85,7 @@ export default function HeroSection() {
                 </section>
 
                 <section className="relative  flex flex-col gap-4 justify-center items-center">
-                <p className='font-mono font-medium text-yellow-500 italic animate-bounce '>Click a cell</p>
+                <p className='font-mono font-medium  italic'>Discover who’s hiding underwater <span className='animate-bounce inline-block'>👀</span></p>
                     <div className="grid  grid-cols-4 max-w-xs bg-gradient-to-b rounded-lg from-blue-800  to-blue-950 w-full gap-0 relative">
                         <LandingAquariumGrid grid={grid} />
                     </div>
