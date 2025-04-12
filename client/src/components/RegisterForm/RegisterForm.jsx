@@ -6,6 +6,7 @@ import { useForm } from "../../hooks/useForm.jsx";
 import GoogleIcon from "../../svg/google-icon.svg";
 import RegisterIcon from "../../svg/add-user-icon.svg";
 import { useGoogleLogin } from '@react-oauth/google';
+import toast from "react-hot-toast";
 
 
 import Button from "../Button/Button.jsx";
@@ -71,7 +72,7 @@ export default function RegisterForm() {
                 .then((response) => {
                     login(response.user, response.accessToken);
                     navigate("/dashboard");
-                    return response; 
+                    return response;
                 }),
             {
                 loading: "Please wait...",
