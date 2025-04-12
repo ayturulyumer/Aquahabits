@@ -44,6 +44,7 @@ exports.getAllWithUserProgress = async (userId) => {
         title: quest.title,
         description: quest.description,
         reward: quest.reward,
+        iconUrl: quest.iconUrl,
         requirement: quest.requirement,
         currentProgress: existingQuestProgress.currentProgress, // Use the saved progress
         isCompleted: true, // Already completed
