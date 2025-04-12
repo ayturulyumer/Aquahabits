@@ -1,6 +1,4 @@
 
-import Completed from "../../assets/completed-icon.png"
-import LockedChest from "../../assets/treasure-chest-locked.png"
 
 import Button from "../Button/Button.jsx";
 
@@ -9,6 +7,7 @@ const COMPLETED_ICON_URL = "https://res.cloudinary.com/dquoir0sw/image/upload/v1
 const LOCKEDCHEST_ICON_URL = "https://res.cloudinary.com/dquoir0sw/image/upload/v1740558057/treasure-chest-locked_m3dgml.png"
 export function QuestsCard({ user, quest, handleClaimRewardClick }) {
     const { title, description, iconUrl, currentProgress, requirement, questId } = quest;
+
 
 
     // Find the current quest progress in user.questProgress

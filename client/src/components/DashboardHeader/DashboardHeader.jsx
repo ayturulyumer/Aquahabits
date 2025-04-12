@@ -13,7 +13,6 @@ function DashboardHeader({ toggleSidebar, sidebarOpen }) {
   const { user, removeUserState } = useAuth()
   const navigate = useNavigate()
 
-  console.log(toggleSidebar)
 
   const handleUserLogout = async () => {
     try {

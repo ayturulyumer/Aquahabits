@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 
 import GamifyIcon from "../../svg/gamify-icon.svg"
 
-import HabitStat from '../HabitStat/HabitStat.jsx'
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
 import Pricing from '../Pricing/Pricing.jsx'
