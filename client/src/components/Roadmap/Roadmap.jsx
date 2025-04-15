@@ -54,7 +54,7 @@ export default function Roadmap() {
                                 alt={item.title}
                                 className="w-24 h-24  object-cover rounded-full mb-2"
                             />
-                            <div className="text-xl  uppercase font-medium  ">{item.title}</div>
+                            <div className="text-xl font-mono uppercase font-medium  ">{item.title}</div>
                         </div>
                     ) : (
                         <div className="timeline-end space-y-6 mb-10">
@@ -63,7 +63,7 @@ export default function Roadmap() {
                                 alt={item.title}
                                 className="w-24 h-24  object-cover rounded-full mb-2"
                             />
-                            <div className="text-xl    uppercase font-medium ">{item.title}</div>
+                            <div className="text-xl  font-mono  uppercase font-medium ">{item.title}</div>
                         </div>
                     )}
 

@@ -72,7 +72,7 @@ export default function HeroSection() {
                             </span>
                         </span>
                     </h1>
-                    <p className="mb-3 leading-relaxed italic font-medium text-center w-11/12 ">
+                    <p className="mb-3 leading-relaxed  font-mono font-medium text-center w-11/12 ">
                         Make growth fun and simple with gamified habits
                     </p>
                     <Link to="/login">
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 </section>
 
                 <section className="relative  flex flex-col gap-4 justify-center items-center">
-                    <p className='font-lexend  font-medium  italic'>Discover who’s hiding underwater <span className='animate-bounce inline-block'>👀</span></p>
+                    <p className='font-mono  font-medium  italic'>Discover who’s hiding underwater <span className='animate-bounce inline-block'>👀</span></p>
                     <div className="grid  grid-cols-4 max-w-xs bg-gradient-to-b rounded-lg from-blue-800  to-blue-950 w-full gap-0 relative">
                         <LandingAquariumGrid grid={grid} />
                     </div>
