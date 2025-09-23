@@ -99,10 +99,10 @@ export default function HeroSection() {
                     <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
                     <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                 </div>
-                <h3 className='my-8 text-2xl leading-relaxed font-medium'>
+                <h3 className='my-8 text-2xl font-lexend  leading-relaxed font-medium'>
                     We get it. Building lasting habits is tough, especially when you feel like you're just spinning your wheels.
                 </h3>
-                <h3 className='my-8 leading-relaxed font-medium'>But it doesn't have to be </h3>
+                <h3 className='my-8 leading-relaxed font-medium'>But it doesn't have to</h3>
             </section>
 
             <section className='grid  grid-cols-1 md:grid-cols-2'>
