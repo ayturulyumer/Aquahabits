@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const corsOptions = {
   origin: isProduction
-    ? "https://aquahabits-9qgr.vercel.app"
+    ? "https://aquahabits.app"
     : "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
