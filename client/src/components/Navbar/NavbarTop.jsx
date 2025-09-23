@@ -11,11 +11,12 @@ export default function NavbarTop() {
         <header>
             <nav className="navbar bg-custom-gradient ">
                 <div className="navbar-start mx-8">
+                    <img className='h-12 w-12' src="/logo.png" alt="Logo" />
                     <Link to="/" className="text-3xl font-light  text-primary tracking-normal ">AquaHabits</Link>
                 </div>
                 <div className="navbar-center">
                     <ul className="flex gap-20 mr-4">
-                        <li className="hover-red-underline cursor-pointer">Pricing</li> 
+                        <li className="hover-red-underline cursor-pointer">Pricing</li>
                         <li className="hover-red-underline cursor-pointer">FAQ</li>
                     </ul>
                 </div>
