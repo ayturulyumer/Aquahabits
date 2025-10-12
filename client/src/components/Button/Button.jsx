@@ -36,7 +36,7 @@ export default function Button({
     return (
         <button type={type} onClick={onClick} className={`${baseClass} ${optionalModifiers} ${className}`}>
             {(iconLeft || iconRight) && !children && (
-                <span className={`flex items-center justify-center ${isIconOnly ? "w-full h-full" : ""}`}>
+                <span className={`flex items-center  justify-center ${isIconOnly ? "w-full h-full" : ""}`}>
                     {iconLeft && (
                         <img className="h-6 w-6" src={iconLeft} alt={iconAlt} />
                     )}

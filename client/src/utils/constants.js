@@ -33,22 +33,23 @@ export const accordionItems = [
 ];
 
 export const painPointsData = {
-  title: "Why Building Habits is Hard",
+  title: "Why You Never Stay Consistent",
   issues: [
-    "Lack of motivation and consistency",
-    "Absence of immediate rewards",
-    "Difficulty in tracking progress",
-    "Overwhelming when trying to change multiple habits",
+    "You start with fire, then the spark dies after a week.",
+    "You track habits until you miss a day - then quit entirely.",
+    "You expect perfection instead of progress.",
+    "You try to change your life overnight.",
   ],
 };
 
+
 export const solutionPointsData = {
-  title: "How Aquahabits Transforms it",
+  title: "How Aquahabits Keeps You Going",
   solutions: [
-    "Gamified experience to boost motivation",
-    "Instant rewards and achievements",
-    "Visual progress tracking",
-    "Gradual habit stacking for sustainable change",
+    "Makes progress visible - every check-in grows your world.",
+    "Turns consistency into a small daily win, not a chore.",
+    "Takes away the guilt of missed days - you just keep going.",
+    "Builds habits slowly, the way real change actually happens.",
   ],
 };
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 
 import GamifyIcon from "../../svg/gamify-icon.svg"
+import JourneyIcon from "../../svg/journey-icon.svg"
 
 import HabitCard from '../HabitCard/HabitCard.jsx'
 import Roadmap from '../Roadmap/Roadmap.jsx'
@@ -78,7 +79,7 @@ export default function HeroSection() {
                     <Link to="/login">
 
                         <div className='z-50  '>
-                            <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-secondary hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
+                            <Button isWide iconRight={GamifyIcon} iconAlt='Joystick Icon' className='text-white uppercase hover:-rotate-3 transition-transform duration-300 ease-in-out'>Gamify now</Button>
                         </div>
                     </Link>
                 </section>
@@ -92,22 +93,25 @@ export default function HeroSection() {
             </div>
 
             <section className='relative my-28 max-w-6xl mx-auto z-40 font-extrabold text-center lg:mt-40'>
-                <h2 className='text-3xl text-center font-extrabold sm:text-4xl md:text-5xl'>
+                <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-4xl lg:text-7xl">
                     Tired of setting goals and never following through?
-                </h2>
+                </h1>
+                <div className="mx-auto mt-12 max-w-3xl space-y-3 text-pretty text-xl leading-relaxed text-foreground/80 sm:text-xl">
+                    <p>You've tried planners, apps, and morning routines.</p>
+                    <p className="font-medium text-foreground">None of it stuck.</p>
+                </div>
                 <div className='grid md:grid-cols-2 gap-8 mt-20 max-w-8xl mx-auto'>
                     <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
                     <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                 </div>
-                <h3 className='my-8 text-2xl font-lexend  leading-relaxed font-medium'>
-                    We get it. Building lasting habits is tough, especially when you feel like you're just spinning your wheels.
-                </h3>
-                <h3 className='my-8 leading-relaxed font-medium'>But it doesn't have to</h3>
+                <div className='z-50 mt-10 '>
+                    <Button isWide iconRight={JourneyIcon}  className='text-white shadow-xl  uppercase '>Start Free </Button>
+                </div>
             </section>
 
-            <section className='grid  grid-cols-1 md:grid-cols-2'>
-                <Roadmap />
-                <Pricing />
+            <section className=''>
+                {/* <Roadmap /> */}
+                {/* <Pricing /> */}
             </section>
             <section className='my-28'>
                 <Accordion />
