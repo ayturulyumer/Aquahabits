@@ -104,9 +104,11 @@ export default function HeroSection() {
                     <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
                     <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                 </div>
+                <Link to="/login">
                 <div className='z-50 mt-10 '>
                     <Button isWide iconRight={JourneyIcon}  className='text-white shadow-xl  uppercase '>Start Free </Button>
                 </div>
+                </Link>
             </section>
 
             <section className=''>

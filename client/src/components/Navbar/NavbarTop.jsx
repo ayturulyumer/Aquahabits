@@ -15,10 +15,6 @@ export default function NavbarTop() {
                     <Link to="/" className="text-3xl font-light  text-primary tracking-normal ">AquaHabits</Link>
                 </div>
                 <div className="navbar-center">
-                    <ul className="flex gap-20 mr-4">
-                        <li className="hover-red-underline cursor-pointer">Pricing</li>
-                        <li className="hover-red-underline cursor-pointer">FAQ</li>
-                    </ul>
                 </div>
                 <div className="navbar-end">
                     {user ? <p>Hello {user.name}</p>
