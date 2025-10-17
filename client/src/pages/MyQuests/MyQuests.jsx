@@ -63,7 +63,6 @@ export default function MyQuests() {
   return (
     <div className="min-h-fit flex justify-center md:justify-normal mx-4 ">
       <main className="mt-8">
-        <h2 className="text-2xl font-bold mb-4 text-primary  uppercase ">Quests</h2>
         {questsLoading ?
           <div className='flex justify-center align-middle'>
             <Spinner />

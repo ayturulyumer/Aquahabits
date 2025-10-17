@@ -41,7 +41,8 @@ function DashboardHeader({ toggleSidebar, sidebarOpen }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <h1 className="ml-2 mr-4 md:text-2xl font-bold text-3xl   text-primary tracking-normal">AquaHabits</h1>
+        <img className='h-12 w-12' src="/logo.png" alt="Logo" />
+        <h1 className="ml-2 mr-4 hidden  text-primary tracking-normal md:text-3xl sm:flex">AquaHabits</h1>
       </div>
       <div className="flex items-center justify-around  space-x-2">
         <span className="text-xs font-semibold ">Welcome, {user?.name} </span>

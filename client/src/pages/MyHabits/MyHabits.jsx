@@ -165,8 +165,7 @@ export default function MyHabits() {
 
     return (
         <div className="space-y-2">
-            <div className="flex justify-between mx-4 items-baseline ">
-                <h2 className="text-2xl font-bold text-primary">My Habits</h2>
+            <div className="flex justify-end mx-4 items-baseline ">
                 <Button onClick={() => openModal()} iconRight={addIcon} iconAlt='Add Icon' className="btn btn-circle mt-4  btn-primary "></Button>
             </div>
 

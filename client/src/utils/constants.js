@@ -33,49 +33,126 @@ export const accordionItems = [
 ];
 
 export const painPointsData = {
-  title: "Why You Never Stay Consistent",
+  title: "Why It's Hard to Stay Consistent",
   issues: [
-    "You start with fire, then the spark dies after a week.",
-    "You track habits until you miss a day - then quit entirely.",
-    "You expect perfection instead of progress.",
-    "You try to change your life overnight.",
+    "You lose motivation fast.",
+    "You forget to track.",
+    "You miss one day and give up.",
+    "You try to do too much at once.",
   ],
 };
 
-
 export const solutionPointsData = {
-  title: "How Aquahabits Keeps You Going",
+  title: "How Aquahabits Fixes It",
   solutions: [
-    "Makes progress visible - every check-in grows your world.",
-    "Turns consistency into a small daily win, not a chore.",
-    "Takes away the guilt of missed days - you just keep going.",
-    "Builds habits slowly, the way real change actually happens.",
+    "Turns progress into something you can actually see.",
+    "Every check-in grows your little world underwater.",
+    "Miss a day? You lose a few points, not your progress.",
+    "Keeps you coming back with calm, steady progress.",
   ],
 };
 
 export const ITEM_TYPES = [
   // Easy Creatures to Unlock (Common)
-  { name: "Seahorse", rarity: "common", cost: 35, icon: SeahorseIcon, size: "small" },
-  { name: "Clownfish", rarity: "common", cost: 45, icon: ClownfishIcon, size: "small" },
+  {
+    name: "Seahorse",
+    rarity: "common",
+    cost: 35,
+    icon: SeahorseIcon,
+    size: "small",
+  },
+  {
+    name: "Clownfish",
+    rarity: "common",
+    cost: 45,
+    icon: ClownfishIcon,
+    size: "small",
+  },
   { name: "Crab", rarity: "common", cost: 55, icon: CrabIcon, size: "small" },
 
   // Mid-Level Creatures (Uncommon)
-  { name: "Jellyfish", rarity: "rare", cost: 70, icon: JellyfishIcon, size: "small" },
-  { name: "Piranha", rarity: "rare", cost: 90, icon: PiranhaIcon, size: "small" },
-  { name: "Stingray", rarity: "rare", cost: 95, icon: StingrayIcon, size: "small" },
+  {
+    name: "Jellyfish",
+    rarity: "rare",
+    cost: 70,
+    icon: JellyfishIcon,
+    size: "small",
+  },
+  {
+    name: "Piranha",
+    rarity: "rare",
+    cost: 90,
+    icon: PiranhaIcon,
+    size: "small",
+  },
+  {
+    name: "Stingray",
+    rarity: "rare",
+    cost: 95,
+    icon: StingrayIcon,
+    size: "small",
+  },
 
   // Advanced Creatures (Rare)
-  { name: "Starfish", rarity: "epic", cost: 120, icon: StarfishIcon, size: "small" },
-  { name: "Dolphin", rarity: "epic", cost: 140, icon: DolphinIcon, size: "small" },
-  { name: "Octopus", rarity: "epic", cost: 160, icon: OctopusIcon, size: "small" },
-  { name: "Sea Turtle", rarity: "epic", cost: 175, icon: SeaTurtleIcon, size: "small" },
+  {
+    name: "Starfish",
+    rarity: "epic",
+    cost: 120,
+    icon: StarfishIcon,
+    size: "small",
+  },
+  {
+    name: "Dolphin",
+    rarity: "epic",
+    cost: 140,
+    icon: DolphinIcon,
+    size: "small",
+  },
+  {
+    name: "Octopus",
+    rarity: "epic",
+    cost: 160,
+    icon: OctopusIcon,
+    size: "small",
+  },
+  {
+    name: "Sea Turtle",
+    rarity: "epic",
+    cost: 175,
+    icon: SeaTurtleIcon,
+    size: "small",
+  },
   { name: "Shark", rarity: "epic", cost: 220, icon: SharkIcon, size: "small" },
 
   // High-Level Creatures (Legendary)
-  { name: "Whale", rarity: "legendary", cost: 250, icon: WhaleIcon, size: "small" },
-  { name: "Kraken", rarity: "legendary", cost: 280, icon: KrakenIcon, size: "small" },
-  { name: "Axolotl", rarity: "legendary", cost: 310, icon: AxolotlIcon, size: "small" },
-  { name: "Triturus", rarity: "legendary", cost: 360, icon: TriturusIcon, size: "small" },
+  {
+    name: "Whale",
+    rarity: "legendary",
+    cost: 250,
+    icon: WhaleIcon,
+    size: "small",
+  },
+  {
+    name: "Kraken",
+    rarity: "legendary",
+    cost: 280,
+    icon: KrakenIcon,
+    size: "small",
+  },
+  {
+    name: "Axolotl",
+    rarity: "legendary",
+    cost: 310,
+    icon: AxolotlIcon,
+    size: "small",
+  },
+  {
+    name: "Triturus",
+    rarity: "legendary",
+    cost: 360,
+    icon: TriturusIcon,
+    size: "small",
+  },
 ];
 
 export const GROWTH_COSTS = {
@@ -96,5 +173,3 @@ export const GROWTH_COSTS = {
     level3: 240,
   },
 };
-
-

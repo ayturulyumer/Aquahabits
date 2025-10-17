@@ -73,9 +73,19 @@ export default function HeroSection() {
                             </span>
                         </span>
                     </h1>
-                    <p className="mb-3 leading-relaxed  font-mono font-medium text-center w-11/12 ">
+                    <p className="mb-3 leading-relaxed   font-medium text-center w-11/12 ">
                         Make growth fun and simple with gamified habits
                     </p>
+                    <div className="flex flex-row justify-start gap-4 text-xs text-gray-500 md:text-sm lg:justify-start sm:gap-6">
+                        <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-green-400" />
+                            <span>Completely free - no paywalls</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-yellow-600" />
+                            <span>Play. Grow. Repeat</span>
+                        </div>
+                    </div>
                     <Link to="/login">
 
                         <div className='z-50  '>
@@ -92,7 +102,7 @@ export default function HeroSection() {
                 </section>
             </div>
 
-            <section className='relative my-28 max-w-6xl mx-auto z-40 font-extrabold text-center lg:mt-40'>
+            <section className='relative my-20 max-w-6xl mx-auto z-40  text-center lg:mt-40'>
                 <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-4xl lg:text-7xl">
                     Tired of setting goals and never following through?
                 </h1>
@@ -105,10 +115,20 @@ export default function HeroSection() {
                     <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
                 </div>
                 <Link to="/login">
-                <div className='z-50 mt-10 '>
-                    <Button isWide iconRight={JourneyIcon}  className='text-white shadow-xl  uppercase '>Start Free </Button>
-                </div>
+                    <div className='z-50 mt-10 '>
+                        <Button isWide iconRight={JourneyIcon} className='text-white shadow-xl  uppercase '>Start Now </Button>
+                    </div>
                 </Link>
+                <div className="flex flex-row my-4 justify-start gap-4 text-xs text-gray-500 md:text-sm lg:justify-center sm:gap-6">
+                    <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-green-400" />
+                        <span>Join now for free</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-yellow-600" />
+                        <span>Build your aquarium</span>
+                    </div>
+                </div>
             </section>
 
             <section className=''>
