@@ -13,6 +13,7 @@ import Button from '../Button/Button.jsx'
 import LandingAquariumGrid from '../AquariumGrid/LandingAquariumGrid.jsx'
 
 import { painPointsData, solutionPointsData } from '../../utils/constants.js'
+import Showcase from '../Showcase/Showcase.jsx'
 
 const GRID_SIZE = 2
 
@@ -64,7 +65,7 @@ export default function HeroSection() {
         <div className="container mx-auto px-2 py-16 sm:px-6 sm:py-24 lg:px-4 max-w-full h-full">
             <div className="grid gap-12 py-24 lg:grid-cols-2 lg:gap-8 h-full">
                 <section className="relative flex flex-col justify-center items-center gap-3">
-                    <h1 className="mb-4 text-3xl font-black -tracking-wider  leading-none text-left w-11/12    md:w-full md:font-semibold md:text-5xl  lg:text-6xl lg:w-10/12">
+                    <h1 className="mb-4 text-3xl text-blue-200 font-black -tracking-wider  leading-none text-left w-11/12    md:w-full md:font-semibold md:text-5xl  lg:text-6xl lg:w-10/12">
                         Building lasting habits is easier when it's
                         <span className="relative inline-block ml-2 mt-2 bg-base-100 rounded-xl transform">
                             <span className="relative z-10 px-2 py-1 text-primary font-mono font-black ">
@@ -95,41 +96,66 @@ export default function HeroSection() {
                 </section>
 
                 <section className="relative  flex flex-col gap-4 justify-center items-center">
-                    <p className='font-mono  font-medium  italic'>Discover who’s hiding underwater <span className='animate-bounce inline-block'>👀</span></p>
+                    <p className='  italic'>Discover who’s hiding underwater  <span className='ml-2  inline-block'>👀</span></p>
                     <div className="grid  grid-cols-4 max-w-xs bg-gradient-to-b rounded-lg from-blue-800  to-blue-950 w-full gap-0 relative">
                         <LandingAquariumGrid grid={grid} />
                     </div>
                 </section>
             </div>
 
-            <section className='relative my-20 max-w-6xl mx-auto z-40  text-center lg:mt-40'>
-                <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-4xl lg:text-7xl">
+            <section className="relative my-20 max-w-6xl mx-auto z-40 text-center lg:mt-40">
+                {/* Headline */}
+                <h1 className="font-mono text-blue-300 text-4xl font-black leading-[1.1] tracking-tight sm:text-4xl md:text-4xl lg:text-7xl">
                     Tired of setting goals and never following through?
                 </h1>
-                <div className="mx-auto mt-12 max-w-3xl space-y-3 text-pretty text-xl leading-relaxed text-foreground/80 sm:text-xl">
+
+                {/* Subtext */}
+                <div className="mx-auto mt-12 max-w-3xl space-y-3 text-base-content text-xl leading-relaxed sm:text-xl">
                     <p>You've tried planners, apps, and morning routines.</p>
-                    <p className="font-medium text-foreground">None of it stuck.</p>
+                    <p className="font-medium text-base-content">None of it stuck.</p>
                 </div>
-                <div className='grid md:grid-cols-2 gap-8 mt-20 max-w-8xl mx-auto'>
-                    <HabitCard style="red" labelText={painPointsData.title} listItems={painPointsData.issues} />
-                    <HabitCard style="green" labelText={solutionPointsData.title} listItems={solutionPointsData.solutions} />
+
+                {/* Habit cards */}
+                <div className="grid md:grid-cols-2 gap-8 mt-20 max-w-8xl mx-auto">
+                    <HabitCard
+                        style="red"
+                        labelText={painPointsData.title}
+                        listItems={painPointsData.issues}
+                    />
+                    <HabitCard
+                        style="green"
+                        labelText={solutionPointsData.title}
+                        listItems={solutionPointsData.solutions}
+                    />
                 </div>
+
+                {/* CTA */}
                 <Link to="/login">
-                    <div className='z-50 mt-10 '>
-                        <Button isWide iconRight={JourneyIcon} className='text-white shadow-xl  uppercase '>Start Now </Button>
+                    <div className="z-50 mt-10">
+                        <Button
+                            isWide
+                            iconRight={JourneyIcon}
+                            className="text-white shadow-xl uppercase font-mono"
+                        >
+                            Start Now
+                        </Button>
                     </div>
                 </Link>
+
+                {/* Micro bullets */}
                 <div className="flex flex-row my-4 justify-start gap-4 text-xs text-gray-500 md:text-sm lg:justify-center sm:gap-6">
                     <div className="flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-green-400" />
-                        <span>Join now for free</span>
+                        <span className="font-mono text-base-content">Join now for free</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-yellow-600" />
-                        <span>Build your aquarium</span>
+                        <span className="font-mono text-base-content">Build your aquarium</span>
                     </div>
                 </div>
             </section>
+
+            <Showcase />
 
             <section className=''>
                 {/* <Roadmap /> */}
