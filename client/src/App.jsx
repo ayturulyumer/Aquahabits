@@ -20,7 +20,8 @@ import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
 import MyQuests from "./pages/MyQuests/MyQuests.jsx";
 import MyAquarium from "./pages/MyAquarium/MyAquarium.jsx";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";  
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
+import PublicRoute from "./components/PublicRoute/PublicRoute.jsx";
 import toast, { Toaster } from "react-hot-toast";
 
 
@@ -63,8 +64,8 @@ function App() {
             { path: "my-aquarium", element: <MyAquarium /> },
           ],
         },
-        { path: "/signup", element: <Register /> },
-        { path: "/login", element: <Login /> },
+        { path: "/signup", element: <PublicRoute> <Register /> </PublicRoute> },
+        { path: "/login", element: <PublicRoute> <Login /> </PublicRoute> },
       ],
     },
   ]);
