@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import MyHabits from "./pages/MyHabits/MyHabits.jsx";
 import MyQuests from "./pages/MyQuests/MyQuests.jsx";
 import MyAquarium from "./pages/MyAquarium/MyAquarium.jsx";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";  
 import toast, { Toaster } from "react-hot-toast";
 
 
@@ -49,7 +50,12 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         {
-          path: "/dashboard", element: <Dashboard />,
+          path: "/dashboard",
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
           children: [
             { index: true, element: <Navigate to="my-habits" /> },
             { path: "my-habits", element: <MyHabits /> },
