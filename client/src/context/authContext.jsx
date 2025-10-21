@@ -8,6 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
 
 
@@ -65,38 +66,36 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
 
-    if (storedAccessToken) {
-      const fetchUserData = async () => {
-        try {
-          // Attempt to fetch user data with the current access token
-          const userData = await getUserData();
-          setUser(userData); // Set user data
-        } catch (err) {
-          // Check if the error is related to token expiration
-          if (err.message === "Access token expired") {
-            // Refresh the session if token expired
-            try {
-              const refreshedAccessToken = await refreshSession();
-              setAccessToken(refreshedAccessToken);
-              localStorage.setItem("accessToken", refreshedAccessToken); // Store the new token
-
-              // Retry fetching user data with the new access token
-              const userData = await getUserData();
-              setUser(userData);
-            } catch (refreshError) {
-              console.error("Error refreshing session:", refreshError.message);
-              // Optionally, log out or redirect to login page
-            }
-          } else {
-            console.error("Error fetching user data:", err);
-          }
-        }
-      };
-
-      fetchUserData(); // Fetch user data when the component mounts
+    if (!storedAccessToken) {
+      setIsLoading(false);
+      return;
     }
-  }, []); // The empty dependency array ensures this runs only on component mount
 
+    const fetchUserData = async () => {
+      try {
+        const userData = await getUserData();
+        setUser(userData);
+      } catch (err) {
+        if (err.message === "Access token expired") {
+          try {
+            const refreshedAccessToken = await refreshSession();
+            setAccessToken(refreshedAccessToken);
+            localStorage.setItem("accessToken", refreshedAccessToken);
+            const userData = await getUserData();
+            setUser(userData);
+          } catch (refreshError) {
+            console.error("Error refreshing session:", refreshError.message);
+          }
+        } else {
+          console.error("Error fetching user data:", err);
+        }
+      } finally {
+        setIsLoading(false); // done fetching
+      }
+    };
+
+    fetchUserData();
+  }, []);
   useEffect(() => {
     // Whenever accessToken is updated, store it in localStorage
     if (accessToken) {
@@ -116,7 +115,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress, updateUserCreatures, removeUserCreature }}>
+    <AuthContext.Provider value={{ user, login, removeUserState, updateAquaCoins, updateUserQuestProgress, updateUserCreatures, removeUserCreature ,isLoading }}>
       {children}
     </AuthContext.Provider>
   );
