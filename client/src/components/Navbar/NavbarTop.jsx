@@ -17,7 +17,9 @@ export default function NavbarTop() {
                 <div className="navbar-center">
                 </div>
                 <div className="navbar-end">
-                    {user ? <p>Hello {user.name}</p>
+                    {user ?  <Link to="/dashboard">
+                                <button type='button' className="btn btn-md btn-outline text-neutral">Dashboard</button>
+                            </Link>
                         :
                         <ul className="flex mx-20">
                             <Link to="/login">
